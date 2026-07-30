@@ -1,0 +1,507 @@
+/* @theme academic-course */
+
+/*
+ * ============================================================================
+ * ACADEMIC COURSE — Tema Marp reutilizável para ensino
+ * ----------------------------------------------------------------------------
+ * Autor original: gerado para uso acadêmico e corporativo.
+ * Licença: MIT — livre para reutilizar em qualquer disciplina/instituição.
+ *
+ * Filosofia:
+ *   - Legibilidade em projetores
+ *   - Muito espaço em branco, pouco texto
+ *   - Toda a identidade visual controlada por variáveis CSS (:root)
+ *   - Trocar cores, fontes e logotipo NÃO exige mexer no restante do código
+ *
+ * Índice:
+ *   1. Importação de fontes
+ *   2. Variáveis de configuração (:root)
+ *   3. Base / tipografia
+ *   4. Cabeçalho e rodapé
+ *   5. Listas
+ *   6. Tabelas
+ *   7. Código
+ *   8. Citações e links
+ *   9. Imagens (small / medium / large / full)
+ *  10. Componentes (dica, erro, boas práticas, curiosidade, indústria,
+ *      exercício, objetivos, resumo)
+ *  11. Layouts (cover, chapter, section, comparison, columns, timeline,
+ *      question, exercise, summary, quote, full-image, diagram)
+ *  12. Utilitários
+ * ============================================================================
+ */
+
+/* ------------------------------------------------------------------ *
+ * 1. FONTES
+ * Inter para texto; JetBrains Mono para código. Comente estas linhas
+ * se preferir usar apenas fontes locais (offline / projetores sem rede).
+ * ------------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ------------------------------------------------------------------ *
+ * 2. CONFIGURAÇÃO — altere APENAS aqui para adaptar o tema.
+ * ------------------------------------------------------------------ */
+:root {
+  /* --- Paleta principal (derivada do template IFMS Jogos v2) --- */
+  --primary-color: #3b2f68;      /* Índigo institucional IFMS     */
+  --secondary-color: #5a4a92;    /* Índigo mais claro (apoio)     */
+  --accent-color: #b6d7a8;       /* Verde suave (destaques)       */
+  --text-color: #262233;         /* Texto do corpo                */
+  --muted-color: #6b6580;        /* Texto secundário / legendas   */
+  --background-color: #ffffff;   /* Fundo dos slides              */
+
+  /* --- Cabeçalho / rodapé --- */
+  --header-color: #5b6672;
+  --footer-color: #8a94a0;
+
+  /* --- Elementos --- */
+  --link-color: #2e75b6;
+  --quote-color: #1f4e79;
+  --table-header-color: #1f4e79;
+  --table-header-text: #ffffff;
+  --table-border-color: #d7dde5;
+  --table-zebra-color: #efefef;
+  --code-background: #efefef;
+  --code-text: #1c2430;
+
+  /* --- Cores dos componentes --- */
+  --tip-color: #2e9e5b;          /* Dica / boas práticas          */
+  --warning-color: #e0a800;      /* Atenção                       */
+  --error-color: #d64545;        /* Erro comum                    */
+  --curiosity-color: #7b52c9;    /* Curiosidade                   */
+  --industry-color: #2e75b6;     /* Na indústria                  */
+  --exercise-color: #1f4e79;     /* Exercício                     */
+
+  /* --- Dimensões --- */
+  --logo-width: 140px;
+  --header-height: 44px;
+  --footer-height: 40px;
+
+  /* --- Tipografia --- */
+  --font-family: 'Open Sans', 'Segoe UI', Roboto, Arial, sans-serif;
+  --code-font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace;
+  --title-font-size: 44px;       /* Título principal (h1)         */
+  --subtitle-font-size: 32px;    /* Subtítulo (h2)                */
+  --heading-font-size: 27px;     /* Seção (h3)                    */
+  --body-font-size: 24px;        /* Texto do corpo                */
+  --caption-font-size: 19px;     /* Legendas                      */
+  --code-font-size: 20px;
+
+  /* --- Imagens --- */
+  --image-radius: 12px;
+  --image-shadow: 0 8px 24px rgba(15, 30, 50, 0.16);
+
+  /* --- Espaçamento --- */
+  --content-padding: 60px 70px;
+  --list-gap: 0.55em;
+}
+
+/* ------------------------------------------------------------------ *
+ * 3. BASE / TIPOGRAFIA
+ * ------------------------------------------------------------------ */
+section {
+  font-family: var(--font-family);
+  font-size: var(--body-font-size);
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.5;
+  padding: var(--content-padding);
+  letter-spacing: 0.005em;
+}
+
+h1, h2, h3, h4 {
+  color: var(--primary-color);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 0.4em 0;
+}
+
+h1 { font-size: var(--title-font-size); }
+h2 { font-size: var(--subtitle-font-size); }
+h3 { font-size: var(--heading-font-size); color: var(--secondary-color); }
+h4 { font-size: calc(var(--body-font-size) * 1.05); color: var(--muted-color); }
+
+/* Barra de destaque sob os títulos de seção (h2) */
+h2::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin-top: 0.35em;
+  background: var(--accent-color);
+  border-radius: 2px;
+}
+
+p { margin: 0 0 0.6em 0; }
+
+strong { color: var(--primary-color); font-weight: 700; }
+em { color: var(--secondary-color); }
+
+.caption, figcaption, .muted {
+  font-size: var(--caption-font-size);
+  color: var(--muted-color);
+}
+
+/* ------------------------------------------------------------------ *
+ * 4. CABEÇALHO E RODAPÉ
+ * O texto é definido nas diretivas `header:` e `footer:` do Markdown.
+ * ------------------------------------------------------------------ */
+header {
+  font-size: var(--caption-font-size);
+  color: var(--header-color);
+  font-weight: 500;
+  padding: 0;
+  top: 22px;
+  left: 70px;
+  right: 70px;
+}
+
+footer {
+  font-size: calc(var(--caption-font-size) * 0.9);
+  color: var(--footer-color);
+  padding: 0;
+  bottom: 20px;
+  left: 70px;
+  right: 70px;
+}
+
+/* Numeração de página */
+section::after {
+  color: var(--footer-color);
+  font-size: calc(var(--caption-font-size) * 0.9);
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ *
+ * 5. LISTAS — espaçadas, bullets discretos
+ * ------------------------------------------------------------------ */
+ul, ol { margin: 0.3em 0 0.6em 0; padding-left: 1.4em; }
+
+li { margin-bottom: var(--list-gap); padding-left: 0.2em; }
+
+ul > li::marker { color: var(--accent-color); }
+ol > li::marker { color: var(--secondary-color); font-weight: 600; }
+
+/* Sublistas um pouco menores e mais suaves */
+li ul > li::marker { color: var(--muted-color); }
+
+/* ------------------------------------------------------------------ *
+ * 6. TABELAS
+ * ------------------------------------------------------------------ */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: calc(var(--body-font-size) * 0.85);
+  margin: 0.4em 0;
+}
+
+th {
+  background: var(--table-header-color);
+  color: var(--table-header-text);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.5em 0.7em;
+}
+
+td { padding: 0.45em 0.7em; border-bottom: 1px solid var(--table-border-color); }
+
+/* Zebra striping — ativo por padrão. Para desativar, use a classe
+   `no-zebra` no slide (<!-- _class: no-zebra -->). */
+tbody tr:nth-child(even) { background: var(--table-zebra-color); }
+section.no-zebra tbody tr:nth-child(even) { background: transparent; }
+
+/* ------------------------------------------------------------------ *
+ * 7. CÓDIGO
+ * ------------------------------------------------------------------ */
+code {
+  font-family: var(--code-font-family);
+  font-size: 0.92em;
+  background: var(--code-background);
+  color: var(--code-text);
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+}
+
+pre {
+  background: var(--code-background);
+  border: 1px solid var(--table-border-color);
+  border-radius: var(--image-radius);
+  padding: 0.9em 1.1em;
+  font-size: var(--code-font-size);
+  line-height: 1.45;
+  overflow: auto;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 1em;
+}
+
+/* ------------------------------------------------------------------ *
+ * 8. CITAÇÕES E LINKS
+ * ------------------------------------------------------------------ */
+blockquote {
+  border-left: 5px solid var(--quote-color);
+  margin: 0.4em 0;
+  padding: 0.3em 0 0.3em 1em;
+  color: var(--muted-color);
+  font-style: italic;
+}
+
+a { color: var(--link-color); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+/* ------------------------------------------------------------------ *
+ * 9. IMAGENS
+ * Use classes no alt-text: ![small](...) etc. Marp aplica via `img[alt]`.
+ * ------------------------------------------------------------------ */
+img { border-radius: var(--image-radius); box-shadow: var(--image-shadow); }
+
+img[alt~="small"]  { width: 260px; }
+img[alt~="medium"] { width: 460px; }
+img[alt~="large"]  { width: 720px; }
+img[alt~="flat"]   { box-shadow: none; } /* imagem sem sombra */
+img[alt~="plain"]  { box-shadow: none; border-radius: 0; }
+
+/* Diagramas (ex.: Mermaid renderizado como imagem): encolhe mantendo a
+   proporção para caber na área de conteúdo do slide, sem depender da
+   orientação/altura nativa do diagrama. */
+img[alt~="diagram"] {
+  width: auto;
+  height: auto;
+  max-width: 90%;
+  max-height: 440px;
+  box-shadow: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * 10. COMPONENTES (callouts)
+ * Uso no Markdown:
+ *   > [!TIP] Texto...     (via blockquote com marcador)  OU
+ *   uma <div class="tip">...</div>
+ * Para simplicidade e portabilidade, usamos divs de classe.
+ * ------------------------------------------------------------------ */
+.tip, .warning, .error, .curiosity, .industry, .best, .objectives, .summary {
+  border-radius: 10px;
+  padding: 0.7em 1em 0.7em 1.1em;
+  margin: 0.5em 0;
+  font-size: calc(var(--body-font-size) * 0.92);
+  border-left: 6px solid;
+  background: #f7f9fc;
+}
+.tip::before, .warning::before, .error::before, .curiosity::before,
+.industry::before, .best::before, .objectives::before, .summary::before {
+  display: block;
+  font-weight: 700;
+  font-size: 0.85em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.25em;
+}
+
+.tip        { border-color: var(--tip-color);       background: #eef8f1; }
+.tip::before        { content: "💡 Dica";            color: var(--tip-color); }
+
+.best       { border-color: var(--tip-color);       background: #eef8f1; }
+.best::before       { content: "✅ Boas práticas";   color: var(--tip-color); }
+
+.warning    { border-color: var(--warning-color);   background: #fdf6e3; }
+.warning::before    { content: "⚠️ Atenção";        color: var(--warning-color); }
+
+.error      { border-color: var(--error-color);     background: #fdeeee; }
+.error::before      { content: "🚫 Erro comum";      color: var(--error-color); }
+
+.curiosity  { border-color: var(--curiosity-color); background: #f4effb; }
+.curiosity::before  { content: "🔎 Curiosidade";     color: var(--curiosity-color); }
+
+.industry   { border-color: var(--industry-color);  background: #eef4fb; }
+.industry::before   { content: "🏭 Na indústria";    color: var(--industry-color); }
+
+.objectives { border-color: var(--exercise-color);  background: #eef2f8; }
+.objectives::before { content: "🎯 Objetivos";       color: var(--exercise-color); }
+
+.summary    { border-color: var(--secondary-color); background: #eef4fb; }
+.summary::before    { content: "📌 Resumo";          color: var(--secondary-color); }
+
+/* ------------------------------------------------------------------ *
+ * 11. LAYOUTS
+ * Aplicados por slide com: <!-- _class: nome -->
+ * ------------------------------------------------------------------ */
+
+/* --- COVER / CAPA --------------------------------------------------- */
+section.cover {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 70px 90px;
+}
+section.cover h1 { color: #fff; font-size: 54px; font-weight: 800; margin-bottom: 0.15em; }
+section.cover h2 { color: rgba(255,255,255,0.9); font-size: 30px; font-weight: 500; }
+section.cover h2::after { display: none; }
+section.cover .meta {
+  margin-top: 1.2em;
+  font-size: 22px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.92);
+}
+section.cover .meta strong { color: var(--accent-color); }
+section.cover img { position: absolute; top: 60px; right: 90px; width: var(--logo-width); box-shadow: none; border-radius: 0; }
+section.cover footer, section.cover::after { color: rgba(255,255,255,0.7); }
+
+/* --- CHAPTER / abertura de capítulo -------------------------------- */
+section.chapter {
+  background: var(--primary-color);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+section.chapter h1 { color: #fff; font-size: 60px; font-weight: 800; }
+section.chapter h2 { color: var(--accent-color); font-size: 26px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; }
+section.chapter h2::after { display: none; }
+section.chapter .chapter-number {
+  font-size: 120px; font-weight: 800; color: rgba(255,255,255,0.12);
+  position: absolute; bottom: 30px; right: 70px; line-height: 1;
+}
+
+/* --- SECTION / divisória mais leve --------------------------------- */
+section.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 12px solid var(--accent-color);
+}
+section.section h1 { font-size: 50px; }
+
+/* --- TWO / THREE COLUMNS ------------------------------------------- */
+section.two-columns .columns,
+section.comparison .columns {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+}
+section.three-columns .columns {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+}
+
+/* --- COMPARISON ---------------------------------------------------- */
+section.comparison .col {
+  background: #f7f9fc; border-radius: 12px; padding: 0.8em 1em;
+  border-top: 6px solid var(--secondary-color);
+}
+section.comparison .col.negative { border-top-color: var(--error-color); }
+section.comparison .col.positive { border-top-color: var(--tip-color); }
+section.comparison .col h3 { margin-top: 0; }
+
+/* --- IMAGE-RIGHT / IMAGE-LEFT -------------------------------------- */
+section.image-right, section.image-left {
+  display: grid; align-items: center; gap: 50px;
+}
+section.image-right { grid-template-columns: 1.1fr 0.9fr; }
+section.image-left  { grid-template-columns: 0.9fr 1.1fr; }
+section.image-left .text { order: 2; }
+section.image-left .media { order: 1; }
+section.image-right img, section.image-left img { width: 100%; }
+
+/* --- FULL-IMAGE ---------------------------------------------------- */
+section.full-image {
+  padding: 0; display: flex; align-items: center; justify-content: center;
+}
+section.full-image img {
+  width: 100%; height: 100%; object-fit: cover; border-radius: 0; box-shadow: none;
+}
+section.full-image .overlay {
+  position: absolute; bottom: 60px; left: 70px;
+  background: rgba(31,78,121,0.85); color: #fff;
+  padding: 0.5em 1em; border-radius: 8px; font-size: 28px;
+}
+
+/* --- TIMELINE ------------------------------------------------------ */
+section.timeline ul { list-style: none; padding-left: 0; margin-top: 0.6em; }
+section.timeline li {
+  position: relative; padding-left: 2.2em; margin-bottom: 0.9em;
+}
+section.timeline li::before {
+  content: ""; position: absolute; left: 0.35em; top: 0.35em;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent-color); box-shadow: 0 0 0 4px rgba(242,169,0,0.2);
+}
+section.timeline li::after {
+  content: ""; position: absolute; left: calc(0.35em + 6px); top: 1.4em;
+  width: 2px; height: calc(100% + 0.2em); background: var(--table-border-color);
+}
+section.timeline li:last-child::after { display: none; }
+section.timeline li strong { display: block; color: var(--primary-color); }
+
+/* --- QUESTION ------------------------------------------------------ */
+section.question {
+  display: flex; flex-direction: column; justify-content: center;
+  text-align: center; background: #f4f7fb;
+}
+section.question h1 {
+  font-size: 46px; color: var(--primary-color); max-width: 90%; margin: 0 auto 0.3em;
+}
+section.question h1::before { content: "?"; display:block; font-size: 90px; color: var(--accent-color); line-height: 1; }
+section.question p { color: var(--muted-color); font-size: 24px; }
+
+/* --- EXERCISE ------------------------------------------------------ */
+section.exercise { border-top: 14px solid var(--accent-color); }
+section.exercise h1::before {
+  content: "✏️ Exercício"; display: block;
+  font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent-color); margin-bottom: 0.3em; font-weight: 700;
+}
+
+/* --- SUMMARY ------------------------------------------------------- */
+section.summary-slide { background: #f4f7fb; }
+section.summary-slide h1::before {
+  content: "📌 Resumo"; display: block;
+  font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--secondary-color); margin-bottom: 0.3em; font-weight: 700;
+}
+
+/* --- QUOTE (slide inteiro de citação) ------------------------------ */
+section.quote {
+  display: flex; flex-direction: column; justify-content: center;
+  background: var(--primary-color); color: #fff;
+}
+section.quote blockquote {
+  border: none; font-size: 38px; font-style: italic; color: #fff;
+  padding: 0; margin: 0;
+}
+section.quote blockquote::before { content: "“"; font-size: 80px; color: var(--accent-color); display: block; line-height: 0.4; }
+section.quote .author { margin-top: 0.6em; color: var(--accent-color); font-weight: 600; }
+
+/* --- DIAGRAM / MERMAID --------------------------------------------- *
+ * Não sobrescreve o estilo interno do Mermaid; apenas centraliza e
+ * dá respiro visual ao contêiner. */
+section.diagram { text-align: center; }
+section.diagram .mermaid, section.diagram pre.mermaid {
+  background: transparent; border: none; display: inline-block; margin: 0 auto;
+}
+section.diagram svg { max-width: 90%; height: auto; }
+
+/* --- CODE (slide dedicado a código) -------------------------------- */
+section.code pre { font-size: calc(var(--code-font-size) * 1.05); }
+
+/* ------------------------------------------------------------------ *
+ * 12. UTILITÁRIOS
+ * ------------------------------------------------------------------ */
+.center  { text-align: center; }
+.right   { text-align: right; }
+.small   { font-size: calc(var(--body-font-size) * 0.8); }
+.big     { font-size: calc(var(--body-font-size) * 1.25); }
+.mt      { margin-top: 1em; }
+.accent  { color: var(--accent-color); }
+.primary { color: var(--primary-color); }
+
+/* Fundo escuro invertido para slides pontuais: <!-- _class: invert --> */
+section.invert {
+  background: var(--primary-color); color: #fff;
+}
+section.invert h1, section.invert h2, section.invert h3, section.invert strong { color: #fff; }
+section.invert h2::after { background: var(--accent-color); }
+
+/* ------------------------------------------------------------------ *
+ * FIM DO TEMA
+ * ------------------------------------------------------------------ */

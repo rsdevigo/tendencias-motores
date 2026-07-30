@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 90" width="280" height="90" role="img" aria-label="IFMS">
+  <!-- PLACEHOLDER — substituir por Slides/themes/logo-ifms.svg com a marca oficial do IFMS.
+       Manter o mesmo nome de arquivo e a mesma viewBox (280x90) para não alterar os 17 decks.
+       Marca oficial: https://www.ifms.edu.br (manual de identidade visual do Instituto). -->
+  <rect width="280" height="90" fill="none"/>
+  <text x="0" y="62" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#3b2f68">IFMS</text>
+</svg>
