@@ -171,11 +171,7 @@ O princípio é idêntico nas duas engines: a interface lê o estado de gameplay
 
 ## Do dado de gameplay ao elemento visual
 
-```mermaid
-flowchart LR
-    A[HealthComponent: vida atual] -->|binding| B[Progress Bar do Widget]
-    B --> C[Jogador vê o estado em tempo real]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -358,13 +354,7 @@ O princípio é o mesmo nas duas engines — um único ponto de organização vi
 
 ## Vários dados, um único HUD
 
-```mermaid
-flowchart LR
-    A[HealthComponent] --> D[WBP_HUD]
-    B[SaveComponent] --> D
-    C[BP_GameState] --> D
-    D --> E[Jogador vê tudo organizado em tela]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

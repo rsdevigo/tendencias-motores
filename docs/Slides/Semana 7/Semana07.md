@@ -135,12 +135,7 @@ Reforçar PROJECT_ARCHITECTURE.md: o SaveComponent é o ponto único de acesso a
 
 ## Estado em memória × Estado serializado
 
-```mermaid
-flowchart LR
-    A[Estado em memória: Actors, variáveis em runtime] --> B[SaveComponent]
-    B --> C[Estado serializado: BP_SaveGame em disco]
-    C --> B
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -341,13 +336,7 @@ Este é o conceito que atravessou todo o Módulo 2, desde a Semana 4. Não é um
 
 ## Sistemas do Módulo 2 integrados
 
-```mermaid
-flowchart LR
-    A[GameMode / GameState] --> B[PlayerController / GameInstance]
-    B --> C[BPI_Interactable + Event Dispatcher]
-    C --> D[DT_Items]
-    D --> E[SaveComponent / BP_SaveGame]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador
@@ -481,11 +470,7 @@ O grupo tende a subestimar a confusão de um jogador novo justamente por já dom
 
 ## Duas lentes sobre o mesmo Vertical Slice
 
-```mermaid
-flowchart LR
-    A[Code Review: avaliação por dentro] --> C[Vertical Slice integrado]
-    B[Playtest: avaliação por fora] --> C
-```
+![diagram](assets/mermaid-3.png)
 
 <!--
 ### Notas do apresentador

@@ -118,16 +118,7 @@ Referência: Unreal Engine 5 Documentation — visão geral do Editor (dev.epicg
 
 ## Onde a Unreal se encaixa
 
-```mermaid
-flowchart LR
-    A[Game Engine] --> B[Renderização]
-    A --> C[Física]
-    A --> D[Assets]
-    A --> E[Cena]
-    A --> F[Lógica de gameplay]
-    A --> G[Editor]
-    G --> H[Jogo construído sobre a engine]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador

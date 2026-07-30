@@ -116,12 +116,7 @@ Referência: Unreal Engine Materials (dev.epicgames.com/documentation).
 
 ## Da textura à superfície
 
-```mermaid
-flowchart LR
-    A[Textura / Parâmetro] --> B[Material Graph]
-    B --> C[Base Color, Roughness, Metallic, Normal]
-    C --> D[Superfície final]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -403,11 +398,7 @@ Referência: Lumen Global Illumination and Reflections (dev.epicgames.com/docume
 
 ## Dois problemas, duas soluções
 
-```mermaid
-flowchart LR
-    A[Geometria bruta] --> B[Nanite] --> C[Detalhe por pixel]
-    D[Luz emitida] --> E[Lumen] --> F[Iluminação indireta em tempo real]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

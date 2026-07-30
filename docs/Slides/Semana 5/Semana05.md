@@ -134,13 +134,7 @@ Referência: Blueprints Visual Scripting in Unreal Engine (dev.epicgames.com/doc
 
 ## Contrato × implementação concreta
 
-```mermaid
-flowchart LR
-    A[InteractionComponent] -- Call Function on Interface --> B[BPI_Interactable]
-    B -.implementada por.-> C[BP_Door]
-    B -.implementada por.-> D[BP_Lever]
-    B -.implementada por.-> E[BP_Chest]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -327,13 +321,7 @@ Referência: Blueprints Visual Scripting in Unreal Engine (dev.epicgames.com/doc
 
 ## Emissor e inscritos
 
-```mermaid
-flowchart LR
-    A[Interact chamada via interface] --> B[Event Dispatcher: OnAtivado]
-    B -.Bind Event.-> C[Animação da porta]
-    B -.Bind Event.-> D[Sistema de áudio]
-    B -.Bind Event.-> E[Outro sistema futuro]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

@@ -171,11 +171,7 @@ O princípio é idêntico nas duas engines: isolar a decisão de animação em u
 
 ## Do dado de gameplay à animação
 
-```mermaid
-flowchart LR
-    A[Character: velocidade e input] --> B[Animation Blueprint]
-    B --> C[State Machine: Idle / Walk / Run]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -372,13 +368,7 @@ O princípio — separar animação contínua de locomoção de animação pontu
 
 ## Dois problemas, duas ferramentas
 
-```mermaid
-flowchart LR
-    A[Problema de animação] -->|contínuo e direcional| B[Blend Space]
-    A -->|pontual e sobreposto| C[Montage]
-    B --> D[State Machine]
-    C --> D
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

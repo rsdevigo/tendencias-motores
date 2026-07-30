@@ -114,13 +114,7 @@ Referência: Gameplay Framework in Unreal Engine (dev.epicgames.com/documentatio
 
 ## De Actor a Character
 
-```mermaid
-flowchart LR
-    A[Actor] --> B[Pawn]
-    B --> C[Character]
-    C --> D[Character Movement Component]
-    D --> E[Caminhada, corrida, salto, colisão]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -308,13 +302,7 @@ Referência: Enhanced Input in Unreal Engine (dev.epicgames.com/documentation).
 
 ## Do dispositivo à ação no mundo
 
-```mermaid
-flowchart LR
-    A[Dispositivo físico] --> B[Input Mapping Context]
-    B --> C[Input Action]
-    C --> D[Trigger / Modifier]
-    D --> E[Lógica de gameplay no BP_Player]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

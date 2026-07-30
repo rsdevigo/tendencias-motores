@@ -157,12 +157,7 @@ O princípio é idêntico nas duas engines — som como resposta a um evento de 
 
 ## Do evento existente ao som disparado
 
-```mermaid
-flowchart LR
-    A[Event Dispatcher já existente] --> B[InteractionComponent / locomoção do BP_Player]
-    B --> C[Audio Component]
-    C --> D[Som pontual ou ambiente]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -345,12 +340,7 @@ O princípio é o mesmo nas duas engines — medir antes de otimizar, tratando p
 
 ## Da medição à otimização justificada
 
-```mermaid
-flowchart LR
-    A[Stat commands / Unreal Insights] --> B[Gargalo identificado com dados]
-    B --> C[Otimização aplicada]
-    C --> D[Justificativa técnica no Feedback formal]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador
@@ -446,13 +436,7 @@ Avaliação: insumo direto para o critério "Qualidade técnica" do Sistema de A
 
 ## Onde a Semana 13 se encaixa no Vertical Slice
 
-```mermaid
-flowchart TD
-    S12["Semana 12: camada visual refinada"] --> AUD["Áudio integrado a eventos existentes"]
-    S12 --> PROF["Profiling e otimização de gargalos reais"]
-    AUD --> POLISH["Vertical Slice pronto para Packaging"]
-    PROF --> POLISH
-```
+![diagram](assets/mermaid-3.png)
 
 <!--
 ### Notas do apresentador

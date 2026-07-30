@@ -157,12 +157,7 @@ O princípio é idêntico nas duas engines — separar o ambiente de edição do
 
 ## Do projeto editável ao build distribuível
 
-```mermaid
-flowchart LR
-    A[Projeto no editor] --> B[Project Settings: plataforma, build, mapa inicial]
-    B --> C[Packaging]
-    C --> D[Build executável fora do editor]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -345,13 +340,7 @@ O princípio de produção é o mesmo nas duas engines — validar o build fora 
 
 ## Do build ao ajuste final
 
-```mermaid
-flowchart LR
-    A[Build empacotado] --> B[Playtest cruzado: outro grupo testa]
-    B --> C[Registro de bugs e pontos de confusão]
-    C --> D[Ajustes finais pelo próprio grupo]
-    D --> E[Code Review de encerramento — Rubrica 7]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador
@@ -447,13 +436,7 @@ Avaliação: Rubrica 7, dez critérios completos (ver Sistema de Avaliação). O
 
 ## Onde a Semana 14 se encaixa no Vertical Slice
 
-```mermaid
-flowchart TD
-    S13["Semana 13: áudio e otimizações"] --> PKG["Packaging: build estável fora do editor"]
-    PKG --> PT["Playtest cruzado entre grupos"]
-    PT --> CR["Code Review de encerramento — Rubrica 7"]
-    CR --> FINAL["Entrega parcial do Vertical Slice Final"]
-```
+![diagram](assets/mermaid-3.png)
 
 <!--
 ### Notas do apresentador

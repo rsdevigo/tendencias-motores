@@ -156,20 +156,7 @@ O papel arquitetural é idêntico — apenas o grau de indireção muda em funç
 
 ## Correspondência de papéis: Lyra × Vertical Slice
 
-```mermaid
-flowchart LR
-    subgraph Lyra
-    LGM[LyraGameMode] --- LGS[LyraGameState]
-    LGS --- LPS[LyraPlayerState]
-    LGM --- PD[Pawn Data / Experience]
-    end
-    subgraph VerticalSlice[Vertical Slice da turma]
-    BGM[BP_GameMode] --- BGS[BP_GameState]
-    BGS --- BPC[BP_PlayerController]
-    end
-    LGM -. mesmo papel .- BGM
-    LGS -. mesmo papel .- BGS
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -435,14 +422,7 @@ Avaliação: ver Sistema de Avaliação para os critérios completos das Rubrica
 
 ## Onde a Semana 15 se encaixa no Vertical Slice
 
-```mermaid
-flowchart TD
-    S14["Semana 14: build empacotado e validado"] --> LYRA["Encontro 1: leitura arquitetural do Lyra"]
-    LYRA --> QC["Quadro comparativo Lyra x Vertical Slice"]
-    QC --> SOB["Encontro 2: Stack O Bot e Content Examples"]
-    SOB --> DEC["Decisão arquitetural candidata a revisão"]
-    DEC --> S16["Semana 16: quadro comparativo Unreal x Unity"]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

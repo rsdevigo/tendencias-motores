@@ -156,13 +156,7 @@ Projetar a seção 12 do PROJECT_ARCHITECTURE.md lado a lado com o quadro compar
 
 ## Fluxo da consolidação
 
-```mermaid
-flowchart LR
-    S15["Quadro comparativo do Lyra (Semana 15)"] --> REV["Revisão da seção 12 do PROJECT_ARCHITECTURE.md"]
-    REV --> DEMO["Demonstração: percurso guiado sistema a sistema"]
-    DEMO --> LAB["Laboratório: cada grupo completa seu quadro com exemplos próprios"]
-    LAB --> FEED["Feedback: linha mais reveladora de cada grupo"]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -428,13 +422,7 @@ Avaliação: ver Sistema de Avaliação para os critérios completos das Rubrica
 
 ## Onde a Semana 16 se encaixa no Vertical Slice
 
-```mermaid
-flowchart TD
-    S15["Semana 15: quadro comparativo Lyra x Vertical Slice + decisão candidata a revisão"] --> C1["Encontro 1: quadro comparativo Unreal x Unity consolidado"]
-    C1 --> C2["Encontro 2: motor adicional escolhido + comparação registrada"]
-    C2 --> EST["Estrutura preliminar da Apresentação Técnica Final"]
-    EST --> S17["Semana 17: Apresentação Técnica Final"]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

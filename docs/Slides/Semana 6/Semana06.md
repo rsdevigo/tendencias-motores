@@ -134,13 +134,7 @@ Não aprofundar Data Asset nesta semana; o objetivo é que a turma saiba diferen
 
 ## Data Table × Data Asset
 
-```mermaid
-flowchart LR
-    A[DT_Items] --> B[Linha: Poção]
-    A --> C[Linha: Chave]
-    A --> D[Linha: Moeda]
-    E[Data Asset] --> F[Um único dado independente]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -347,11 +341,7 @@ Referência: Gameplay Framework in Unreal Engine (dev.epicgames.com/documentatio
 
 ## Struct, Enum e Data Table juntos
 
-```mermaid
-flowchart LR
-    A[E_ItemType: categorias fechadas] --> B[S_ItemData: forma do dado]
-    B --> C[DT_Items: coleção de linhas tipadas]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

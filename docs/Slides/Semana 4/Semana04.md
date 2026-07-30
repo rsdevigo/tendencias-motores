@@ -135,12 +135,7 @@ Referência: Gameplay Framework in Unreal Engine (dev.epicgames.com/documentatio
 
 ## Regra e estado no nível de teste
 
-```mermaid
-flowchart LR
-    A[Nível de teste] --> B[GameMode: decide a regra]
-    B --> C[GameState: expõe o estado]
-    C --> D[UI, IA, outros sistemas consultam GameState]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -347,14 +342,7 @@ Referência: Gameplay Framework in Unreal Engine (dev.epicgames.com/documentatio
 
 ## Jogador, corpo e persistência
 
-```mermaid
-flowchart LR
-    A[Jogador] --> B[PlayerController: identidade e input]
-    B --> C[Pawn / BP_Player: o corpo possuído]
-    D[Nível A] -- troca de nível --> E[Nível B]
-    F[GameInstance] -.permanece em ambos.-> D
-    F -.permanece em ambos.-> E
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

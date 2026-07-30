@@ -112,13 +112,7 @@ Abertura do encontro: relembrar critérios, ordem das apresentações e tempo po
 
 ## O que cada apresentação precisa cobrir
 
-```mermaid
-flowchart LR
-    VG["Visão geral do projeto"] --> DEMO["Demonstração ao vivo do build (Semana 14)"]
-    DEMO --> DEC["Justificativa das decisões arquiteturais centrais"]
-    DEC --> COMP["Comparação com Unity e motor adicional (Semana 16)"]
-    COMP --> QA["Perguntas técnicas da turma e do professor"]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -261,13 +255,7 @@ Confirmar a ordem dos grupos restantes antes do início. Preencher a Rubrica 6 e
 
 ## Da Semana 1 à Semana 17
 
-```mermaid
-flowchart LR
-    S1["Semana 1: primeiro contato com o editor da Unreal"] --> MOD["Módulos 2 a 4: sistemas construídos em cadeia no Vertical Slice"]
-    MOD --> S15["Semana 15: análise arquitetural do Lyra"]
-    S15 --> S16["Semana 16: quadro comparativo Unreal x Unity + motor adicional"]
-    S16 --> S17["Semana 17: defesa técnica e comparação entre motores"]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador

@@ -158,13 +158,7 @@ O princípio é idêntico nas duas engines: geometria navegável pré-calculada,
 
 ## Da geometria do nível ao deslocamento autônomo
 
-```mermaid
-flowchart LR
-    A[Geometria visual do nível] --> B[Nav Mesh Bounds Volume]
-    B --> C[NavMesh]
-    C --> D[AIController]
-    D --> E[BP_Enemy se desloca até um ponto]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -347,14 +341,7 @@ O princípio — separar estrutura de decisão de memória do agente — é o me
 
 ## Behavior Tree e Blackboard em conjunto
 
-```mermaid
-flowchart LR
-    A[Blackboard: PontoDePatrulhaAtual, AlvoDetectado] --> B[Behavior Tree]
-    B -->|AlvoDetectado vazio| C[Patrulhar]
-    B -->|AlvoDetectado preenchido| D[Perseguir]
-    C --> A
-    D --> A
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador
@@ -525,19 +512,7 @@ Avaliação: Playtest (Rubrica 5 — Funcionamento, Usabilidade, Bugs, Feedback 
 
 ## Vertical Slice do Módulo 3
 
-```mermaid
-flowchart TD
-    M2["Módulo 2: Gameplay funcional"] --> ANIM["Animation Blueprint / Blend Space / Montage"]
-    M2 --> HUD["WBP_HUD"]
-    M2 --> INV["InventoryComponent"]
-    M2 --> INT["Interação ampliada"]
-    ANIM --> VS["Vertical Slice jogável do Módulo 3"]
-    HUD --> VS
-    INV --> VS
-    INT --> VS
-    NAV["NavMesh + BP_Enemy + Behavior Tree/Blackboard"] --> VS
-    COMBATE["Combate simples (Trace/Overlap + ApplyDamage)"] --> VS
-```
+![diagram](assets/mermaid-3.png)
 
 <!--
 ### Notas do apresentador

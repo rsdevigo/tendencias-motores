@@ -157,12 +157,7 @@ O princípio é o mesmo nas duas engines — separar estrutura compilada da para
 
 ## Do grafo compilado às variações visuais
 
-```mermaid
-flowchart LR
-    A[Material base: grafo compilado] --> B[Parâmetros expostos]
-    B --> C[Material Instance A]
-    B --> D[Material Instance B]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -345,12 +340,7 @@ O princípio de evitar um GameObject por elemento repetido é o mesmo nas duas e
 
 ## Da geometria repetida à cena composta
 
-```mermaid
-flowchart LR
-    A[Malha estática única] --> B[Foliage Tool: densidade e escala]
-    B --> C[Instanced Static Mesh Component]
-    C --> D[Cena composta no Vertical Slice]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador
@@ -446,13 +436,7 @@ Avaliação: Rubrica 4 — Code Review, critérios Organização dos Blueprints,
 
 ## Onde a Semana 12 se encaixa no Vertical Slice
 
-```mermaid
-flowchart TD
-    M3["Módulo 3: Vertical Slice jogável"] --> MAT["Material base + Material Instances"]
-    M3 --> FOL["Foliage Tool: vegetação/elementos de cena"]
-    MAT --> POLISH["Vertical Slice com camada visual refinada"]
-    FOL --> POLISH
-```
+![diagram](assets/mermaid-3.png)
 
 <!--
 ### Notas do apresentador

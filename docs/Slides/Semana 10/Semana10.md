@@ -157,11 +157,7 @@ O princípio é idêntico: o Component/script de inventário nunca redefine o it
 
 ## Item, posse e exibição
 
-```mermaid
-flowchart LR
-    A[DT_Items: dado do item] -->|referência| B[InventoryComponent: posse]
-    B -->|binding| C[WBP_HUD / WBP_Inventory: exibição]
-```
+![diagram](assets/mermaid-1.png)
 
 <!--
 ### Notas do apresentador
@@ -342,11 +338,7 @@ O princípio de comunicação desacoplada é idêntico nas duas engines; a decis
 
 ## Fluxo de uma interação de coleta
 
-```mermaid
-flowchart LR
-    A[BP_Pickup] -->|BPI_Interactable| B[InteractionComponent]
-    B --> C[InventoryComponent: item adicionado]
-```
+![diagram](assets/mermaid-2.png)
 
 <!--
 ### Notas do apresentador
