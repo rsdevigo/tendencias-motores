@@ -40,7 +40,7 @@ Ao final da semana, todos os grupos terão apresentado e defendido tecnicamente 
 
 Não há conceito novo de Game Engine introduzido neste encontro. O conceito fundamental em jogo é a síntese de todo o semestre: a capacidade de nomear, para qualquer sistema construído no Vertical Slice, o conceito universal que ele resolve, a implementação específica adotada no Godot, e ao menos um motor alternativo em que o mesmo problema aparece sob outro nome. Essa tríade — conceito, implementação, transferência — é a competência que a disciplina construiu desde a Semana 1 e que a apresentação técnica final avalia diretamente, não como recital de funcionalidades, mas como demonstração de raciocínio arquitetural.
 
-## Recursos da GODOT explorados
+## Recursos do Godot
 
 - Vertical Slice completo de cada grupo, executado ao vivo ou demonstrado em vídeo/build exportado, conforme a infraestrutura disponível na sala.
 - Nenhum recurso novo do Godot é aberto no editor; o projeto de cada grupo é usado como evidência da apresentação, não como objeto de nova exploração.
@@ -52,7 +52,7 @@ Cada apresentação deve conter a comparação Godot x Unity estruturada no quad
 ## Preparação do Professor
 
 - Ordem de apresentação dos grupos e tempo definido por grupo (recomenda-se 10–12 minutos de apresentação e 5–8 minutos de perguntas por grupo, ajustado ao número de grupos da turma).
-- Rubrica de Apresentações e rubrica de Arquitetura/Justificativa Técnica (Sistema de Avaliação) impressas ou abertas para preenchimento durante cada apresentação.
+- Rubrica de Apresentações e Rubrica de Vertical Slice Final (Sistema de Avaliação) impressas ou abertas para preenchimento durante cada apresentação.
 - Projetor, som e acesso aos builds exportados de cada grupo testados antes do início do encontro, para evitar perda de tempo com problemas técnicos.
 - Perguntas de arguição preparadas por grupo, com base no checkpoint da Semana 16 e no histórico de decisões de cada projeto ao longo do semestre.
 
@@ -61,12 +61,12 @@ Cada apresentação deve conter a comparação Godot x Unity estruturada no quad
 | Duração | Atividade |
 |---|---|
 | 10 min | Abertura do encontro, ordem de apresentação e regras da sessão de perguntas |
-| ~95 min | Apresentações técnicas do primeiro bloco de grupos (tempo dividido conforme número de grupos) |
+| ~105 min | Apresentações técnicas do primeiro bloco de grupos (tempo dividido conforme número de grupos) |
 | 20 min | Feedback consolidado do professor sobre o bloco apresentado e fechamento do Encontro 1 |
 
 ## Desenvolvimento
 
-O encontro abre com a definição da ordem de apresentação e das regras da sessão de perguntas — cada grupo apresenta o recorte do Vertical Slice definido no checkpoint da Semana 16, justifica as decisões arquiteturais destacadas e situa o projeto na comparação Godot x Unity x motor adicional escolhido. Após cada apresentação, a turma e o professor fazem perguntas técnicas, distribuídas entre os integrantes do grupo para garantir que a defesa não recaia sobre uma única pessoa. O professor registra, ao longo das apresentações, as evidências para as rubricas de Apresentações e de Arquitetura/Justificativa Técnica. O encontro fecha com feedback consolidado do professor sobre o bloco apresentado, sem aguardar o encerramento de todas as apresentações da disciplina — o feedback imediato reforça o padrão esperado para os grupos que apresentam no Encontro 2.
+O encontro abre com a definição da ordem de apresentação e das regras da sessão de perguntas — cada grupo apresenta o recorte do Vertical Slice definido no checkpoint da Semana 16, justifica as decisões arquiteturais destacadas e situa o projeto na comparação Godot x Unity x motor adicional escolhido. Após cada apresentação, a turma e o professor fazem perguntas técnicas, distribuídas entre os integrantes do grupo para garantir que a defesa não recaia sobre uma única pessoa. O professor registra, ao longo das apresentações, as evidências para as rubricas de Apresentações e de Vertical Slice Final. O encontro fecha com feedback consolidado do professor sobre o bloco apresentado, sem aguardar o encerramento de todas as apresentações da disciplina — o feedback imediato reforça o padrão esperado para os grupos que apresentam no Encontro 2.
 
 ## Desafio
 
@@ -78,7 +78,7 @@ Cada grupo do primeiro bloco apresenta o recorte definido no checkpoint, justifi
 
 ## Evidências para Avaliação
 
-Rubrica de Apresentações (10% da nota final) e rubrica de Arquitetura/Justificativa Técnica, aplicadas em conjunto nesta semana conforme previsto no Sistema de Avaliação — a defesa oral é o principal instrumento de evidência para ambas.
+Rubrica de Apresentações (10% da nota final) e Rubrica de Vertical Slice Final (20%, critérios de Arquitetura e de Capacidade de Explicar Decisões), aplicadas em conjunto nesta semana conforme previsto no Sistema de Avaliação — a defesa oral é o principal instrumento de evidência para ambas.
 
 ## Dificuldades Esperadas
 
@@ -106,7 +106,7 @@ Rubrica de Apresentações (10% da nota final) e rubrica de Arquitetura/Justific
 
 O conceito fundamental deste encontro é o fechamento da premissa que abriu a disciplina na Semana 1: a engine é um estudo de caso, não o objetivo. Depois de dezessete semanas construindo um único Vertical Slice em Godot, a discussão final pergunta à turma, de forma direta, se essa premissa se sustentou — se, de fato, cada estudante sairia desta disciplina capaz de abrir Unity, Unreal, O3DE ou qualquer outro motor e localizar, com razoável rapidez, onde vivem os mesmos conceitos universais que aprendeu aqui: estado global de partida, comunicação desacoplada entre sistemas, dados de design fora do código, navegação e decisão autônoma de agentes, pipeline de exportação. A resposta a essa pergunta é o verdadeiro produto final da disciplina, mais do que o próprio Vertical Slice.
 
-## Recursos da GODOT explorados
+## Recursos do Godot
 
 - Vertical Slice completo dos grupos do segundo bloco.
 - Nenhum recurso novo do Godot é aberto no editor; o Godot aparece, na discussão final, como um dos motores possíveis, não como o centro exclusivo da conversa.
@@ -145,7 +145,7 @@ Cada grupo do segundo bloco apresenta e defende o próprio Vertical Slice com o 
 
 ## Evidências para Avaliação
 
-Rubrica de Apresentações e rubrica de Arquitetura/Justificativa Técnica, aplicadas aos grupos do segundo bloco. A participação na discussão final não gera nota isolada, mas compõe a avaliação processual de participação ativa prevista no Sistema de Avaliação ao longo de toda a disciplina.
+Rubrica de Apresentações e Rubrica de Vertical Slice Final, aplicadas aos grupos do segundo bloco. A participação na discussão final não gera nota isolada, mas compõe a avaliação processual de participação ativa prevista no Sistema de Avaliação ao longo de toda a disciplina.
 
 ## Dificuldades Esperadas
 
@@ -172,4 +172,4 @@ Não há próxima semana: a Semana 17 encerra a Unidade V, o Módulo 5 e a disci
 - Unreal Engine Documentation: https://dev.epicgames.com/documentation/en-us/unreal-engine
 - O3DE Documentation: https://docs.o3de.org/
 - Stride Documentation: https://doc.stride3d.net/
-- Sistema de Avaliação da disciplina (Rubrica de Apresentações; Rubrica de Arquitetura/Justificativa Técnica) — Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md
+- Sistema de Avaliação da disciplina (Rubrica 6 — Apresentações; Rubrica 7 — Vertical Slice Final) — Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md

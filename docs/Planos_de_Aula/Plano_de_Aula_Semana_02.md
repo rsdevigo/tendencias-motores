@@ -58,8 +58,8 @@ Na Unity, o mesmo problema costuma ser resolvido combinando um CharacterControll
 
 | Duração | Atividade |
 |---|---|
-| 15 min | Revisão do Encontro 2 da Semana 1 (Scene com Nodes filhos) |
-| 20 min | Introdução: por que engines desacoplam intenção de ação; física de locomoção |
+| 10 min | Revisão do Encontro 2 da Semana 1 (Scene com Nodes filhos) |
+| 15 min | Introdução: por que engines desacoplam intenção de ação; física de locomoção |
 | 35 min | Demonstração: configuração de um CharacterBody3D com CollisionShape3D via Orchestrator |
 | 45 min | Laboratório: cada estudante adiciona seu próprio Player à Scene do Vertical Slice |
 | 20 min | Desafio: ajustar forma de colisão ou escala do Player, justificando a escolha |
@@ -67,7 +67,7 @@ Na Unity, o mesmo problema costuma ser resolvido combinando um CharacterControll
 
 ## Desenvolvimento
 
-O encontro retoma a Scene da Semana 1 e adiciona um novo Node filho: o Player, um CharacterBody3D. O professor demonstra a montagem — CharacterBody3D com CollisionShape3D e MeshInstance3D como filhos — explicando por que a colisão precisa de uma forma própria, separada da malha visual. A turma replica a montagem dentro do próprio projeto, preparando o terreno para o input, que será conectado no Encontro 2.
+O encontro retoma a Scene da Semana 1 e adiciona um novo Node filho: o Player, um CharacterBody3D. O professor demonstra a montagem — CharacterBody3D com CollisionShape3D e MeshInstance3D como filhos — explicando por que a colisão precisa de uma forma própria, separada da malha visual, e salva o resultado como Scene própria (`scenes/characters/Player.tscn`), reaproveitável em outros níveis do Vertical Slice. A turma replica a montagem dentro do próprio projeto, preparando o terreno para o input, que será conectado no Encontro 2.
 
 ## Desafio
 
@@ -94,7 +94,7 @@ Sem instrumento formal nesta semana. A configuração do Player é retomada e ob
 ## Objetivos de Aprendizagem
 
 - Explicar Input Map e InputEvent como camada de desacoplamento entre dispositivo físico e ação lógica.
-- Configurar um Input Map para movimentação e câmera.
+- Configurar um Input Map para movimentação.
 - Conectar o Input Map ao `move_and_slide` do Player.
 
 ## Conteúdos
@@ -126,12 +126,12 @@ A Unity resolve o mesmo problema com o Input System (novo), usando Action Maps e
 
 | Duração | Atividade |
 |---|---|
-| 15 min | Revisão do Encontro 1 (Player configurado, ainda sem se mover) |
-| 25 min | Introdução: por que desacoplar dispositivo físico de ação lógica; Input Map e InputEvent |
+| 10 min | Revisão do Encontro 1 (Player configurado, ainda sem se mover) |
+| 20 min | Introdução: por que desacoplar dispositivo físico de ação lógica; Input Map e InputEvent |
 | 35 min | Demonstração: configuração do Input Map e conexão com `move_and_slide` via Orchestrator |
 | 45 min | Laboratório: cada estudante configura o próprio Input Map e movimenta o Player |
 | 20 min | Desafio: adicionar uma Action não demonstrada em aula (correr, agachar ou pular) |
-| 15 min | Feedback e fechamento |
+| 5 min | Feedback e fechamento |
 
 ## Desenvolvimento
 

@@ -103,7 +103,7 @@ Sem instrumento formal isolado neste encontro. O `SaveData`/`Checkpoint` constru
 ## Conteúdos
 
 - Revisão integrada de todos os sistemas do Módulo 2: `GameManager`/`SaveManager` (Autoload), contrato `Interactable`, Signals, `ItemData`/Enum, `SaveData`/`SaveComponent`, `Checkpoint`.
-- Integração final dos desafios do módulo (portas, baús, alavancas, NPCs, `Checkpoint`) em um único fluxo jogável.
+- Integração final dos desafios do módulo (portas, baús, alavancas, `Checkpoint`) em um único fluxo jogável.
 - Code Review dos sistemas implementados.
 - Playtest coletivo entre grupos.
 
@@ -132,14 +132,14 @@ Nenhuma comparação nova é introduzida neste encontro — é o momento de cons
 | Duração | Atividade |
 |---|---|
 | 15 min | Revisão integrada de GameManager, SaveManager, Interactable, Signals, Resources e save/load |
-| 60 min | Laboratório: integração final dos desafios do módulo (portas, baús, alavancas, NPCs, Checkpoint) em um único fluxo jogável |
+| 60 min | Laboratório: integração final dos desafios do módulo (portas, baús, alavancas, Checkpoint) em um único fluxo jogável |
 | 15 min | Preparação de cada grupo para apresentar e justificar sua integração |
 | 30 min | Code Review — cada grupo apresenta sua integração completa, justificando as escolhas de arquitetura adotadas |
 | 15 min | Playtest coletivo entre grupos e fechamento da Unidade II |
 
 ## Desenvolvimento
 
-O encontro não introduz sistema novo: reúne, sob supervisão do professor atuando como diretor técnico, todos os sistemas construídos desde a Semana 4 em um único fluxo jogável por grupo. Cada grupo conecta seus próprios objetos interativos (portas, alavancas, baús, NPCs) e o `Checkpoint` ao restante do projeto, verificando que o `GameManager`, o `SaveManager` e o `SaveData` sustentam o conjunto sem retrabalho. O professor conduz o Code Review percorrendo a Rubrica 4 do Sistema de Avaliação com cada grupo, seguido do Playtest coletivo, em que os grupos testam o fluxo integrado uns dos outros.
+O encontro não introduz sistema novo: reúne, sob supervisão do professor atuando como diretor técnico, todos os sistemas construídos desde a Semana 4 em um único fluxo jogável por grupo. Cada grupo conecta seus próprios objetos interativos (portas, alavancas, baús) e o `Checkpoint` ao restante do projeto, verificando que o `GameManager`, o `SaveManager` e o `SaveData` sustentam o conjunto sem retrabalho. O professor conduz o Code Review percorrendo a Rubrica 4 do Sistema de Avaliação com cada grupo, seguido do Playtest coletivo, em que os grupos testam o fluxo integrado uns dos outros.
 
 ## Desafio
 

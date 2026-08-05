@@ -90,7 +90,7 @@ Como o Vertical Slice evolui em cadeia — cada módulo depende diretamente do s
 | **Pergunta Norteadora** | Como uma engine desacopla a intenção do jogador (input) da ação no mundo? |
 | **Documentação de Referência** | Godot Documentation — Inputs |
 | **Encontro 1** | Fundamentação de CharacterBody3D e de `move_and_slide` como sistema universal de locomoção. Configuração guiada de um CharacterBody3D controlável no nível de teste. |
-| **Encontro 2** | Fundamentação de Input Map e InputEvent — Actions, eventos de input, deadzones — comparando com o Input System da Unity. Configuração de Input Map para movimentação e câmera. **Desafio:** adicionar uma nova Action (correr, agachar ou pular) não demonstrada em aula, com liberdade de implementação. |
+| **Encontro 2** | Fundamentação de Input Map e InputEvent — Actions, eventos de input, deadzones — comparando com o Input System da Unity. Configuração de Input Map para movimentação. **Desafio:** adicionar uma nova Action (correr, agachar ou pular) não demonstrada em aula, com liberdade de implementação. |
 | **Recursos do Godot explorados** | CharacterBody3D, move_and_slide, Input Map, InputEvent |
 | **Entrega** | — |
 
@@ -168,7 +168,7 @@ Como o Vertical Slice evolui em cadeia — cada módulo depende diretamente do s
 | **Pergunta Norteadora** | Como uma engine serializa e recupera o estado de progresso de um jogador? |
 | **Documentação de Referência** | Godot Documentation — Saving Games (FileAccess, ResourceSaver/ResourceLoader) |
 | **Encontro 1** | Fundamentação de `SaveData` (Resource) + FileAccess como serialização de estado de jogo, comparando com PlayerPrefs/serialização em JSON na Unity. Implementação de save/load de um estado simples do projeto (ex.: itens coletados), seguida da construção de `Checkpoint`, que reutiliza o contrato `Interactable` e o `SaveComponent` para gravar progresso. |
-| **Encontro 2** | Revisão integrada de GameManager, contrato Interactable, Signals, Resources e save/load. Integração final dos desafios do módulo (portas, baús, alavancas, NPCs, `Checkpoint`) em um único fluxo jogável. **Desafio:** cada grupo apresenta sua integração completa, justificando as escolhas de arquitetura adotadas. |
+| **Encontro 2** | Revisão integrada de GameManager, contrato Interactable, Signals, Resources e save/load. Integração final dos desafios do módulo (portas, baús, alavancas, `Checkpoint`) em um único fluxo jogável. **Desafio:** cada grupo apresenta sua integração completa, justificando as escolhas de arquitetura adotadas. |
 | **Recursos do Godot explorados** | Save/Load (SaveData, FileAccess), `Checkpoint`, GameManager, SaveManager, contrato Interactable, Signals, Resource customizado, Enums |
 | **Entrega** | **Gameplay funcional consolidado (Módulo 2)**; Code Review dos sistemas implementados; Playtest coletivo |
 | **Observação** | Encerramento da Unidade II. |

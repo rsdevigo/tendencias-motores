@@ -153,6 +153,8 @@ Cada grupo possui, ao final da semana, um `InventoryComponent` conectado ao Inte
 
 **Code Review** (Rubrica 4 do Sistema de Avaliação) — organização dos scripts/Orchestrations, nomenclatura, modularidade, reutilização de `ItemData` (Semana 6) e do contrato `Interactable` (Semana 5), comunicação desacoplada entre sistemas e boas práticas gerais do Godot 4.7. Conduzido como diálogo técnico, com o próprio grupo explicando sua lógica ao professor.
 
+O desafio de propor e implementar o novo tipo de interação (empilhar, combinar ou cooldown) é adicionalmente avaliado pela **Rubrica 2 — Desafios Técnicos** (solução proposta, uso correto do Godot, criatividade, organização, funcionamento), já que a Semana 10 consta na lista de aplicação desta rubrica no Sistema de Avaliação, de forma complementar — não sobreposta — ao Code Review da Rubrica 4, que avalia o conjunto (inventário + interação) sob o critério de organização/reutilização.
+
 ## Dificuldades Esperadas
 
 - Reescrever o contrato `Interactable` do zero para o novo caso de múltiplos tipos, em vez de estendê-lo — reforçar que a ampliação reaproveita o mesmo `has_method`/Signals já existente, apenas com um parâmetro ou método adicional.

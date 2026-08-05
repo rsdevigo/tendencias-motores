@@ -59,8 +59,8 @@ Encontro 100% guiado. O Player criado aqui ainda não se move — isso é intenc
 
 ## Agenda do Encontro 1
 
-- Revisão da Scene da Semana 1 (15 min)
-- Introdução: por que engines desacoplam intenção de ação (20 min)
+- Revisão da Scene da Semana 1 (10 min)
+- Introdução: por que engines desacoplam intenção de ação (15 min)
 - Demonstração: CharacterBody3D + CollisionShape3D via Orchestrator (35 min)
 - Laboratório: cada estudante monta seu Player (45 min)
 - Desafio: ajustar forma de colisão (20 min)
@@ -156,6 +156,7 @@ O que será construído:
 - `CollisionShape3D` — forma física de colisão
 - `Malha` (MeshInstance3D) — representação visual
 - Orchestration `player.os` chamando `move_and_slide` no PhysicsProcess
+- `Player` salvo como Scene própria (`scenes/characters/Player.tscn`), reaproveitável em outros níveis
 
 Por quê: primeiro personagem controlável do semestre, base direta do Input Map no Encontro 2.
 
@@ -188,6 +189,7 @@ Cada estudante replica, no próprio projeto:
 2. `CollisionShape3D` com uma Shape atribuída (ex.: `CapsuleShape3D`)
 3. `Malha` (MeshInstance3D) com uma Mesh atribuída, alinhada à colisão
 4. Orchestration `player.os` chamando `move_and_slide` no PhysicsProcess
+5. `Player` salvo como Scene própria em `scenes/characters/Player.tscn`
 
 <!--
 Erro comum: CollisionShape3D sem Shape atribuída — o Godot alerta com ícone de aviso no painel Scene.
@@ -256,12 +258,12 @@ Encontro 2 depende diretamente do Player montado no Encontro 1. Confirmar que to
 
 ## Agenda do Encontro 2
 
-- Revisão do Encontro 1 (Player parado) (15 min)
-- Introdução: por que desacoplar dispositivo físico de ação lógica (25 min)
+- Revisão do Encontro 1 (Player parado) (10 min)
+- Introdução: por que desacoplar dispositivo físico de ação lógica (20 min)
 - Demonstração: Input Map + conexão com move_and_slide (35 min)
 - Laboratório: cada estudante configura o próprio Input Map (45 min)
 - Desafio: Action adicional (correr, agachar ou pular) (20 min)
-- Feedback e fechamento (15 min)
+- Feedback e fechamento (5 min)
 
 <!--
 Retomar rapidamente o estado do Player do Encontro 1 antes de avançar — é pré-requisito direto.
@@ -450,7 +452,7 @@ Sem instrumento formal de avaliação nesta semana. Observado no Checkpoint de e
 
 ## Checklist da Semana
 
-- [ ] `Player` (CharacterBody3D) com `CollisionShape3D` e `Malha` alinhados
+- [ ] `Player` (CharacterBody3D) com `CollisionShape3D` e `Malha` alinhados, salvo em `scenes/characters/Player.tscn`
 - [ ] Orchestration `player.os` associada ao `Player`
 - [ ] Input Map com `move_forward`, `move_back`, `move_left`, `move_right`
 - [ ] `velocity` atribuída antes de `move_and_slide`

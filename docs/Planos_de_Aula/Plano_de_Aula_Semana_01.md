@@ -128,12 +128,12 @@ Na Unity, um GameObject é um contêiner vazio que recebe Components para ganhar
 
 | Duração | Atividade |
 |---|---|
-| 15 min | Revisão do Encontro 1 (estrutura do projeto criada) |
-| 25 min | Introdução: composição versus herança, Node e Scene Tree |
+| 10 min | Revisão do Encontro 1 (estrutura do projeto criada) |
+| 20 min | Introdução: composição versus herança, Node e Scene Tree |
 | 35 min | Demonstração: criação de uma Scene com Nodes filhos via Orchestrator |
 | 45 min | Laboratório: cada estudante replica a Scene demonstrada dentro do próprio projeto |
 | 20 min | Desafio: adicionar um Node filho adicional, produzindo comportamento visual diferente |
-| 15 min | Feedback e fechamento |
+| 5 min | Feedback e fechamento |
 
 ## Desenvolvimento
 

@@ -41,7 +41,7 @@ Ao final da semana, cada grupo terá conduzido a leitura arquitetural guiada de 
 
 O conceito universal desta aula é engenharia reversa de arquitetura de software como ferramenta de aprendizagem contínua — a capacidade de ler um projeto pronto (não escrito pelo próprio time) e reconstruir as decisões de design por trás dele é uma habilidade transferível para qualquer engine, qualquer linguagem e qualquer stack, muito além do Godot. Em qualquer motor de jogos, um profissional frequentemente entra em um projeto já existente, com decisões arquiteturais já tomadas por outra equipe — a competência de "entender antes de mexer" é tão universal quanto qualquer padrão de design isolado. O TPS Demo é o veículo, não o objetivo: o que se ensina é o método de leitura, aplicável a qualquer código-base profissional que o estudante encontrará depois da disciplina.
 
-## Recursos da GODOT explorados
+## Recursos do Godot
 
 - Godot Demo Projects (repositório oficial) — TPS Demo.
 - Editor do Godot em modo de leitura: FileSystem dock, Scene dock e Script editor usados para navegação e leitura, não para edição.
@@ -110,7 +110,7 @@ Registro de paralelos arquiteturais de cada grupo, insumo direto para o feedback
 
 O conceito universal retomado e ampliado neste encontro é o de que arquitetura de software não tem uma única solução correta — projetos profissionais diferentes (TPS Demo, Platformer 2D Demo, e o próprio Vertical Slice de cada grupo) resolvem problemas semelhantes (comunicação entre sistemas, gerenciamento de estado, organização de cena) de formas distintas, cada uma com trade-offs próprios. A competência que a Semana 15 desenvolve não é "replicar a solução oficial", mas "reconhecer trade-offs arquiteturais e justificar uma escolha própria diante de alternativas conhecidas" — uma habilidade que permanece idêntica em qualquer engine ou stack de desenvolvimento de software.
 
-## Recursos da GODOT explorados
+## Recursos do Godot
 
 - Godot Demo Projects (repositório oficial) — Platformer 2D Demo e outros projetos relevantes ao escopo da turma.
 - Vertical Slice de cada grupo, consolidado na Semana 14, como objeto de comparação.

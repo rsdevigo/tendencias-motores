@@ -378,7 +378,8 @@ Estes são exatamente os pontos observados no Playtest e no Showcase de encerram
 - Encerramento formal da Unidade III (Módulo 3 — Resolver Problemas)
 
 <!--
-Mesmo instrumento de Showcase aplicado nas Semanas 3 e 17 — reforçar a familiaridade da turma com o formato.
+Mesmo instrumento de Showcase aplicado na Semana 3 — reforçar a familiaridade da turma com o formato.
+A Semana 17 usa a mesma Rubrica 6, mas como instrumento distinto (Apresentação Técnica Final, não Showcase) — não citar como "mesmo instrumento".
 Grupos jogam os Vertical Slices uns dos outros durante o Playtest.
 -->
 

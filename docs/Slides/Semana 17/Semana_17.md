@@ -64,7 +64,7 @@ Metade da turma apresenta e defende o Vertical Slice. Nenhum recurso novo do God
 ## Agenda do Encontro 1
 
 - Abertura, ordem de apresentação e regras da sessão de perguntas (10 min)
-- Apresentações técnicas do primeiro bloco de grupos (~95 min)
+- Apresentações técnicas do primeiro bloco de grupos (~105 min)
 - Feedback consolidado do professor e fechamento do Encontro 1 (20 min)
 
 <!--
@@ -95,7 +95,7 @@ Erro comum: tratar a pergunta como aquecimento e não como o próprio roteiro da
 
 <!--
 Conceito fundamental da semana: a tríade conceito–implementação–transferência, construída desde a Semana 1, agora avaliada diretamente.
-Referência: Rubrica de Apresentações e Rubrica de Arquitetura/Justificativa Técnica.
+Referência: Rubrica de Apresentações e Rubrica de Vertical Slice Final.
 -->
 
 ---
@@ -191,7 +191,7 @@ Reforça o Sistema de Avaliação: distribuição de perguntas entre integrantes
 - Distribuir as respostas da sessão de perguntas entre todos os integrantes do grupo
 
 <!--
-Estes são os mesmos critérios usados nas rubricas de Apresentações e de Arquitetura/Justificativa Técnica.
+Estes são os mesmos critérios usados nas rubricas de Apresentações e de Vertical Slice Final.
 -->
 
 ---
@@ -215,7 +215,7 @@ Dificuldade esperada: um único integrante concentrando as respostas — reforç
 ## Fechamento — Encontro 1
 
 - Primeiro bloco de grupos apresentado e arguido
-- Evidências registradas nas rubricas de Apresentações e de Arquitetura/Justificativa Técnica
+- Evidências registradas nas rubricas de Apresentações e de Vertical Slice Final
 - Feedback consolidado do professor sobre o padrão esperado, entregue antes do Encontro 2
 - Próximo passo: segundo bloco de apresentações e discussão final da disciplina
 
@@ -364,7 +364,7 @@ Corresponde ao encerramento do roadmap do Módulo 5 em PROJECT_ARCHITECTURE.md �
 
 - [ ] Todos os grupos do primeiro e do segundo bloco apresentaram e defenderam o Vertical Slice
 - [ ] Rubrica de Apresentações aplicada a todos os grupos
-- [ ] Rubrica de Arquitetura/Justificativa Técnica aplicada a todos os grupos
+- [ ] Rubrica de Vertical Slice Final aplicada a todos os grupos
 - [ ] Discussão final da disciplina realizada, com participação da turma
 - [ ] Encerramento formal da disciplina registrado
 

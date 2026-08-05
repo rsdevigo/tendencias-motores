@@ -128,9 +128,9 @@ A Unity resolve iluminação global com o Global Illumination do pipeline URP/HD
 | Duração | Atividade |
 |---|---|
 | 10 min | Revisão do Encontro 1 (nível com terreno e material) |
-| 20 min | Introdução: iluminação global em tempo real e o problema da geometria virtualizada |
-| 25 min | Demonstração: ativação de SDFGI/VoxelGI no nível e ajuste de parâmetros básicos |
-| 20 min | Demonstração: pipeline de exportação e geração de um build de referência |
+| 15 min | Introdução: iluminação global em tempo real e o problema da geometria virtualizada |
+| 15 min | Demonstração: ativação de SDFGI/VoxelGI no nível e ajuste de parâmetros básicos |
+| 15 min | Demonstração: pipeline de exportação e geração de um build de referência |
 | 40 min | Laboratório: cada estudante ativa iluminação global no próprio nível e exporta seu primeiro build |
 | 30 min | Checkpoint de encerramento do Módulo 1: showcase dos builds exportados |
 | 10 min | Feedback e fechamento |

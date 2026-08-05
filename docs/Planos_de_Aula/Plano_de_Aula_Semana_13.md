@@ -35,7 +35,7 @@ Ao final da semana, cada grupo possui o próprio Vertical Slice com som integrad
 
 - O problema do áudio como camada de resposta a eventos, não como trilha isolada: som de interação, som de passos e som ambiente respondem a algo que já acontece no jogo, e não devem ser tratados como um sistema à parte.
 - `AudioStreamPlayer` (som não posicional, ex.: música/UI), `AudioStreamPlayer2D` e `AudioStreamPlayer3D` (som posicional no espaço do nível) — quando cada um se aplica.
-- Reaproveitamento dos pontos de integração já existentes no projeto: o Signal de interação (Semana 5), o `move_and_slide` do Player (Semana 2) como gatilho de passos, e a ambientação da zona externa/interna (Semana 3) como base do som ambiente.
+- Reaproveitamento dos pontos de integração já existentes no projeto: o Signal de interação (Semana 5), o `move_and_slide` do Player (Semana 2) como gatilho de passos, e a zona externa/interna do nível, composta desde a Semana 12, como base do som ambiente.
 - Integração guiada de som a um evento de interação já existente (ex.: `Door` ou `Lever`) e a um evento de passos do Player.
 
 ## Conceitos Fundamentais

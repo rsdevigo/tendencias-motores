@@ -112,7 +112,7 @@ O Encontro 1 resolveu a parametrização de um material por instância. O Encont
 
 ## Recursos do Godot
 
-`MultiMeshInstance3D`, Kenney Nature Kit (assets de vegetação já disponíveis no projeto desde a Semana 3).
+`MultiMeshInstance3D`, Kenney Nature Kit (assets de vegetação já disponíveis no projeto, conforme direção de arte definida em PROJECT_ARCHITECTURE.md).
 
 ## Comparação com Unity
 
@@ -122,7 +122,7 @@ A Unity resolve o mesmo problema de composição em escala com a Foliage Tool (p
 
 - Projetos de cada grupo com materiais refatorados do Encontro 1.
 - Cena de exemplo com MultiMeshInstance3D configurado sobre um terreno de teste, preparada para demonstração, sem distribuir antes da aula.
-- Assets do Kenney Nature Kit já disponíveis nos projetos, conferidos previamente quanto à compatibilidade com MultiMesh.
+- Assets do Kenney Nature Kit já disponíveis nos projetos (direção de arte definida em PROJECT_ARCHITECTURE.md), conferidos previamente quanto à compatibilidade com MultiMesh.
 - Ficha de Code Review (Rubrica 4) do Sistema de Avaliação, impressa ou digital.
 - Slides com o comparativo MultiMeshInstance3D (Godot) × Foliage Tool/GPU Instancing (Unity).
 
@@ -137,7 +137,7 @@ A Unity resolve o mesmo problema de composição em escala com a Foliage Tool (p
 
 ## Desenvolvimento
 
-O encontro abre com a demonstração guiada de um `MultiMeshInstance3D` configurado sobre um terreno de teste, cobrindo a diferença entre instanciar Scenes individuais e agrupar instâncias em uma única chamada de desenho. Cada grupo aplica essa ferramenta à própria zona externa do Vertical Slice, compondo vegetação e elementos de cena do Kenney Nature Kit já disponíveis desde a Semana 3, com atenção à densidade visual e ao impacto de performance — como diretor técnico, o professor orienta decisões de densidade e distribuição sem impor uma composição única para todos os grupos. O encontro fecha com o Code Review de materiais e composição de cena, em que cada grupo apresenta a refatoração de materiais do Encontro 1 e a composição de vegetação deste encontro, justificando as decisões de parametrização e otimização adotadas diante do professor.
+O encontro abre com a demonstração guiada de um `MultiMeshInstance3D` configurado sobre um terreno de teste, cobrindo a diferença entre instanciar Scenes individuais e agrupar instâncias em uma única chamada de desenho. Cada grupo aplica essa ferramenta à própria zona externa do Vertical Slice, compondo vegetação e elementos de cena do Kenney Nature Kit já disponíveis no projeto, com atenção à densidade visual e ao impacto de performance — como diretor técnico, o professor orienta decisões de densidade e distribuição sem impor uma composição única para todos os grupos. O encontro fecha com o Code Review de materiais e composição de cena, em que cada grupo apresenta a refatoração de materiais do Encontro 1 e a composição de vegetação deste encontro, justificando as decisões de parametrização e otimização adotadas diante do professor.
 
 ## Desafio
 

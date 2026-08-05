@@ -160,7 +160,7 @@ Um Autoload só demonstra sua utilidade quando testado sob o cenário que ele re
 
 1. No script `save_manager.gd`, declare uma variável persistente simples, por exemplo `var itens_coletados: int = 0`.
 2. Adicione uma função simples para alterá-la, por exemplo `func coletar_item() -> void: itens_coletados += 1`.
-3. No FileSystem Dock, crie uma nova Scene em `scenes/levels/` chamada `level_teste_persistencia.tscn`, com um Node raiz `Node3D` e um `Label3D` filho exibindo um texto temporário (por exemplo, "Cena de teste").
+3. No FileSystem Dock, crie uma nova Scene em `scenes/levels/exploration/` chamada `level_teste_persistencia.tscn`, com um Node raiz `Node3D` e um `Label3D` filho exibindo um texto temporário (por exemplo, "Cena de teste"), seguindo a mesma pasta de `level_exploration.tscn` (PROJECT_ARCHITECTURE.md, seção 8).
 4. No script do Player (`player.gd`), adicione temporariamente uma ação de teste: ao pressionar uma tecla ainda não usada (por exemplo, `ui_accept`), chame `SaveManager.coletar_item()` e imprima `print(SaveManager.itens_coletados)`.
 5. Rode `level_exploration.tscn` (F6), pressione a tecla de teste algumas vezes e confirme, no Output, que o valor de `itens_coletados` aumenta.
 6. Ainda no editor, troque manualmente a Scene principal rodada para `level_teste_persistencia.tscn` (Play Current Scene com essa Scene aberta, ou defina-a temporariamente como Main Scene em Project Settings).

@@ -19,7 +19,7 @@ A quantidade de orientação docente diminui ao longo do semestre e, em paralelo
 | Componente | Peso | Instrumentos no Cronograma |
 |---|---|---|
 | Desenvolvimento Semanal | 20% | Todas as semanas — participação, execução e autonomia em laboratório |
-| Desafios Técnicos | 15% | Desafios propostos nas Semanas 1, 2, 4, 5, 6, 8, 9, 10, 11, 13 e 16 |
+| Desafios Técnicos | 15% | Desafios propostos nas Semanas 1, 2, 4, 5, 6, 8, 9, 10, 11 e 13 |
 | Checkpoints | 10% | Semanas 3, 6 e 16 |
 | Code Review | 15% | Semanas 7, 10, 12 e 14 |
 | Playtest | 10% | Semanas 7, 11 e 14 |
@@ -27,7 +27,7 @@ A quantidade de orientação docente diminui ao longo do semestre e, em paralelo
 | Vertical Slice Final (Projeto) | 20% | Entrega consolidada da Semana 14 (build otimizado) e defesa arquitetural da Semana 17 |
 | **Total** | **100%** | |
 
-> **Nota sobre a Semana 7 e a Semana 15 na Rubrica 2:** os desafios de integração final da Semana 7 e de análise arquitetural da Semana 15 existem e são avaliados, mas deliberadamente **não** entram na lista de "Desafios Técnicos" (Rubrica 2) acima. A Semana 7 já é avaliada pela Rubrica 4 — Code Review (a integração de todos os desafios do Módulo 2 é exatamente o que o Code Review dessa semana verifica); a Semana 15 já é avaliada pelo instrumento de Feedback Formal (a proposta de decisão arquitetural revisitada é o próprio objeto desse feedback). Avaliar essas duas semanas também pela Rubrica 2 duplicaria a pontuação sobre o mesmo entregável.
+> **Nota sobre a Semana 7, a Semana 15 e a Semana 16 na Rubrica 2:** os desafios de integração final da Semana 7, de análise arquitetural da Semana 15 e de escolha justificada de motor da Semana 16 existem e são avaliados, mas deliberadamente **não** entram na lista de "Desafios Técnicos" (Rubrica 2) acima. A Semana 7 já é avaliada pela Rubrica 4 — Code Review (a integração de todos os desafios do Módulo 2 é exatamente o que o Code Review dessa semana verifica); a Semana 15 já é avaliada pelo instrumento de Feedback Formal (a proposta de decisão arquitetural revisitada é o próprio objeto desse feedback); a Semana 16 já é avaliada pela Rubrica 3 — Checkpoints (o checkpoint de preparação da apresentação técnica final é o único entregável formal da semana, e já inclui a escolha do motor com justificativa como um de seus componentes). Avaliar essas semanas também pela Rubrica 2 duplicaria a pontuação sobre o mesmo entregável — além disso, os critérios "Uso correto do Godot" e "Funcionamento" da Rubrica 2 pressupõem uma solução implementada e executável, o que não existe no desafio puramente analítico da Semana 16.
 
 ### Justificativa de cada componente
 
@@ -92,9 +92,9 @@ _________________________________________________________________________
 # Rubrica 2
 ## Desafios Técnicos
 
-**Aplicação:** desafios das Semanas 1, 2, 4, 5, 6, 8, 9, 10, 11, 13 e 16.
+**Aplicação:** desafios das Semanas 1, 2, 4, 5, 6, 8, 9, 10, 11 e 13.
 
-> **Nota:** os desafios da Semana 7 (integração final do Módulo 2) e da Semana 15 (análise arquitetural comparada) não são avaliados por esta rubrica, para evitar dupla pontuação sobre o mesmo entregável — a Semana 7 é avaliada pela Rubrica 4 (Code Review) e a Semana 15 pelo instrumento de Feedback Formal da própria semana (ver "Distribuição das notas").
+> **Nota:** os desafios da Semana 7 (integração final do Módulo 2), da Semana 15 (análise arquitetural comparada) e da Semana 16 (escolha justificada de motor para aprofundamento) não são avaliados por esta rubrica, para evitar dupla pontuação sobre o mesmo entregável — a Semana 7 é avaliada pela Rubrica 4 (Code Review), a Semana 15 pelo instrumento de Feedback Formal da própria semana, e a Semana 16 pela Rubrica 3 — Checkpoints (ver "Distribuição das notas").
 
 | Critério | Excelente | Bom | Satisfatório | Insuficiente |
 |---|---|---|---|---|

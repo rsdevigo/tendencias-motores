@@ -263,12 +263,12 @@ Encontro 2 depende diretamente do projeto criado no Encontro 1. Confirmar com a 
 
 ## Agenda do Encontro 2
 
-- Revisão do Encontro 1 (15 min)
-- Composição × herança, Node e Scene Tree (25 min)
+- Revisão do Encontro 1 (10 min)
+- Composição × herança, Node e Scene Tree (20 min)
 - Demonstração: Scene com Nodes filhos via Orchestrator (35 min)
 - Laboratório: réplica da Scene (45 min)
 - Desafio: Node filho adicional (20 min)
-- Feedback e fechamento (15 min)
+- Feedback e fechamento (5 min)
 
 <!--
 Retomar rapidamente a estrutura de pastas do Encontro 1 antes de avançar — é pré-requisito direto.

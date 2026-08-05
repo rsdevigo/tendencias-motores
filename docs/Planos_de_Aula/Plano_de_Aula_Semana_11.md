@@ -154,7 +154,7 @@ Cada grupo possui, ao final da semana, um `Enemy` que se desloca autonomamente v
 
 ## Evidências para Avaliação
 
-**Playtest** (Rubrica 5 do Sistema de Avaliação) — experiência efetiva de jogo, funcionamento, usabilidade e clareza para quem joga o Vertical Slice de cada grupo. **Showcase** (Rubrica 6 do Sistema de Avaliação) — apresentação do projeto e capacidade de justificar decisões de arquitetura diante da turma, mesmo instrumento aplicado nas Semanas 3 e 17.
+**Playtest** (Rubrica 5 do Sistema de Avaliação) — experiência efetiva de jogo, funcionamento, usabilidade e clareza para quem joga o Vertical Slice de cada grupo. **Showcase** (Rubrica 6 do Sistema de Avaliação) — apresentação do projeto e capacidade de justificar decisões de arquitetura diante da turma, mesmo instrumento de Showcase aplicado na Semana 3 (a Semana 17 é avaliada pela mesma Rubrica 6, porém como instrumento distinto — Apresentação Técnica Final, não Showcase).
 
 ## Dificuldades Esperadas
 

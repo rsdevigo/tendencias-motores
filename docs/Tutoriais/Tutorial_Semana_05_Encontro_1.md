@@ -160,8 +160,8 @@ O contrato `Interactable` só é útil se algo o chamar. Esse "algo" é o `Inter
 3. Na Scene do Player, adicione um novo nó filho `Area3D`, renomeado para `InteractionComponent`, com um `CollisionShape3D` filho definindo um raio pequeno de detecção.
 4. Com `InteractionComponent` selecionado, anexe um script em `scripts/components/interaction_component.gd`, com `class_name InteractionComponent` no topo.
 5. Declare uma variável para guardar o Interactable mais próximo detectado, por exemplo `var interactable_atual: Node = null`.
-6. Conecte o sinal `area_entered` (ou `body_entered`, dependendo do tipo de collider da Door) da própria `Area3D` a uma função `_on_area_entered`, que verifica `if area.has_method("interact"): interactable_atual = area` (ajuste conforme o nó que carrega o script, se o script estiver no `StaticBody3D` da Door em vez da `Area3D` detectada).
-7. Conecte também o sinal `area_exited` (ou `body_exited`) a uma função que limpa `interactable_atual = null` quando o objeto sai da área.
+6. Conecte o sinal `body_entered` da própria `Area3D` a uma função `_on_body_entered(body: Node3D)`, que verifica `if body.has_method("interact"): interactable_atual = body`. Use sempre `body_entered` (nunca `area_entered`): a Door foi criada na Parte 2 com nó raiz `StaticBody3D`, e `area_entered` só dispara quando outro `Area3D` entra na zona — um `StaticBody3D` é sempre detectado via `body_entered`.
+7. Conecte também o sinal `body_exited` a uma função `_on_body_exited(body: Node3D)` que limpa `interactable_atual = null` quando o objeto sai da área.
 8. No script do Player (`player.gd`), no `_input()` ou `_unhandled_input()`, adicione a checagem da ação `interagir`: se pressionada e `InteractionComponent.interactable_atual` não for nulo, chame `interactable_atual.interact()`.
 9. Rode `level_exploration.tscn` (F6), aproxime o Player da `Door.tscn` instanciada no nível e pressione **E**.
 10. Confirme no Output a mensagem `"Door: interagido"`.
@@ -179,8 +179,9 @@ O Player detecta a `Door` ao se aproximar (via `Area3D`) e, ao pressionar a aç�
 
 ## Problemas comuns
 
-- Chamar `interact()` sem checar `has_method("interact")` antes: se qualquer outro `Area3D`/`body` sem esse método entrar na zona de detecção, a chamada direta geraria erro — sempre checar antes de chamar.
-- Esquecer de limpar `interactable_atual` no `area_exited`: o Player continuaria chamando `interact()` em um objeto do qual já se afastou.
+- Chamar `interact()` sem checar `has_method("interact")` antes: se qualquer outro `body` sem esse método entrar na zona de detecção, a chamada direta geraria erro — sempre checar antes de chamar.
+- Usar `area_entered` em vez de `body_entered`: a Door é um `StaticBody3D`, não um `Area3D` — `area_entered` nunca dispara para ela, e o `InteractionComponent` nunca detectaria a porta.
+- Esquecer de limpar `interactable_atual` no `body_exited`: o Player continuaria chamando `interact()` em um objeto do qual já se afastou.
 - Anexar o script de detecção ao nó errado (ao invés da `Area3D` do `InteractionComponent`, ao `CollisionShape3D` filho): sinais de área devem ser conectados a partir do nó `Area3D`, não do seu `CollisionShape3D`.
 
 ## Boas práticas

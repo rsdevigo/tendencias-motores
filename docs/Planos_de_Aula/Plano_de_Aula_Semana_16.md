@@ -40,7 +40,7 @@ Ao final da semana, cada grupo terá produzido um quadro comparativo Godot x Uni
 
 O conceito universal desta aula é a distinção entre conceito de Game Engine e implementação de uma engine específica. Um Autoload no Godot e um GameMode na Unreal resolvem o mesmo problema — estado de partida acessível globalmente — com nomes, sintaxe e limitações diferentes; uma Signal no Godot e um Event/Delegate na Unity resolvem o mesmo problema de comunicação desacoplada entre sistemas. A competência central do Módulo 5 é reconhecer esse padrão repetidamente: quando um estudante consegue nomear o conceito universal por trás de um recurso específico do Godot, ele já tem o vocabulário necessário para localizar o recurso equivalente em qualquer motor novo, mesmo sem ainda conhecer a sintaxe daquele motor.
 
-## Recursos da GODOT explorados
+## Recursos do Godot
 
 - Revisão geral do Vertical Slice completo — nenhum recurso novo é aberto no editor nesta semana; o Godot é usado apenas como referência de consulta para preencher o quadro comparativo.
 - Documentação oficial do Godot (Class Reference) como fonte de consulta rápida para confirmar terminologia exata de cada sistema já construído.
@@ -107,7 +107,7 @@ Quadro comparativo Godot x Unity de cada grupo, insumo direto para o Checkpoint 
 
 O conceito universal retomado neste encontro é que a ampliação da comparação para múltiplos motores confirma, em vez de contradizer, o que já apareceu no par Godot x Unity: os mesmos problemas — estado global de partida, comunicação desacoplada entre sistemas, dados de design fora do código, navegação e decisão autônoma de agentes, composição de cena em escala, empacotamento de build — reaparecem em Unreal, O3DE e Stride com nomes e convenções próprias, mas com a mesma motivação de design. A disciplina não pretende ensinar Unreal, O3DE ou Stride em profundidade; pretende demonstrar, com evidência acumulada de múltiplos motores, que a competência real desenvolvida no semestre foi a de reconhecer conceitos universais de Game Engine sob qualquer nome de API.
 
-## Recursos da GODOT explorados
+## Recursos do Godot
 
 - Nenhum recurso novo do Godot é explorado neste encontro — o Vertical Slice consolidado desde a Semana 14 continua sendo o objeto de referência central da comparação e da apresentação em preparação.
 

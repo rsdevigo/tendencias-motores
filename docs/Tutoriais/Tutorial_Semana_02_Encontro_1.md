@@ -79,17 +79,19 @@ Por isso, engines modernas oferecem uma solução pronta para esse problema espe
 9. Posicione o `Player` (usando o Gizmo de movimento no Viewport) sobre a área visível do `Chao`, evitando sobreposição com a geometria.
 10. Abra o painel do Orchestrator e crie uma nova Orchestration associada ao Node `Player`, salvando-a em `orchestrations/` com o nome `player.os`.
 11. Dentro da Orchestration, adicione um nó de evento **PhysicsProcess** (equivalente ao `_physics_process()` do GDScript) e conecte-o a uma chamada do método `move_and_slide` do próprio `Player` — sem ainda atribuir nenhuma velocidade a `velocity`, apenas garantindo que a chamada existe e não gera erro.
-12. Salve a Scene (**Ctrl+S**) e pressione **Play Scene** (F6) para confirmar que o Player aparece na cena, sólido e sem erros, mesmo parado.
+12. Com `Player` selecionado no painel Scene, clique com o botão direito e escolha **Save Branch as Scene**, salvando em `scenes/characters/Player.tscn` (ver PROJECT_ARCHITECTURE.md, seções 8 e 9). O `Player` continua na hierarquia de `level_exploration.tscn`, mas agora é uma Scene independente e reutilizável, instanciada dentro do nível — não um Node solto que só existe dentro dele.
+13. Salve a Scene (**Ctrl+S**) e pressione **Play Scene** (F6) para confirmar que o Player aparece na cena, sólido e sem erros, mesmo parado.
 
 ## Resultado esperado
 
-O `Player` (CharacterBody3D) existe dentro de `level_exploration.tscn`, com `CollisionShape3D` e `Malha` (MeshInstance3D) como filhos, alinhados visualmente sobre o `Chao`. Uma Orchestration `player.os` está associada ao Node e chama `move_and_slide` a cada frame de física, sem ainda produzir movimento.
+O `Player` (CharacterBody3D) existe como Scene própria em `scenes/characters/Player.tscn`, com `CollisionShape3D` e `Malha` (MeshInstance3D) como filhos, alinhados visualmente sobre o `Chao`, e instanciado dentro de `level_exploration.tscn`. Uma Orchestration `player.os` está associada ao Node e chama `move_and_slide` a cada frame de física, sem ainda produzir movimento.
 
 ## Verificando
 
 1. Confirme, na árvore de cena, que `CollisionShape3D` e `Malha` são filhos diretos de `Player`.
-2. Rode a Scene com F6 e confirme que o Player aparece parado sobre o `Chao`, sem afundar nem flutuar.
-3. Verifique, no painel Output, que nenhum erro relacionado à Orchestration ou à ausência de `Shape` aparece ao rodar a cena.
+2. Confirme, no FileSystem Dock, que `scenes/characters/Player.tscn` existe e que o ícone do `Player` em `level_exploration.tscn` passou a indicar uma Scene instanciada (não mais um Node solto).
+3. Rode a Scene com F6 e confirme que o Player aparece parado sobre o `Chao`, sem afundar nem flutuar.
+4. Verifique, no painel Output, que nenhum erro relacionado à Orchestration ou à ausência de `Shape` aparece ao rodar a cena.
 
 ## Problemas comuns
 
@@ -103,6 +105,7 @@ O `Player` (CharacterBody3D) existe dentro de `level_exploration.tscn`, com `Col
 - Sempre separar a forma de colisão (`CollisionShape3D`) da malha visual (`MeshInstance3D`) como Nodes distintos — mesmo quando os dois parecem redundantes visualmente, essa separação permite ajustar cada um de forma independente.
 - Nomear o Node raiz do personagem como `Player`, seguindo a convenção de nomenclatura do projeto (PROJECT_ARCHITECTURE.md, seção 9), e não deixar o nome padrão `CharacterBody3D` gerado pelo editor.
 - Confirmar visualmente, no Viewport, que a forma de colisão está alinhada à malha antes de avançar para o próximo passo — erros de alinhamento aqui geram bugs de movimento difíceis de depurar depois.
+- Salvar o `Player` como Scene própria (`scenes/characters/Player.tscn`) assim que montado, em vez de deixá-lo apenas como Node dentro de `level_exploration.tscn` — é essa Scene independente que será reaproveitada em outros níveis do Vertical Slice (por exemplo, `level_dungeon.tscn`, no Módulo 2), sem duplicar sua montagem.
 
 ## Comparação com Unity
 
@@ -125,6 +128,8 @@ Ajuste a forma ou o tamanho da `CollisionShape3D` do próprio Player — por exe
 ☐ Node `Player` (CharacterBody3D) adicionado como filho de `NivelTeste`
 
 ☐ `CollisionShape3D` e `Malha` (MeshInstance3D) configurados como filhos de `Player`, com forma e malha alinhadas
+
+☐ `Player` salvo como Scene própria em `scenes/characters/Player.tscn` e instanciado em `level_exploration.tscn`
 
 ☐ Player posicionado sobre o `Chao`, sem sobreposição ou flutuação
 

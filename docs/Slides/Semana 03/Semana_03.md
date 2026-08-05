@@ -286,9 +286,9 @@ Este encontro encerra o Módulo 1 e a Unidade I — Aprender a Ferramenta.
 ## Agenda do Encontro 2
 
 - Revisão do Encontro 1 (terreno e material) (10 min)
-- Introdução: iluminação global e geometria virtualizada (20 min)
-- Demonstração: SDFGI/VoxelGI e ajuste de parâmetros (25 min)
-- Demonstração: pipeline de exportação (20 min)
+- Introdução: iluminação global e geometria virtualizada (15 min)
+- Demonstração: SDFGI/VoxelGI e ajuste de parâmetros (15 min)
+- Demonstração: pipeline de exportação (15 min)
 - Laboratório: cada estudante ativa iluminação e exporta seu build (40 min)
 - Checkpoint: showcase dos builds exportados (30 min)
 - Feedback e fechamento (10 min)

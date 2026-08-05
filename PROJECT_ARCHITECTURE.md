@@ -136,6 +136,7 @@ O roadmap segue estritamente a ordem dos módulos definida no Plano de Ensino e 
 | AnimationTree (State Machine) | Transição de animações do Player — Semana 8 | AnimationTree, AnimationNodeStateMachine | Player |
 | BlendSpace1D/2D + AnimationPlayer | Interpolação direcional e animações pontuais — Semana 8 | BlendSpace1D/2D, AnimationPlayer | AnimationTree |
 | HUD (Control) | Comunicar estado de jogo em tempo real — Semana 9 | Control nodes, CanvasLayer | GameManager, SaveComponent, HealthComponent |
+| PauseMenu (Control) | Aplicar Control nodes a um caso adicional de interface, reforçando o fluxo de UI sobre o GameManager (Autoload) — Semana 9, extensão do desafio de HUD do Encontro 2 | Control nodes, CanvasLayer | GameManager, HUD |
 | InventoryComponent + InventoryUI | Estruturar armazenamento e exibição de itens coletados — Semana 10 | Resource customizado, Control nodes | ItemData, HUD |
 | Ampliação da Interação | Suportar múltiplos tipos de interação conectados ao inventário — Semana 10 | Contrato Interactable, Signals | InventoryComponent |
 | NavigationRegion3D | Base de deslocamento autônomo de agentes — Semana 11 | NavigationRegion3D, NavigationServer | Nível do Módulo 2 |
@@ -209,7 +210,8 @@ res://
 │       └── dungeon/      (estrutura interna)
 ├── scripts/
 │   ├── autoload/         (game_manager.gd, save_manager.gd)
-│   └── components/       (interaction_component.gd, inventory_component.gd, health_component.gd, save_component.gd)
+│   ├── components/       (interaction_component.gd, inventory_component.gd, health_component.gd, save_component.gd)
+│   └── resources/        (classes de Resource customizado, ex.: item_data.gd — Semana 6)
 ├── orchestrations/       (arquivos .os do Orchestrator equivalentes aos scripts acima)
 ├── resources/
 │   ├── items/            (ItemData .tres)
