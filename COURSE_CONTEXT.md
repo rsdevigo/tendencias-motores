@@ -15,9 +15,9 @@ Carga Horária
 
 OBJETIVO
 
-A disciplina NÃO tem como objetivo ensinar Unreal Engine.
+A disciplina NÃO tem como objetivo ensinar Godot.
 
-Ela utiliza Unreal Engine como estudo de caso para ensinar conceitos universais presentes em Game Engines modernos.
+Ela utiliza Godot 4.7 + Orchestrator (visual scripting) como estudo de caso para ensinar conceitos universais presentes em Game Engines modernos.
 
 O objetivo principal é desenvolver autonomia para que o estudante consiga aprender qualquer motor de jogos.
 
@@ -50,18 +50,18 @@ Por que existe?
 
 Quando utilizar?
 
-Como funciona na Unreal?
+Como funciona no Godot (via Orchestrator ou GDScript)?
 
 Como funciona na Unity?
 
-Como funciona em outros motores?
+Como funciona em outros motores (Unreal, O3DE, Stride)?
 
 ORGANIZAÇÃO
 
 A disciplina possui cinco módulos.
 
 Módulo 1
-Fundamentos da Unreal.
+Fundamentos do Godot.
 
 Módulo 2
 Gameplay Framework.
@@ -85,13 +85,13 @@ Não utilizar mini games independentes.
 
 COMPARAÇÕES
 
-Sempre comparar Unreal com Unity.
+Sempre comparar Godot com Unity.
 
-Quando pertinente citar Godot, O3DE, CryEngine ou Stride.
+Quando pertinente citar Unreal Engine, O3DE, CryEngine ou Stride.
 
 VERSÃO
 
-Utilizar Unreal Engine 5.6.
+Utilizar Godot 4.7 com o addon Orchestrator (visual scripting) como camada principal de scripting, com GDScript como apoio quando o Orchestrator não cobrir o recurso.
 
 ========================================================================
 PROGRESSÃO PEDAGÓGICA
@@ -129,7 +129,7 @@ Objetivo
 
 Aprender o editor.
 
-Conhecer a arquitetura da Unreal.
+Conhecer a arquitetura do Godot.
 
 Construção
 
@@ -137,19 +137,19 @@ Protótipo explorável.
 
 Recursos
 
-- Unreal Editor
-- Viewport
-- Content Browser
-- Actors
-- Components
-- Character
-- Character Movement
-- Enhanced Input
-- Blueprint
-- Materiais
-- Landscape
-- Lumen
-- Nanite
+- Godot Editor
+- Viewport (2D/3D)
+- FileSystem Dock
+- Node e Scene Tree
+- Nodes especializados (equivalente a Components)
+- Orchestrator (visual scripting)
+- CharacterBody2D / CharacterBody3D
+- Movimento via move_and_slide
+- Input Map e InputEvent
+- Materiais (StandardMaterial3D, ShaderMaterial)
+- Terrain3D (addon, equivalente a Landscape)
+- SDFGI / VoxelGI (iluminação global em tempo real, equivalente a Lumen)
+- Exportação de projeto (equivalente a Packaging)
 
 Produto
 
@@ -177,15 +177,15 @@ Sistemas fundamentais.
 
 Recursos
 
-- GameMode
-- PlayerController
-- Interfaces
-- Event Dispatchers
-- SaveGame
-- Data Assets
-- Data Tables
-- Structs
-- Enums
+- Autoload / Singleton (equivalente a GameMode e GameState)
+- Player node + Input handling (equivalente a PlayerController)
+- Autoload persistente entre cenas (equivalente a GameInstance)
+- Interfaces via GDScript (duck typing, class_name, has_method) ou nós do Orchestrator (equivalente a Blueprint Interfaces)
+- Signals (equivalente a Event Dispatchers)
+- Composição de Nodes filhos (equivalente a Actor Components)
+- Resource customizado (equivalente a Data Assets)
+- Resource em coleção / Dictionary (equivalente a Data Tables)
+- FileAccess + ResourceSaver/ResourceLoader (equivalente a SaveGame)
 
 Desafios
 
@@ -221,16 +221,16 @@ Cada grupo propõe soluções.
 
 Recursos
 
-- Animation Blueprint
-- Blend Spaces
-- UMG
-- HUD
-- Inventory
-- Interaction
-- AI
-- Navigation
-- Behavior Tree
-- Blackboard
+- AnimationTree e AnimationTree StateMachine (equivalente a Animation Blueprint)
+- BlendSpace1D / BlendSpace2D (equivalente a Blend Spaces)
+- Control nodes (equivalente a UMG)
+- CanvasLayer + Control (equivalente a HUD)
+- Inventory (sistema próprio baseado em Resource)
+- Interaction (Area3D / RayCast3D)
+- NavigationAgent e NavigationServer (equivalente a AI Navigation)
+- NavigationRegion (equivalente a Navigation)
+- LimboAI ou Beehave (addons, equivalente a Behavior Tree)
+- Blackboard (recurso do addon de Behavior Tree escolhido)
 
 Produto
 
@@ -252,14 +252,13 @@ O professor atua como diretor técnico.
 
 Recursos
 
-- Polish
-- Materials
-- Material Instances
-- Foliage
-- Audio
-- Optimization
-- Packaging
-- Profiling
+- Materials (StandardMaterial3D / ShaderMaterial)
+- Material Overrides / Unique Materials (equivalente a Material Instances)
+- MultiMeshInstance3D (equivalente a Foliage)
+- AudioStreamPlayer (Audio)
+- Otimização (instancing, LOD, occlusion culling)
+- Exportação de projeto / Export Templates (equivalente a Packaging)
+- Profiler / Debugger do Godot (equivalente a Profiling)
 
 Produto
 
@@ -281,13 +280,13 @@ Os estudantes analisam projetos profissionais.
 
 Referências
 
-Lyra
+Godot Demo Projects (oficiais)
 
-Stack O Bot
+TPS Demo (Third Person Shooter, oficial)
 
-Action RPG
+Platformer 2D Demo (oficial)
 
-Content Examples
+Projetos da comunidade Godot Asset Library
 
 Discussões
 
@@ -297,7 +296,7 @@ Boas práticas
 
 Comparação com Unity
 
-Comparação com Godot
+Comparação com Unreal Engine
 
 Comparação com O3DE
 

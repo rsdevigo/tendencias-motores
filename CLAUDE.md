@@ -36,7 +36,7 @@ Todos os documentos devem ser consistentes entre si e tratados como partes de um
 
 ## Objetivo
 
-Produzir todos os materiais da disciplina utilizando Unreal Engine 5 como estudo de caso principal para ensinar conceitos universais de Game Engines e facilitar a transição entre motores.
+Produzir todos os materiais da disciplina utilizando Godot 4.7 + Orchestrator (visual scripting) como estudo de caso principal para ensinar conceitos universais de Game Engines e facilitar a transição entre motores.
 
 ## Estrutura
 
@@ -44,7 +44,7 @@ Este projeto utiliza quatro documentos de contexto:
 
 - COURSE_CONTEXT.txt
 - PEDAGOGICAL_RULES.txt
-- UNREAL_REFERENCE.md
+- GODOT_REFERENCE.md
 - REFERENCES.md
 
 Todos devem ser considerados durante qualquer geração de conteúdo.
@@ -61,7 +61,7 @@ Esta é a ementa oficial da disciplina e deve ser reproduzida integralmente (sem
 
 - Ensinar arquitetura de motores de jogos.
 - Desenvolver autonomia para aprender novos motores.
-- Comparar Unreal Engine com Unity e outros motores.
+- Comparar Godot com Unreal Engine, Unity e outros motores.
 - Desenvolver um Vertical Slice incremental durante todo o semestre.
 
 ## Regras gerais
@@ -70,20 +70,20 @@ Esta é a ementa oficial da disciplina e deve ser reproduzida integralmente (sem
 - APIs permanecem em inglês.
 - Markdown como formato padrão.
 - Nunca copiar documentação oficial.
-- Priorizar boas práticas da Unreal Engine 5.6.
+- Priorizar boas práticas do Godot 4.7 e do Orchestrator.
 - Sempre utilizar documentação oficial como referência principal.
 
 ## Identidade da Disciplina
 
 A disciplina deve ser entendida como um laboratório de aprendizagem de Game Engines.
 
-A Unreal Engine 5 é utilizada como estudo de caso principal, mas não é o objetivo final da disciplina.
+Godot 4.7 + Orchestrator é utilizado como estudo de caso principal, mas não é o objetivo final da disciplina.
 
 Todo conteúdo produzido deve responder simultaneamente a quatro perguntas:
 
 1. Qual conceito universal está sendo ensinado?
-2. Como esse conceito é implementado na Unreal?
-3. Como seria implementado na Unity?
+2. Como esse conceito é implementado no Godot (via Orchestrator ou GDScript)?
+3. Como seria implementado na Unity ou na Unreal?
 4. Como esse conhecimento pode ser transferido para outro motor?
 
 Toda geração deve considerar a evolução pedagógica abaixo:

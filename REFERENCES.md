@@ -33,51 +33,74 @@ SALEN, Katie; ZIMMERMAN, Eric. Regras do jogo: fundamentos do design de jogos: i
 
 SALEN, Katie; ZIMMERMAN, Eric. Regras do jogo: fundamentos do design de jogos: cultura: volume 4. São Paulo: Blucher, 2012. 153 p. ISBN 9788521206293.
 
-Esta é a bibliografia oficial da disciplina conforme o PPC e deve ser reproduzida integralmente (sem paráfrase) na Bibliografia Básica e Complementar do Plano de Ensino. Referências de documentação de motores (Epic, Unity, Godot etc.) listadas abaixo são materiais de apoio técnico complementares, não substitutos da bibliografia oficial.
+Esta é a bibliografia oficial da disciplina conforme o PPC e deve ser reproduzida integralmente (sem paráfrase) na Bibliografia Básica e Complementar do Plano de Ensino. Referências de documentação de motores (Godot, Unity, Epic etc.) listadas abaixo são materiais de apoio técnico complementares, não substitutos da bibliografia oficial.
 
-## Epic Games
+## Godot Engine
 
 Documentação
-https://dev.epicgames.com/documentation/en-us/unreal-engine
+https://docs.godotengine.org/
 
-Learning Library
-https://dev.epicgames.com/community/unreal-engine/learning
+Class Reference
+https://docs.godotengine.org/en/stable/classes/index.html
 
-Samples
-https://dev.epicgames.com/documentation/en-us/unreal-engine/samples-and-tutorials
+Getting Started
+https://docs.godotengine.org/en/stable/getting_started/introduction/index.html
 
-Blueprints
-https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprints-visual-scripting-in-unreal-engine
+GDScript
+https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/index.html
 
-Gameplay Framework
-https://dev.epicgames.com/documentation/en-us/unreal-engine/gameplay-framework-in-unreal-engine
+Nodes and Scenes
+https://docs.godotengine.org/en/stable/tutorials/scripting/nodes_and_scene_instances.html
 
-Enhanced Input
-https://dev.epicgames.com/documentation/en-us/unreal-engine/enhanced-input-in-unreal-engine
+Signals
+https://docs.godotengine.org/en/stable/getting_started/step_by_step/signals.html
+
+Input
+https://docs.godotengine.org/en/stable/tutorials/inputs/index.html
 
 Animation
-https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-blueprints-in-unreal-engine
+https://docs.godotengine.org/en/stable/tutorials/animation/index.html
 
-Behavior Trees
-https://dev.epicgames.com/documentation/en-us/unreal-engine/behavior-trees-in-unreal-engine
+Navigation e IA
+https://docs.godotengine.org/en/stable/tutorials/navigation/index.html
 
-UMG
-https://dev.epicgames.com/documentation/en-us/unreal-engine/umg-ui-designer
+UI (Control nodes)
+https://docs.godotengine.org/en/stable/tutorials/ui/index.html
 
-Materials
-https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-materials
+Materiais e Shaders
+https://docs.godotengine.org/en/stable/tutorials/3d/standard_material_3d.html
 
-Nanite
-https://dev.epicgames.com/documentation/en-us/unreal-engine/nanite-virtualized-geometry
+Iluminação Global (SDFGI/VoxelGI)
+https://docs.godotengine.org/en/stable/tutorials/3d/global_illumination/index.html
 
-Lumen
-https://dev.epicgames.com/documentation/en-us/unreal-engine/lumen-global-illumination-and-reflections
+Exportação de Projetos
+https://docs.godotengine.org/en/stable/tutorials/export/index.html
 
-World Partition
-https://dev.epicgames.com/documentation/en-us/unreal-engine/world-partition-in-unreal-engine
+---
 
-Packaging
-https://dev.epicgames.com/documentation/en-us/unreal-engine/packaging-your-project
+## Orchestrator (Visual Scripting)
+
+Site oficial
+https://orchestrator.cratercrash.space/
+
+Repositório
+https://github.com/CraterCrash/godot-orchestrator
+
+Godot Asset Library
+https://godotengine.org/asset-library/asset
+
+---
+
+## Addons de Apoio (Módulos 1, 3 e 4)
+
+Terrain3D (equivalente a Landscape)
+https://github.com/TokisanGames/Terrain3D
+
+LimboAI (Behavior Tree e Blackboard)
+https://github.com/limbonaut/limboai
+
+Beehave (Behavior Tree, alternativa)
+https://github.com/bitbrain/beehave
 
 ---
 
@@ -90,15 +113,12 @@ https://kenney.nl/
 
 ## Samples
 
-Lyra Starter Game
+Godot Demo Projects (oficiais)
+https://github.com/godotengine/godot-demo-projects
 
-Stack O Bot
+TPS Demo (Third Person Shooter, oficial)
 
-Content Examples
-
-Action RPG Sample
-
-Cropout Sample
+Platformer 2D Demo (oficial)
 
 ---
 
@@ -110,53 +130,49 @@ https://learn.unity.com/
 
 ---
 
-## Godot
+## Unreal Engine
 
-https://docs.godotengine.org/
+https://dev.epicgames.com/documentation/en-us/unreal-engine
 
 ---
 
 ## Comunidade
 
-Tom Looman
+GDQuest
 
-https://www.tomlooman.com/
+https://www.gdquest.com/
 
-BenUI
+KidsCanCode
 
-https://benui.ca/
+https://kidscancode.org/godot_recipes/4.x/
 
-Unreal Community Wiki
+Godot Community Wiki (Godot Docs — Community section)
 
-https://unrealcommunity.wiki/
+https://docs.godotengine.org/en/stable/community/
 
 ---
 
 ## Canais
 
-Unreal Engine
+GDQuest
 
-https://www.youtube.com/@UnrealEngine
+https://www.youtube.com/@GDQuest
 
-Mathew Wadstein
+Brackeys
 
-https://www.youtube.com/@MathewWadsteinTutorials
+https://www.youtube.com/@Brackeys
 
-PrismaticaDev
+Clear Code
 
-https://www.youtube.com/@PrismaticaDev
+https://www.youtube.com/@ClearCode
 
-Ryan Laley
+HeartBeast
 
-https://www.youtube.com/@RyanLaley
+https://www.youtube.com/@uheartbeast
 
-LeafBranchGames
+KidsCanCode
 
-https://www.youtube.com/@LeafBranchGames
-
-Smart Poly
-
-https://www.youtube.com/@SmartPoly
+https://www.youtube.com/@kidscancode
 
 ---
 
@@ -182,9 +198,9 @@ GDC Vault
 
 https://gdcvault.com/
 
-Unreal Fest
+Godot Con
 
-https://www.youtube.com/@UnrealEngine
+https://godotengine.org/godotcon/
 
 SIGGRAPH
 
@@ -194,11 +210,11 @@ https://www.siggraph.org/
 
 ## Ordem de Prioridade
 
-1. Documentação oficial da Epic.
-2. Learning Library.
-3. Samples oficiais.
-4. Unreal Community Wiki.
+1. Documentação oficial do Godot.
+2. Documentação oficial do Orchestrator.
+3. Samples oficiais (Godot Demo Projects).
+4. Godot Docs — Community.
 5. Livros.
 6. Unity Documentation.
-7. Comunidade.
+7. Comunidade (GDQuest, KidsCanCode etc.).
 

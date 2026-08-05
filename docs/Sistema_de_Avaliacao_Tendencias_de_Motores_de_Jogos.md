@@ -37,13 +37,13 @@ A quantidade de orientação docente diminui ao longo do semestre e, em paralelo
 
 **Checkpoints (10%).** Os checkpoints (Semanas 3, 6 e 16) verificam se o progresso esperado para aquele ponto do semestre foi de fato atingido, funcionando como pontos de controle de risco para o projeto incremental. Peso moderado porque seu papel é diagnóstico, não somativo isolado.
 
-**Code Review (15%).** Reflete a exigência de boas práticas de Unreal Engine (nomenclatura, modularidade, organização de Blueprints) que a disciplina prioriza desde o CLAUDE.md do projeto. Peso alto porque a disciplina forma para postura profissional de estúdio, na qual a qualidade da implementação é tão relevante quanto o resultado visível.
+**Code Review (15%).** Reflete a exigência de boas práticas do Godot (nomenclatura, modularidade, organização de Scenes/Scripts/Orchestrations) que a disciplina prioriza desde o CLAUDE.md do projeto. Peso alto porque a disciplina forma para postura profissional de estúdio, na qual a qualidade da implementação é tão relevante quanto o resultado visível.
 
 **Playtest (10%).** Mede a experiência efetiva de jogo — funcionamento, usabilidade e clareza para o jogador — complementando o Code Review, que é uma avaliação de "caixa aberta". Peso menor que Code Review porque a disciplina não avalia qualidade artística nem quantidade de assets.
 
 **Apresentações (10%).** Concentra-se nos showcases de encerramento de módulo e na apresentação técnica final, medindo comunicação técnica e domínio do projeto. Peso crescente de fato ao longo do semestre (ver seção de Coerência), culminando na Semana 17.
 
-**Vertical Slice Final — Projeto (20%).** É o segundo maior componente porque sintetiza toda a disciplina: arquitetura, gameplay, qualidade técnica, uso correto dos recursos da Unreal e capacidade de justificar decisões, tal como avaliado na Rubrica 7.
+**Vertical Slice Final — Projeto (20%).** É o segundo maior componente porque sintetiza toda a disciplina: arquitetura, gameplay, qualidade técnica, uso correto dos recursos do Godot e capacidade de justificar decisões, tal como avaliado na Rubrica 7.
 
 ---
 
@@ -56,7 +56,7 @@ A quantidade de orientação docente diminui ao longo do semestre e, em paralelo
 |---|---|---|---|---|
 | **Participação** | Envolve-se ativamente em todas as etapas do encontro, contribui com perguntas e observações que avançam a discussão do grupo. | Participa de todas as etapas do encontro, com contribuições pontuais quando solicitado. | Participa das etapas principais, mas permanece passivo na maior parte do tempo. | Ausente ou desengajado na maior parte do encontro; não interage com o conteúdo ou com o grupo. |
 | **Preparação** | Chega ao encontro com o projeto do Vertical Slice já organizado e revisado desde a aula anterior, pronto para construir sobre o que já existe. | Chega preparado, com pequenos ajustes pendentes que não comprometem o início da construção. | Precisa de tempo do início do encontro para organizar o que ficou pendente da aula anterior. | Não retoma o trabalho da aula anterior; o projeto está no mesmo estado ou em estado pior do que ao final do último encontro. |
-| **Execução** | Implementa corretamente o conceito demonstrado, sem erros de configuração, replicando com precisão o padrão da Unreal apresentado em aula. | Implementa corretamente o conceito, com pequenos erros que corrige de forma autônoma durante o encontro. | Implementa o conceito de forma parcial ou com erros que exigem intervenção direta do professor para correção. | Não consegue implementar o conceito demonstrado, mesmo com apoio do professor. |
+| **Execução** | Implementa corretamente o conceito demonstrado, sem erros de configuração, replicando com precisão o padrão do Godot apresentado em aula. | Implementa corretamente o conceito, com pequenos erros que corrige de forma autônoma durante o encontro. | Implementa o conceito de forma parcial ou com erros que exigem intervenção direta do professor para correção. | Não consegue implementar o conceito demonstrado, mesmo com apoio do professor. |
 | **Autonomia** | Resolve dúvidas de execução consultando a documentação oficial antes de solicitar ajuda, de forma coerente com o nível de autonomia esperado no módulo. | Tenta resolver de forma independente antes de pedir ajuda, mesmo sem sucesso completo. | Recorre à ajuda do professor ou dos colegas antes de tentar soluções próprias. | Depende integralmente da intervenção do professor para qualquer avanço, mesmo em tarefas já demonstradas. |
 | **Evolução** | O trabalho da semana demonstra evolução clara sobre o estado do Vertical Slice na semana anterior, sem retrabalho de sistemas já concluídos. | O trabalho da semana avança o projeto, com necessidade pontual de retrabalho em sistemas anteriores. | O avanço da semana é mínimo ou depende fortemente de retrabalho do que já havia sido construído. | Não há avanço perceptível no projeto em relação à semana anterior, ou houve regressão funcional. |
 
@@ -64,7 +64,7 @@ A quantidade de orientação docente diminui ao longo do semestre e, em paralelo
 
 **Evidências a observar:** estado do projeto no início e no fim de cada encontro; histórico de versionamento (commits, backups) coerente com o cronograma de construção; capacidade de retomar o próprio trabalho sem reexplicação completa do professor.
 
-**Erros comuns:** estudantes que recriam do zero elementos já prontos em vez de reutilizá-los (violação direta da regra "todo exercício pertence ao Vertical Slice"); dependência de anotações externas em vez de consulta à documentação oficial da Epic; confundir "estar presente" com "estar participando".
+**Erros comuns:** estudantes que recriam do zero elementos já prontos em vez de reutilizá-los (violação direta da regra "todo exercício pertence ao Vertical Slice"); dependência de anotações externas em vez de consulta à documentação oficial do Godot; confundir "estar presente" com "estar participando".
 
 **Sugestões de feedback:** ao identificar baixa autonomia, direcionar o estudante à seção específica da documentação oficial antes de responder diretamente; elogiar explicitamente quando o estudante reutiliza um sistema anterior em vez de duplicar lógica; ao final de cada módulo, comunicar ao estudante em que ponto da progressão de autonomia (guiado → mentor → revisor) ele se encontra.
 
@@ -98,10 +98,10 @@ _________________________________________________________________________
 
 | Critério | Excelente | Bom | Satisfatório | Insuficiente |
 |---|---|---|---|---|
-| **Solução proposta** | A solução vai além do mínimo exigido pelo desafio, demonstrando compreensão do conceito universal por trás dele, não apenas da execução na Unreal. | A solução atende integralmente ao desafio proposto, com compreensão clara do conceito envolvido. | A solução atende parcialmente ao desafio, com lacunas conceituais que comprometem partes do resultado. | A solução não atende ao desafio proposto ou demonstra desconhecimento do conceito envolvido. |
-| **Uso correto da Unreal** | Utiliza os recursos da Unreal indicados no módulo (ver UNREAL_REFERENCE.md) de forma tecnicamente correta e apropriada ao problema. | Utiliza os recursos indicados corretamente, com pequenos desvios que não comprometem o funcionamento. | Utiliza os recursos de forma incorreta ou inadequada em pontos específicos, mas o resultado ainda funciona. | Utiliza os recursos de forma incorreta a ponto de comprometer o funcionamento ou contrariar boas práticas básicas da engine. |
+| **Solução proposta** | A solução vai além do mínimo exigido pelo desafio, demonstrando compreensão do conceito universal por trás dele, não apenas da execução no Godot. | A solução atende integralmente ao desafio proposto, com compreensão clara do conceito envolvido. | A solução atende parcialmente ao desafio, com lacunas conceituais que comprometem partes do resultado. | A solução não atende ao desafio proposto ou demonstra desconhecimento do conceito envolvido. |
+| **Uso correto do Godot** | Utiliza os recursos do Godot indicados no módulo (ver GODOT_REFERENCE.md) de forma tecnicamente correta e apropriada ao problema. | Utiliza os recursos indicados corretamente, com pequenos desvios que não comprometem o funcionamento. | Utiliza os recursos de forma incorreta ou inadequada em pontos específicos, mas o resultado ainda funciona. | Utiliza os recursos de forma incorreta a ponto de comprometer o funcionamento ou contrariar boas práticas básicas da engine. |
 | **Criatividade** | Propõe uma solução própria e diferenciada da demonstrada em aula, dentro da liberdade explicitamente oferecida pelo desafio. | Propõe variações pontuais sobre a solução demonstrada em aula. | Reproduz de forma quase idêntica a solução demonstrada em aula, com adaptações mínimas. | Não há tentativa de solução própria; o desafio é resolvido apenas copiando a demonstração sem adaptação ao contexto pedido. |
-| **Organização** | Nomenclatura, estrutura de pastas e organização de Blueprints seguem boas práticas da Unreal 5.6 de forma consistente. | Organização adequada, com pequenas inconsistências de nomenclatura ou estrutura. | Organização confusa em partes da solução, dificultando a leitura por terceiros. | Ausência de organização; nomes padrão da engine não alterados, estrutura de pastas desorganizada. |
+| **Organização** | Nomenclatura, estrutura de pastas e organização de Scenes/Scripts/Orchestrations seguem boas práticas do Godot 4.7 de forma consistente. | Organização adequada, com pequenas inconsistências de nomenclatura ou estrutura. | Organização confusa em partes da solução, dificultando a leitura por terceiros. | Ausência de organização; nomes padrão da engine não alterados, estrutura de pastas desorganizada. |
 | **Funcionamento** | A solução funciona integralmente, sem bugs perceptíveis, em qualquer ordem de teste. | A solução funciona, com bugs menores que não comprometem a experiência central. | A solução funciona parcialmente ou apenas em condições específicas de teste. | A solução não funciona ou quebra o funcionamento de sistemas já existentes no Vertical Slice. |
 
 ### Guia para o Professor — Desafios Técnicos
@@ -120,7 +120,7 @@ _________________________________________________________________________
 | Critério | Excelente (4) | Bom (3) | Satisfatório (2) | Insuficiente (1) | Nota |
 |---|:---:|:---:|:---:|:---:|:---:|
 | Solução proposta | ☐ | ☐ | ☐ | ☐ | |
-| Uso correto da Unreal | ☐ | ☐ | ☐ | ☐ | |
+| Uso correto do Godot | ☐ | ☐ | ☐ | ☐ | |
 | Criatividade | ☐ | ☐ | ☐ | ☐ | |
 | Organização | ☐ | ☐ | ☐ | ☐ | |
 | Funcionamento | ☐ | ☐ | ☐ | ☐ | |
@@ -144,12 +144,12 @@ _________________________________________________________________________
 |---|---|---|---|---|
 | **Progresso esperado** | O progresso supera o esperado para o ponto do cronograma, incorporando elementos além do mínimo definido no módulo. | O progresso corresponde integralmente ao esperado para aquele ponto do cronograma. | O progresso está abaixo do esperado, mas ainda em ritmo recuperável dentro do módulo atual. | O progresso está muito abaixo do esperado, comprometendo a entrega de encerramento do módulo. |
 | **Funcionalidades implementadas** | Todas as funcionalidades previstas até o checkpoint estão implementadas e integradas ao Vertical Slice único. | A maioria das funcionalidades previstas está implementada, com uma ou duas pendências claramente identificadas. | Parte relevante das funcionalidades previstas está ausente ou implementada apenas parcialmente. | A maior parte das funcionalidades previstas até o checkpoint está ausente. |
-| **Qualidade técnica** | A implementação segue boas práticas da Unreal 5.6 sem necessidade de retrabalho estrutural nos módulos seguintes. | A implementação é tecnicamente sólida, com ajustes pontuais recomendados para os próximos módulos. | A implementação apresenta problemas técnicos que exigirão retrabalho relevante nos próximos módulos. | A implementação apresenta problemas técnicos estruturais que comprometem a continuidade do projeto. |
+| **Qualidade técnica** | A implementação segue boas práticas do Godot 4.7 sem necessidade de retrabalho estrutural nos módulos seguintes. | A implementação é tecnicamente sólida, com ajustes pontuais recomendados para os próximos módulos. | A implementação apresenta problemas técnicos que exigirão retrabalho relevante nos próximos módulos. | A implementação apresenta problemas técnicos estruturais que comprometem a continuidade do projeto. |
 | **Estabilidade** | O build/projeto roda sem falhas, travamentos ou erros visíveis durante toda a demonstração do checkpoint. | O build/projeto roda com falhas raras e não críticas. | O build/projeto apresenta falhas frequentes, mas ainda permite demonstração do progresso. | O build/projeto não roda ou trava de forma a impedir a demonstração do checkpoint. |
 
 ### Guia para o Professor — Checkpoints
 
-**Evidências a observar:** comparação direta entre o que está descrito como "produto esperado" do módulo no Plano de Ensino/Cronograma e o que de fato está funcional no checkpoint; se o build da Semana 3 realmente empacota (Packaging), e não apenas roda no editor.
+**Evidências a observar:** comparação direta entre o que está descrito como "produto esperado" do módulo no Plano de Ensino/Cronograma e o que de fato está funcional no checkpoint; se o build da Semana 3 realmente exporta (Export), e não apenas roda no editor.
 
 **Erros comuns:** apresentar funcionalidades "quase prontas" como se estivessem completas; não testar o build fora do ambiente do editor antes do checkpoint; ignorar pendências técnicas que se acumulam e só aparecem como problema estrutural em módulos futuros.
 
@@ -184,18 +184,18 @@ _________________________________________________________________________
 
 | Critério | Excelente | Bom | Satisfatório | Insuficiente |
 |---|---|---|---|---|
-| **Organização dos Blueprints** | Grafos organizados, com comentários (Comment Boxes) e agrupamento lógico (Collapsed Nodes/Functions) que tornam a leitura imediata. | Grafos organizados na maior parte do projeto, com pontos isolados sem comentário ou agrupamento. | Grafos funcionais, mas com organização inconsistente entre diferentes partes do projeto. | Grafos desorganizados, sem comentários ou agrupamento, exigindo esforço significativo para compreensão. |
-| **Nomenclatura** | Variáveis, funções, Actors e assets seguem convenção de nomenclatura consistente e descritiva em todo o projeto. | Nomenclatura consistente na maior parte do projeto, com exceções pontuais. | Nomenclatura inconsistente ou pouco descritiva em partes relevantes do projeto. | Nomes padrão da engine mantidos (ex.: "NewBlueprint1", "Actor2") ou nomenclatura sem qualquer padrão identificável. |
-| **Modularidade** | Lógica dividida em funções/componentes reutilizáveis, evitando duplicação de lógica entre Blueprints. | Modularidade presente na maior parte do projeto, com duplicações pontuais e justificáveis. | Modularidade limitada, com duplicação relevante de lógica entre diferentes Blueprints. | Ausência de modularidade; lógica duplicada extensivamente ou concentrada em um único Blueprint monolítico. |
+| **Organização dos Scripts/Orchestrations** | Grafos e scripts organizados, com comentários e agrupamento lógico (funções nomeadas, grafos de Orchestrator organizados) que tornam a leitura imediata. | Organizados na maior parte do projeto, com pontos isolados sem comentário ou agrupamento. | Funcionais, mas com organização inconsistente entre diferentes partes do projeto. | Desorganizados, sem comentários ou agrupamento, exigindo esforço significativo para compreensão. |
+| **Nomenclatura** | Variáveis, funções, Scenes e assets seguem convenção de nomenclatura consistente e descritiva em todo o projeto. | Nomenclatura consistente na maior parte do projeto, com exceções pontuais. | Nomenclatura inconsistente ou pouco descritiva em partes relevantes do projeto. | Nomes padrão da engine mantidos (ex.: "Node2D", "Control1") ou nomenclatura sem qualquer padrão identificável. |
+| **Modularidade** | Lógica dividida em funções/Components reutilizáveis, evitando duplicação de lógica entre Scenes. | Modularidade presente na maior parte do projeto, com duplicações pontuais e justificáveis. | Modularidade limitada, com duplicação relevante de lógica entre diferentes Scenes. | Ausência de modularidade; lógica duplicada extensivamente ou concentrada em uma única Scene monolítica. |
 | **Reutilização** | Sistemas construídos em módulos anteriores são reutilizados de forma explícita e correta nos módulos seguintes. | Reutilização presente na maior parte do projeto, com alguma recriação evitável. | Reutilização parcial; partes do projeto recriam funcionalidades já existentes em outros sistemas. | Sistemas anteriores são ignorados e recriados do zero, contrariando a regra de reutilização entre módulos. |
-| **Comunicação entre sistemas** | Sistemas se comunicam por padrões desacoplados (Interfaces, Event Dispatchers) apropriados ao caso de uso. | Comunicação majoritariamente desacoplada, com referências diretas pontuais e justificáveis. | Comunicação com dependências diretas relevantes entre sistemas que poderiam ser desacopladas. | Comunicação por referências diretas e acopladas em toda a extensão do projeto, sem uso de Interfaces/Dispatchers onde caberia. |
-| **Boas práticas gerais** | Segue boas práticas atuais da Unreal 5.6 de forma consistente (estrutura de pastas, tipos de Blueprint apropriados, uso correto de eventos). | Segue boas práticas na maior parte do projeto, com desvios pontuais e não críticos. | Segue boas práticas de forma inconsistente, com desvios que afetam a manutenibilidade do projeto. | Não segue boas práticas básicas da engine, comprometendo a manutenibilidade do projeto. |
+| **Comunicação entre sistemas** | Sistemas se comunicam por padrões desacoplados (contrato Interactable, Signals) apropriados ao caso de uso. | Comunicação majoritariamente desacoplada, com referências diretas pontuais e justificáveis. | Comunicação com dependências diretas relevantes entre sistemas que poderiam ser desacopladas. | Comunicação por referências diretas e acopladas em toda a extensão do projeto, sem uso de contrato Interactable/Signals onde caberia. |
+| **Boas práticas gerais** | Segue boas práticas atuais do Godot 4.7 de forma consistente (estrutura de pastas, Nodes apropriados, uso correto de Signals). | Segue boas práticas na maior parte do projeto, com desvios pontuais e não críticos. | Segue boas práticas de forma inconsistente, com desvios que afetam a manutenibilidade do projeto. | Não segue boas práticas básicas da engine, comprometendo a manutenibilidade do projeto. |
 
 ### Guia para o Professor — Code Review
 
-**Evidências a observar:** abrir os Blueprints ao vivo com o grupo e pedir que expliquem sua própria lógica; verificar se sistemas de módulos anteriores (interfaces da Semana 5, Data Tables da Semana 6) ainda existem e são usados, ou se foram silenciosamente substituídos por soluções redundantes.
+**Evidências a observar:** abrir os scripts/Orchestrations ao vivo com o grupo e pedir que expliquem sua própria lógica; verificar se sistemas de módulos anteriores (contrato Interactable da Semana 5, Resource customizado da Semana 6) ainda existem e são usados, ou se foram silenciosamente substituídos por soluções redundantes.
 
-**Erros comuns:** lógica de gameplay inteira dentro do Event Graph do Character, sem qualquer componente ou função auxiliar; uso de referências diretas (Cast to) em cascata em vez de Interfaces already ensinadas na Semana 5; nomenclatura copiada de tutoriais externos que não reflete o vocabulário do projeto do grupo.
+**Erros comuns:** lógica de gameplay inteira dentro do script do Player, sem qualquer Component ou função auxiliar; uso de referências diretas (`get_node`/caminhos fixos) em cascata em vez do contrato Interactable já ensinado na Semana 5; nomenclatura copiada de tutoriais externos que não reflete o vocabulário do projeto do grupo.
 
 **Sugestões de feedback:** conduzir o code review como diálogo técnico, pedindo que o próprio grupo identifique o que reorganizaria; priorizar feedback sobre acoplamento e duplicação, que são os problemas que mais se agravam ao longo de um projeto incremental de um único semestre; documentar decisões técnicas discutidas no code review para conferência no code review seguinte.
 
@@ -206,7 +206,7 @@ _________________________________________________________________________
 
 | Critério | Excelente (4) | Bom (3) | Satisfatório (2) | Insuficiente (1) | Nota |
 |---|:---:|:---:|:---:|:---:|:---:|
-| Organização dos Blueprints | ☐ | ☐ | ☐ | ☐ | |
+| Organização dos Scripts/Orchestrations | ☐ | ☐ | ☐ | ☐ | |
 | Nomenclatura | ☐ | ☐ | ☐ | ☐ | |
 | Modularidade | ☐ | ☐ | ☐ | ☐ | |
 | Reutilização | ☐ | ☐ | ☐ | ☐ | |
@@ -322,15 +322,15 @@ _________________________________________________________________________
 
 | Critério | Excelente | Bom | Satisfatório | Insuficiente |
 |---|---|---|---|---|
-| **Arquitetura** | Arquitetura clara, com separação de responsabilidades coerente entre GameMode, GameState, PlayerController, GameInstance e demais sistemas construídos no semestre. | Arquitetura coerente na maior parte do projeto, com sobreposição pontual de responsabilidades entre sistemas. | Arquitetura funcional, mas com sobreposição relevante de responsabilidades entre sistemas que deveriam estar separados. | Arquitetura confusa ou inexistente; lógica concentrada sem separação de responsabilidades. |
+| **Arquitetura** | Arquitetura clara, com separação de responsabilidades coerente entre GameManager, SaveManager e demais sistemas construídos no semestre. | Arquitetura coerente na maior parte do projeto, com sobreposição pontual de responsabilidades entre sistemas. | Arquitetura funcional, mas com sobreposição relevante de responsabilidades entre sistemas que deveriam estar separados. | Arquitetura confusa ou inexistente; lógica concentrada sem separação de responsabilidades. |
 | **Gameplay** | Todos os sistemas de gameplay construídos ao longo do semestre (interação, inventário, animação, IA, UI) estão integrados e funcionais em conjunto. | A maioria dos sistemas está integrada e funcional, com uma ou duas integrações incompletas. | Parte relevante dos sistemas funciona isoladamente, mas não está plenamente integrada ao fluxo de jogo. | Sistemas de gameplay não funcionam em conjunto ou apresentam falhas que impedem a experiência completa. |
 | **Organização** | Estrutura de pastas, nomenclatura e organização de assets seguem um padrão consistente em todo o projeto. | Organização consistente na maior parte do projeto, com exceções pontuais. | Organização inconsistente em partes relevantes do projeto. | Ausência de organização perceptível na estrutura do projeto. |
-| **Qualidade técnica** | Implementação segue boas práticas da Unreal 5.6 de forma consistente, sem gargalos técnicos identificados no profiling da Semana 13. | Implementação tecnicamente sólida, com gargalos pontuais já identificados e parcialmente tratados. | Implementação com problemas técnicos relevantes, alguns não tratados após o profiling. | Implementação com problemas técnicos estruturais que comprometem a estabilidade do projeto. |
+| **Qualidade técnica** | Implementação segue boas práticas do Godot 4.7 de forma consistente, sem gargalos técnicos identificados no profiling da Semana 13. | Implementação tecnicamente sólida, com gargalos pontuais já identificados e parcialmente tratados. | Implementação com problemas técnicos relevantes, alguns não tratados após o profiling. | Implementação com problemas técnicos estruturais que comprometem a estabilidade do projeto. |
 | **Polimento** | Ajustes finais (áudio integrado a eventos, feedback visual, transições) elevam a experiência de jogo de forma perceptível, sem depender de qualidade artística dos assets. | Ajustes finais presentes na maior parte da experiência, com lacunas pontuais. | Ajustes finais limitados a poucos pontos da experiência. | Ausência de ajustes finais; experiência idêntica a versões preliminares do projeto. |
-| **Uso correto dos recursos da Unreal** | Os recursos explorados no semestre (Enhanced Input, Interfaces, Data Assets, Animation Blueprint, UMG, Behavior Trees, Materials, etc.) são utilizados conforme suas finalidades documentadas. | Recursos utilizados corretamente na maior parte do projeto, com desvios pontuais de finalidade. | Recursos utilizados de forma parcialmente inadequada em relação à sua finalidade documentada. | Recursos utilizados de forma incorreta ou substituídos por soluções improvisadas que contrariam boas práticas básicas. |
+| **Uso correto dos recursos do Godot** | Os recursos explorados no semestre (Input Map, contrato Interactable, Resource customizado, AnimationTree, Control nodes, Behavior Trees/LimboAI, Materials, etc.) são utilizados conforme suas finalidades documentadas. | Recursos utilizados corretamente na maior parte do projeto, com desvios pontuais de finalidade. | Recursos utilizados de forma parcialmente inadequada em relação à sua finalidade documentada. | Recursos utilizados de forma incorreta ou substituídos por soluções improvisadas que contrariam boas práticas básicas. |
 | **Consistência** | O projeto mantém coerência visual, técnica e de gameplay entre os sistemas adicionados em diferentes módulos, sem partes que pareçam "descoladas" do restante. | O projeto é majoritariamente coerente, com uma ou duas partes que destoam do restante. | O projeto apresenta partes claramente desconectadas entre si, evidenciando falta de integração entre módulos. | O projeto parece uma colagem de sistemas desconectados, sem coerência entre os módulos. |
 | **Documentação** | O projeto possui documentação técnica clara (decisões de arquitetura, sistemas implementados) suficiente para que outra pessoa compreenda o projeto sem o grupo presente. | Documentação presente e compreensível, com lacunas pontuais. | Documentação superficial, insuficiente para compreender decisões relevantes do projeto. | Documentação ausente ou inexistente. |
-| **Empacotamento** | Build final empacotado (Packaging) roda de forma estável fora do editor, em condições equivalentes às testadas na Semana 14. | Build empacotado roda com falhas raras e não críticas fora do editor. | Build empacotado roda com falhas frequentes fora do editor. | Build não empacota corretamente ou não roda fora do editor. |
+| **Exportação** | Build final exportado roda de forma estável fora do editor, em condições equivalentes às testadas na Semana 14. | Build exportado roda com falhas raras e não críticas fora do editor. | Build exportado roda com falhas frequentes fora do editor. | Build não exporta corretamente ou não roda fora do editor. |
 | **Capacidade de explicar decisões** | O grupo explica e justifica qualquer decisão arquitetural do projeto, incluindo alternativas descartadas e comparação com Unity/outros motores. | O grupo explica a maioria das decisões arquiteturais, com justificativa técnica adequada. | O grupo descreve as decisões arquiteturais, mas com dificuldade de justificá-las tecnicamente. | O grupo não consegue explicar as decisões arquiteturais do próprio projeto. |
 
 ### Guia para o Professor — Vertical Slice Final
@@ -353,10 +353,10 @@ _________________________________________________________________________
 | Organização | ☐ | ☐ | ☐ | ☐ | |
 | Qualidade técnica | ☐ | ☐ | ☐ | ☐ | |
 | Polimento | ☐ | ☐ | ☐ | ☐ | |
-| Uso correto dos recursos da Unreal | ☐ | ☐ | ☐ | ☐ | |
+| Uso correto dos recursos do Godot | ☐ | ☐ | ☐ | ☐ | |
 | Consistência | ☐ | ☐ | ☐ | ☐ | |
 | Documentação | ☐ | ☐ | ☐ | ☐ | |
-| Empacotamento | ☐ | ☐ | ☐ | ☐ | |
+| Exportação | ☐ | ☐ | ☐ | ☐ | |
 | Capacidade de explicar decisões | ☐ | ☐ | ☐ | ☐ | |
 
 **Soma:** _____ / 40 → **Nota do componente (0–10) = (Soma ÷ 40) × 10 =** _____
@@ -375,7 +375,7 @@ A aplicação das rubricas acima não é estática: o peso relativo dos critéri
 
 | Momento do semestre | Módulos | Ênfase avaliativa dominante | Critérios que recebem mais atenção |
 |---|---|---|---|
-| Início | Módulo 1 (Semanas 1–3) | Reprodução e compreensão | Execução correta (Rubrica 1), uso correto da Unreal (Rubrica 2), funcionamento e estabilidade (Rubrica 3) |
+| Início | Módulo 1 (Semanas 1–3) | Reprodução e compreensão | Execução correta (Rubrica 1), uso correto do Godot (Rubrica 2), funcionamento e estabilidade (Rubrica 3) |
 | Meio | Módulos 2 e 3 (Semanas 4–11) | Adaptação e resolução de problemas | Autonomia e evolução (Rubrica 1), solução proposta e criatividade (Rubrica 2), comunicação entre sistemas (Rubrica 4), funcionamento no playtest (Rubrica 5) |
 | Final | Módulos 4 e 5 (Semanas 12–17) | Autonomia, arquitetura e tomada de decisão | Arquitetura, consistência e capacidade de explicar decisões (Rubrica 7), justificativas técnicas (Rubrica 6), boas práticas consolidadas (Rubrica 4) |
 

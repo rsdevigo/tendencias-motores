@@ -10,7 +10,7 @@
 **Carga Horária Semanal:** 6 h/a (4h30)
 **Carga Horária Semestral:** 102 h/a (76h)
 **Organização didática:** 17 semanas, 2 encontros semanais de 2h15
-**Motor de referência:** Unreal Engine 5.6
+**Motor de referência:** Godot 4.7 + Orchestrator (visual scripting)
 **Pré-requisitos:** Programação, Game Design, Unity, Inteligência Artificial, Computação Gráfica e Projeto Integrador
 
 ## Ementa
@@ -21,16 +21,16 @@
 
 ## Objetivo Geral
 
-Desenvolver no estudante a capacidade de compreender a arquitetura de motores de jogos modernos e de transferir esse conhecimento para a aprendizagem autônoma de novos motores, utilizando a Unreal Engine 5.6 como estudo de caso privilegiado e não como fim em si mesma.
+Desenvolver no estudante a capacidade de compreender a arquitetura de motores de jogos modernos e de transferir esse conhecimento para a aprendizagem autônoma de novos motores, utilizando o Godot 4.7 + Orchestrator como estudo de caso privilegiado e não como fim em si mesmo.
 
 ## Objetivos Específicos
 
 - Compreender os conceitos universais que estruturam motores de jogos modernos (arquitetura de editor, gameplay framework, sistemas de animação, inteligência artificial, interface e otimização).
-- Identificar como esses conceitos universais se manifestam concretamente na Unreal Engine 5.6.
-- Estabelecer comparações sistemáticas entre a Unreal Engine e a Unity, e, quando pertinente, com Godot, O3DE, Stride e CryEngine.
+- Identificar como esses conceitos universais se manifestam concretamente no Godot 4.7 + Orchestrator.
+- Estabelecer comparações sistemáticas entre o Godot e a Unity, e, quando pertinente, com Unreal Engine, O3DE e Stride.
 - Desenvolver um Vertical Slice de forma incremental ao longo do semestre, integrando progressivamente novos sistemas sem descartar o que já foi construído.
 - Justificar tecnicamente decisões arquiteturais de projeto a partir de critérios de boas práticas da indústria.
-- Analisar projetos profissionais de referência (Lyra, Stack O Bot, Action RPG, Content Examples) como forma de engenharia reversa e consolidação de autonomia.
+- Analisar projetos profissionais de referência (Godot Demo Projects, TPS Demo, Platformer 2D Demo) como forma de engenharia reversa e consolidação de autonomia.
 - Consultar de forma crítica e autônoma a documentação oficial de diferentes motores.
 
 ## Competências Desenvolvidas
@@ -52,7 +52,7 @@ A disciplina é predominantemente prática, com teoria reduzida ao mínimo neces
 - **Challenge Based Learning** (Módulo 3): o professor apresenta problemas e os estudantes propõem soluções com maior autonomia.
 - **Reverse Engineering** (Módulo 5): os estudantes analisam projetos profissionais e discutem arquitetura de forma comparativa entre motores, com autonomia plena.
 
-Cada encontro segue o ciclo conceito → demonstração → construção → desafio → revisão, sem inversão dessa ordem. Toda aula busca responder quatro perguntas: qual conceito universal está sendo ensinado, como ele é implementado na Unreal, como seria implementado na Unity e como esse conhecimento pode ser transferido para outro motor.
+Cada encontro segue o ciclo conceito → demonstração → construção → desafio → revisão, sem inversão dessa ordem. Toda aula busca responder quatro perguntas: qual conceito universal está sendo ensinado, como ele é implementado no Godot, como seria implementado na Unity e como esse conhecimento pode ser transferido para outro motor.
 
 ## Organização da Disciplina
 
@@ -60,11 +60,11 @@ A disciplina é organizada em cinco módulos, articulados em torno do desenvolvi
 
 ### Módulo 1 — Aprender a Ferramenta
 
-**Objetivo pedagógico:** apresentar a arquitetura da Unreal Engine e familiarizar o estudante com o editor, compreendendo os conceitos universais de motor por trás da ferramenta.
+**Objetivo pedagógico:** apresentar a arquitetura do Godot e familiarizar o estudante com o editor, compreendendo os conceitos universais de motor por trás da ferramenta.
 
-**Competências desenvolvidas:** leitura do editor, compreensão da relação entre Actors, Components e Blueprints, e reconhecimento de conceitos de renderização moderna.
+**Competências desenvolvidas:** leitura do editor, compreensão da relação entre Nodes, Scene Tree e Orchestrator, e reconhecimento de conceitos de renderização moderna.
 
-**Principais sistemas explorados:** Editor, Viewport, Content Browser, Actors, Components, Character e Character Movement, Enhanced Input, Blueprint, Materiais, Landscape, Lumen e Nanite.
+**Principais sistemas explorados:** Editor, Viewport, FileSystem Dock, Node e Scene Tree, CharacterBody3D e movimentação, Input Map, Orchestrator, Materiais, Terrain3D, SDFGI/VoxelGI.
 
 **Produto esperado:** primeiro protótipo executável (build) explorável.
 
@@ -72,11 +72,11 @@ A disciplina é organizada em cinco módulos, articulados em torno do desenvolvi
 
 ### Módulo 2 — Construir Sistemas
 
-**Objetivo pedagógico:** introduzir o gameplay framework da Unreal e consolidar a construção de sistemas fundamentais de jogabilidade.
+**Objetivo pedagógico:** introduzir o gameplay framework do Godot e consolidar a construção de sistemas fundamentais de jogabilidade.
 
-**Competências desenvolvidas:** compreensão do fluxo de controle de um jogo (GameMode, GameState, PlayerController, GameInstance) e uso de comunicação entre sistemas via interfaces e eventos.
+**Competências desenvolvidas:** compreensão do fluxo de controle de um jogo (Autoload/Singleton fazendo o papel de GameManager e SaveManager) e uso de comunicação entre sistemas via contratos de interface e signals.
 
-**Principais sistemas explorados:** GameMode, GameState, PlayerController, GameInstance, Blueprint Interfaces, Event Dispatchers, Actor Components, Data Assets, Data Tables, Structs, Enums e SaveGame.
+**Principais sistemas explorados:** Autoload/Singleton, contrato Interactable (interfaces via GDScript/Orchestrator), Signals, Components (Nodes filhos), Resource customizado, Enums e save/load via FileAccess.
 
 **Produto esperado:** gameplay funcional, com desafios aplicados de portas, baús, alavancas, NPCs e checkpoints integrados ao projeto único.
 
@@ -88,7 +88,7 @@ A disciplina é organizada em cinco módulos, articulados em torno do desenvolvi
 
 **Competências desenvolvidas:** integração de sistemas de animação, interface e inteligência artificial na resolução de problemas de design.
 
-**Principais sistemas explorados:** Animation Blueprint, Blend Spaces, Montages, UMG, HUD, Inventory, Interaction, Navigation, Behavior Trees e Blackboards.
+**Principais sistemas explorados:** AnimationTree, BlendSpace1D/2D, AnimationPlayer, Control nodes, HUD, Inventory, Interaction, Navigation (NavigationRegion3D/NavigationAgent3D), Behavior Trees e Blackboards (addon LimboAI).
 
 **Produto esperado:** Vertical Slice jogável, com sistemas de animação, interface e IA integrados.
 
@@ -100,9 +100,9 @@ A disciplina é organizada em cinco módulos, articulados em torno do desenvolvi
 
 **Competências desenvolvidas:** polimento técnico e visual, otimização de desempenho, empacotamento e organização de projeto conforme boas práticas de produção.
 
-**Principais sistemas explorados:** Materials, Material Instances, Foliage, Áudio, Optimization, Profiling e Packaging.
+**Principais sistemas explorados:** Materials, Material Overrides/Unique Materials, Foliage (MultiMeshInstance3D), Áudio, Optimization, Profiling e exportação de projeto.
 
-**Produto esperado:** Vertical Slice final, otimizado e empacotado como build distribuível.
+**Produto esperado:** Vertical Slice final, otimizado e exportado como build distribuível.
 
 **Metodologia predominante:** Studio Based Learning, com o professor atuando como diretor técnico, autonomia alta, feedback contínuo, code review e playtests.
 
@@ -112,7 +112,7 @@ A disciplina é organizada em cinco módulos, articulados em torno do desenvolvi
 
 **Competências desenvolvidas:** leitura crítica de projetos de referência, argumentação técnica comparativa e transferência de conhecimento entre motores.
 
-**Principais sistemas explorados:** estudo de casos profissionais (Lyra, Stack O Bot, Action RPG Sample, Content Examples) e comparação arquitetural com Unity, Godot, O3DE, Stride e CryEngine.
+**Principais sistemas explorados:** estudo de casos profissionais (Godot Demo Projects, TPS Demo, Platformer 2D Demo) e comparação arquitetural com Unity, Unreal Engine, O3DE e Stride.
 
 **Produto esperado:** apresentação técnica final do projeto, incluindo justificativa de decisões arquiteturais e comparação entre motores.
 
@@ -122,19 +122,19 @@ A disciplina é organizada em cinco módulos, articulados em torno do desenvolvi
 
 - Cada encontro é estruturado no ciclo introdução, demonstração, desenvolvimento e feedback, nunca de forma exclusivamente expositiva.
 - Todo novo conteúdo reutiliza sistemas desenvolvidos em módulos anteriores, evitando exercícios isolados: todo exercício pertence ao Vertical Slice único da disciplina.
-- Todo conceito é apresentado antes de sua implementação, primeiro em sua forma universal e, em seguida, discutido em sua realização na Unreal Engine, com comparação sistemática à Unity e, quando pertinente, a Godot, O3DE, Stride ou CryEngine.
+- Todo conceito é apresentado antes de sua implementação, primeiro em sua forma universal e, em seguida, discutido em sua realização no Godot, com comparação sistemática à Unity e, quando pertinente, à Unreal Engine, O3DE ou Stride.
 - A quantidade de orientação docente diminui progressivamente ao longo do semestre, acompanhando a evolução de Scaffolded Learning para Reverse Engineering.
 - Estimula-se constantemente a consulta autônoma à documentação oficial, sem reprodução de trechos extensos, priorizando resumo e reinterpretação didática do conteúdo.
 - Ao final de cada módulo, é produzido um artefato funcional e jogável, consolidando o aprendizado do período.
 
 ## Recursos Didáticos
 
-- Unreal Engine 5.6 (editor, projetos de exemplo e samples oficiais).
-- Projetos de referência oficiais: Lyra Starter Game, Stack O Bot, Content Examples e Action RPG Sample.
+- Godot 4.7 com o addon Orchestrator (editor, projetos de exemplo e samples oficiais).
+- Projetos de referência oficiais: Godot Demo Projects, TPS Demo (Third Person Shooter) e Platformer 2D Demo.
 - Kenney Assets (kenney.nl): biblioteca de assets 2D e 3D sob licença CC0, utilizada para prototipagem rápida e composição do Vertical Slice sem dependência de ativos pagos.
-- Documentação oficial da Epic Games, Unreal Engine Learning Library e Unreal Community Wiki.
+- Documentação oficial do Godot Engine e do Orchestrator.
 - Documentação oficial da Unity (Unity Manual e Unity Learn), para fins comparativos.
-- Ambiente de laboratório de desenvolvimento com estações equipadas para produção em Unreal Engine.
+- Ambiente de laboratório de desenvolvimento com estações equipadas para produção em Godot.
 - Ferramentas de versionamento e organização de projeto para acompanhamento do desenvolvimento incremental do Vertical Slice.
 - Ferramentas de apresentação e registro para code review, playtests e apresentações técnicas.
 
@@ -147,7 +147,7 @@ A disciplina não utiliza prova tradicional. A avaliação é processual e coere
 - a participação ativa em laboratório;
 - o funcionamento efetivo do projeto em cada entrega;
 - a organização técnica do projeto (estrutura, nomenclatura, versionamento);
-- a aplicação correta e justificada dos recursos da Unreal Engine explorados em cada módulo;
+- a aplicação correta e justificada dos recursos do Godot explorados em cada módulo;
 - a capacidade de justificar decisões arquiteturais tomadas durante o desenvolvimento;
 - apresentações técnicas, com destaque para a apresentação final do Módulo 5;
 - sessões de code review, avaliando qualidade e clareza da implementação;
@@ -171,17 +171,17 @@ Bibliografia oficial conforme o Projeto Pedagógico do Curso Superior de Tecnolo
 - SALEN, Katie; ZIMMERMAN, Eric. **Regras do jogo: fundamentos do design de jogos: interação lúdica: volume 3**. São Paulo: Blucher, 2012. 258 p. ISBN 9788521206286.
 - SALEN, Katie; ZIMMERMAN, Eric. **Regras do jogo: fundamentos do design de jogos: cultura: volume 4**. São Paulo: Blucher, 2012. 153 p. ISBN 9788521206293.
 
-## Referências Técnicas Complementares (Unreal Engine e Unity)
+## Referências Técnicas Complementares (Godot e Unity)
 
-As obras acima constituem a bibliografia oficial do PPC. Para fins de apoio prático ao desenvolvimento em Unreal Engine 5.6 e à comparação entre motores, a disciplina utiliza ainda as seguintes fontes de consulta técnica, não substitutas da bibliografia oficial:
+As obras acima constituem a bibliografia oficial do PPC. Para fins de apoio prático ao desenvolvimento em Godot 4.7 + Orchestrator e à comparação entre motores, a disciplina utiliza ainda as seguintes fontes de consulta técnica, não substitutas da bibliografia oficial:
 
-- EPIC GAMES. **Unreal Engine 5 Documentation**. Disponível em: https://dev.epicgames.com/documentation/en-us/unreal-engine.
-- EPIC GAMES. **Unreal Engine Learning Library**. Disponível em: https://dev.epicgames.com/community/unreal-engine/learning.
-- EPIC GAMES. **Samples and Tutorials**. Disponível em: https://dev.epicgames.com/documentation/en-us/unreal-engine/samples-and-tutorials.
+- GODOT ENGINE. **Godot Documentation**. Disponível em: https://docs.godotengine.org/.
+- CRATERCRASH. **Orchestrator — Visual Scripting for Godot**. Disponível em: https://orchestrator.cratercrash.space/.
+- CRATERCRASH. **Orchestrator (repositório)**. Disponível em: https://github.com/CraterCrash/godot-orchestrator.
+- GODOT ENGINE. **Godot Demo Projects**. Disponível em: https://github.com/godotengine/godot-demo-projects.
 - UNITY TECHNOLOGIES. **Unity Manual**. Disponível em: https://docs.unity3d.com/Manual/.
 - UNITY TECHNOLOGIES. **Unity Learn**. Disponível em: https://learn.unity.com/.
-- GODOT ENGINE. **Godot Documentation**. Disponível em: https://docs.godotengine.org/.
-- Unreal Community Wiki. Disponível em: https://unrealcommunity.wiki/.
-- LOOMAN, Tom. Disponível em: https://www.tomlooman.com/.
-- BenUI. Disponível em: https://benui.ca/.
+- EPIC GAMES. **Unreal Engine 5 Documentation**. Disponível em: https://dev.epicgames.com/documentation/en-us/unreal-engine.
+- GDQuest. Disponível em: https://www.gdquest.com/.
+- KidsCanCode. Disponível em: https://kidscancode.org/godot_recipes/4.x/.
 - GDC Vault. Disponível em: https://gdcvault.com/.

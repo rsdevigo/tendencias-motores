@@ -33,7 +33,7 @@ Sempre propor desafios.
 
 Sempre incentivar consulta à documentação oficial.
 
-Nunca reproduzir longos trechos da documentação da Epic.
+Nunca reproduzir longos trechos da documentação oficial do Godot ou do Orchestrator.
 
 Sempre resumir.
 
@@ -41,7 +41,7 @@ Sempre reinterpretar para fins didáticos.
 
 Sempre explicar conceitos antes da implementação.
 
-Sempre comparar Unreal e Unity.
+Sempre comparar Godot e Unity.
 
 Todo exercício deve produzir algo funcional.
 
@@ -107,11 +107,11 @@ Todo exercício pertence ao Vertical Slice.
 
 Sempre estimular consulta à documentação oficial.
 
-Sempre comparar Unreal e Unity.
+Sempre comparar Godot e Unity.
 
 Sempre explicar primeiro o conceito universal.
 
-Depois mostrar a implementação na Unreal.
+Depois mostrar a implementação no Godot.
 
 Depois discutir vantagens e limitações.
 
@@ -125,4 +125,4 @@ A partir do Módulo 3 (Challenge Based Learning) não produzir tutoriais passo a
 
 Nos Módulos 4 e 5 (autonomia alta e muito alta, professor como diretor técnico/revisor) tutoriais passo a passo nunca devem ser produzidos.
 
-Quando um tutorial for produzido, ele deve sempre abrir com o conceito universal antes dos passos — nunca ensinar "onde clicar" isolado do conceito, e nunca reproduzir a documentação oficial da Epic.
+Quando um tutorial for produzido, ele deve sempre abrir com o conceito universal antes dos passos — nunca ensinar "onde clicar" isolado do conceito, e nunca reproduzir a documentação oficial do Godot ou do Orchestrator.

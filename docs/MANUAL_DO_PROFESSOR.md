@@ -4,17 +4,17 @@
 
 Este manual é o guia operacional de quem vai ministrar a disciplina. Ele não repete o conteúdo do Plano de Ensino, do Cronograma, dos Planos de Aula, dos Tutoriais ou das Rubricas — todos esses documentos já existem e são normativos. O que este manual faz é explicar **como usar** esses documentos no dia a dia da disciplina, e como pensar as decisões que eles não cobrem explicitamente.
 
-Ele foi escrito para servir qualquer professor que assuma a disciplina, em qualquer momento: alguém que nunca a ministrou, alguém com pouca experiência em Unreal Engine, alguém vindo de Unity, ou alguém assumindo a turma no meio do semestre.
+Ele foi escrito para servir qualquer professor que assuma a disciplina, em qualquer momento: alguém que nunca a ministrou, alguém com pouca experiência em Godot, alguém vindo de Unity ou Unreal, ou alguém assumindo a turma no meio do semestre.
 
 ---
 
 ## 1. Filosofia da Disciplina
 
-### 1.1 Por que Unreal Engine
+### 1.1 Por que Godot
 
-A disciplina não ensina Unreal Engine. Ela usa a Unreal Engine 5.6 como **estudo de caso** para ensinar conceitos que existem em qualquer motor de jogos moderno: composição de entidades, gameplay framework, comunicação desacoplada entre sistemas, dados de design separados de lógica, animação por máquina de estados, IA baseada em árvores de decisão, interface em tempo real, otimização e empacotamento. A Unreal foi escolhida porque expõe esses conceitos de forma explícita e nomeada (Actor/Component, GameMode/GameState, Blueprint Interfaces, Behavior Tree), o que facilita apontar para o conceito universal por trás do botão.
+A disciplina não ensina Godot. Ela usa o Godot 4.7 + Orchestrator como **estudo de caso** para ensinar conceitos que existem em qualquer motor de jogos moderno: composição de entidades, gameplay framework, comunicação desacoplada entre sistemas, dados de design separados de lógica, animação por máquina de estados, IA baseada em árvores de decisão, interface em tempo real, otimização e exportação. O Godot foi escolhido porque expõe esses conceitos de forma explícita (Node/Scene Tree, Autoload, contrato Interactable via Orchestrator, Signals) e porque é gratuito e open source, o que facilita apontar para o conceito universal por trás do botão sem depender de licenciamento.
 
-Se em algum momento uma aula vira "como usar tal recurso da Unreal" sem nunca responder "que problema universal isso resolve, e como outro motor resolveria o mesmo problema", a aula perdeu o eixo da disciplina. Esse é o teste mais simples para saber se uma aula está no caminho certo.
+Se em algum momento uma aula vira "como usar tal recurso do Godot" sem nunca responder "que problema universal isso resolve, e como outro motor resolveria o mesmo problema", a aula perdeu o eixo da disciplina. Esse é o teste mais simples para saber se uma aula está no caminho certo.
 
 ### 1.2 Por que um único Vertical Slice
 
@@ -26,11 +26,11 @@ A carga teórica é mínima e nunca expositiva pura: PEDAGOGICAL_RULES.txt proí
 
 ### 1.4 Por que o foco está em conceitos universais
 
-Toda aula deveria, mesmo que implicitamente, responder quatro perguntas: qual conceito universal está sendo ensinado, como ele é implementado na Unreal, como seria implementado na Unity, e como esse conhecimento se transfere para outro motor. Esse é o critério mais importante para julgar se um material (slide, tutorial, desafio) está alinhado com a disciplina — não a qualidade da explicação da Unreal isoladamente, mas se ela está ancorada num conceito que sobrevive fora da Unreal.
+Toda aula deveria, mesmo que implicitamente, responder quatro perguntas: qual conceito universal está sendo ensinado, como ele é implementado no Godot, como seria implementado na Unity, e como esse conhecimento se transfere para outro motor. Esse é o critério mais importante para julgar se um material (slide, tutorial, desafio) está alinhado com a disciplina — não a qualidade da explicação do Godot isoladamente, mas se ela está ancorada num conceito que sobrevive fora do Godot.
 
-### 1.5 Como a Unreal é utilizada como estudo de caso
+### 1.5 Como o Godot é utilizado como estudo de caso
 
-Isso não é uma abstração vaga: PROJECT_ARCHITECTURE.md já define exatamente que sistema da Unreal ensina que conceito, e o Cronograma já embute a comparação com Unity (e, quando pertinente, Godot, O3DE, Stride ou CryEngine) em cada semana. O papel do professor não é decidir se compara — a comparação já está prevista — e sim conduzir essa comparação com profundidade adequada ao momento do semestre, sem deixá-la virar um comentário de rodapé nem um desvio de meia aula.
+Isso não é uma abstração vaga: PROJECT_ARCHITECTURE.md já define exatamente que sistema do Godot ensina que conceito, e o Cronograma já embute a comparação com Unity (e, quando pertinente, Unreal Engine, O3DE ou Stride) em cada semana. O papel do professor não é decidir se compara — a comparação já está prevista — e sim conduzir essa comparação com profundidade adequada ao momento do semestre, sem deixá-la virar um comentário de rodapé nem um desvio de meia aula.
 
 ---
 
@@ -78,7 +78,7 @@ Rubricas (Sistema de Avaliação)
 - **Slides**: material de apresentação, alinhado ao conteúdo do Plano de Aula da mesma semana. Não substituem a preparação do professor — são apoio visual, não roteiro de fala.
 - **Rubricas (Sistema de Avaliação)**: aplicadas apenas nos marcos já definidos no Cronograma e no Quadro de Avaliação Contínua. O professor não cria novos instrumentos avaliativos fora dessa estrutura.
 
-Além desses, três documentos de contexto ficam por trás de toda decisão de conteúdo, mesmo sem aparecer explicitamente em cada material: COURSE_CONTEXT.txt (perfil dos estudantes e filosofia geral), PEDAGOGICAL_RULES.txt (regras de condução pedagógica) e PROJECT_ARCHITECTURE.md (referência técnica única do Vertical Slice — todo Blueprint, Component e convenção de nomenclatura mencionados em qualquer Plano de Aula vêm de lá). Se um Plano de Aula parecer contradizer PROJECT_ARCHITECTURE.md em algum detalhe técnico, o documento de arquitetura prevalece; o problema deve ser sinalizado para correção do material, nunca resolvido ad hoc improvisando uma arquitetura paralela em aula.
+Além desses, três documentos de contexto ficam por trás de toda decisão de conteúdo, mesmo sem aparecer explicitamente em cada material: COURSE_CONTEXT.txt (perfil dos estudantes e filosofia geral), PEDAGOGICAL_RULES.txt (regras de condução pedagógica) e PROJECT_ARCHITECTURE.md (referência técnica única do Vertical Slice — toda Scene, Component e convenção de nomenclatura mencionados em qualquer Plano de Aula vêm de lá). Se um Plano de Aula parecer contradizer PROJECT_ARCHITECTURE.md em algum detalhe técnico, o documento de arquitetura prevalece; o problema deve ser sinalizado para correção do material, nunca resolvido ad hoc improvisando uma arquitetura paralela em aula.
 
 ---
 
@@ -127,7 +127,7 @@ Boas práticas para o momento de laboratório, que é onde a maior parte do temp
 - Estimular experimentação: um estudante que tenta uma variação não demonstrada e erra aprendeu mais sobre o sistema do que um que só replicou com precisão. Isso é coerente com o critério "Criatividade" da Rubrica 2.
 - Evitar resolver tudo para os estudantes. Uma boa métrica pessoal: se você está resolvendo o mesmo tipo de problema em três grupos diferentes na mesma aula, pare e faça uma intervenção coletiva rápida em vez de repetir a solução individualmente três vezes.
 - Incentivar consulta à documentação oficial antes de perguntar ao professor — é um critério explícito da Rubrica 1 (Autonomia) e uma regra geral do PEDAGOGICAL_RULES.txt.
-- Incentivar depuração: quando um Blueprint não funciona, a primeira pergunta ao estudante deveria ser "o que você já verificou?", não a solução.
+- Incentivar depuração: quando um script/Orchestration não funciona, a primeira pergunta ao estudante deveria ser "o que você já verificou?", não a solução.
 - Promover colaboração entre grupos, especialmente porque o Vertical Slice de cada grupo evolui em paralelo — soluções diferentes para o mesmo desafio (ver seção 7) são material de discussão coletiva valioso.
 
 ---
@@ -155,9 +155,9 @@ Todo desafio proposto no Cronograma já existe com um grau de liberdade definido
 ## 9. Code Reviews
 
 - **Frequência**: Semanas 7 (Módulo 2), 10 (inventário/interação), 12 (materiais/cena) e 14 (encerramento do build final) — já fixadas no Cronograma e na Rubrica 4.
-- **Critérios**: organização dos Blueprints, nomenclatura, modularidade, reutilização de sistemas anteriores e comunicação desacoplada entre sistemas (Interfaces, Event Dispatchers) — nessa ordem de atenção, não apenas "funciona ou não funciona".
-- **Foco da revisão**: priorizar organização, modularidade, legibilidade e boas práticas de Blueprint sobre o simples funcionamento. Um Blueprint que funciona mas está inteiro dentro do Event Graph do Character, sem componentes nem funções nomeadas, deve receber nota mais baixa do que um Blueprint modular com uma pequena falha funcional pontual — é exatamente o que a Rubrica 4 pede.
-- **Boas práticas de condução**: abrir os Blueprints ao vivo com o grupo e pedir que expliquem sua própria lógica, em vez de o professor navegar sozinho pelo projeto. Verificar explicitamente se sistemas de módulos anteriores (Interfaces da Semana 5, Data Tables da Semana 6) ainda existem e são reutilizados, ou se foram silenciosamente substituídos — esse é o erro mais comum e mais grave em um projeto incremental de um único semestre.
+- **Critérios**: organização dos scripts/Orchestrations, nomenclatura, modularidade, reutilização de sistemas anteriores e comunicação desacoplada entre sistemas (contrato Interactable, Signals) — nessa ordem de atenção, não apenas "funciona ou não funciona".
+- **Foco da revisão**: priorizar organização, modularidade, legibilidade e boas práticas de Scene/script sobre o simples funcionamento. Uma implementação que funciona mas está inteira dentro do script do Player, sem Components nem funções nomeadas, deve receber nota mais baixa do que uma implementação modular com uma pequena falha funcional pontual — é exatamente o que a Rubrica 4 pede.
+- **Boas práticas de condução**: abrir os scripts/Orchestrations ao vivo com o grupo e pedir que expliquem sua própria lógica, em vez de o professor navegar sozinho pelo projeto. Verificar explicitamente se sistemas de módulos anteriores (contrato Interactable da Semana 5, Resource customizado da Semana 6) ainda existem e são reutilizados, ou se foram silenciosamente substituídos — esse é o erro mais comum e mais grave em um projeto incremental de um único semestre.
 
 ---
 
@@ -190,18 +190,18 @@ A ênfase avaliativa muda ao longo do semestre mesmo sem mudar os pesos percentu
 ### Módulo 1 (Semanas 1–3)
 
 - **Técnicas**: estudantes vindos de Unity tentam mapear literalmente conceitos de um motor para o outro (procurar uma "Assets folder" idêntica, esperar um Inspector idêntico). Intervenção: reforçar que a equivalência é funcional, não literal.
-- **Conceituais**: confundir "aprender Unreal" com o objetivo real da disciplina (aprender conceitos transferíveis). Intervenção: retomar explicitamente a pergunta "isso existiria em qualquer motor?" sempre que a aula correr risco de virar tutorial de botões.
+- **Conceituais**: confundir "aprender Godot" com o objetivo real da disciplina (aprender conceitos transferíveis). Intervenção: retomar explicitamente a pergunta "isso existiria em qualquer motor?" sempre que a aula correr risco de virar tutorial de botões.
 - **Pedagógicas**: professor tentado a acelerar demais por já perceber estudantes com boa base de Unity. Intervenção: lembrar que a autonomia muito baixa do Módulo 1 é proposital — mesmo estudantes experientes precisam da fundamentação conceitual antes da prática, porque é ela que sustenta a comparação entre motores mais adiante.
 
 ### Módulo 2 (Semanas 4–7)
 
-- **Técnicas**: uso de referências diretas (Cast to) em cascata em vez das Interfaces recém-ensinadas (Semana 5). Intervenção: redirecionar para o padrão de Interface antes de aceitar a solução acoplada.
-- **Conceituais**: dificuldade em enxergar por que GameMode/GameState/PlayerController/GameInstance precisam ser papéis separados, já que a Unity não tem equivalente direto e formal. Intervenção: usar exemplos concretos do próprio Vertical Slice para cada papel, evitando explicação puramente abstrata.
+- **Técnicas**: uso de referências diretas (`get_node`/caminhos fixos) em cascata em vez do contrato Interactable recém-ensinado (Semana 5). Intervenção: redirecionar para o padrão de contrato Interactable antes de aceitar a solução acoplada.
+- **Conceituais**: dificuldade em enxergar por que o `GameManager` precisa concentrar regras de partida e estado compartilhado, já que a Unity não tem equivalente direto e formal (padrão Manager/Singleton por convenção). Intervenção: usar exemplos concretos do próprio Vertical Slice para cada papel, evitando explicação puramente abstrata.
 - **Pedagógicas**: grupos recriando do zero elementos já prontos em vez de reutilizá-los, violando a regra "todo exercício pertence ao Vertical Slice". Intervenção: no Code Review da Semana 7, verificar explicitamente a reutilização de sistemas de semanas anteriores.
 
 ### Módulo 3 (Semanas 8–11)
 
-- **Técnicas**: lógica de animação, HUD ou IA implementada de forma monolítica, sem componentes reutilizáveis (ex.: HealthComponent duplicado entre BP_Player e BP_Enemy em vez de compartilhado). Intervenção: Code Review da Semana 10 e Playtest da Semana 11 são os pontos formais para capturar isso, mas vale sinalizar informalmente antes.
+- **Técnicas**: lógica de animação, HUD ou IA implementada de forma monolítica, sem componentes reutilizáveis (ex.: HealthComponent duplicado entre `Player` e `Enemy` em vez de compartilhado). Intervenção: Code Review da Semana 10 e Playtest da Semana 11 são os pontos formais para capturar isso, mas vale sinalizar informalmente antes.
 - **Conceituais**: dificuldade em decompor um problema aberto (metodologia Challenge Based Learning) depois de dois módulos guiados. Intervenção: pistas por aproximação (seção 7), nunca solução direta — é o momento em que a autonomia precisa começar a aparecer de fato.
 - **Pedagógicas**: professor tentado a demonstrar a solução completa de um desafio "para adiantar", contradizendo a metodologia do módulo. Intervenção: lembrar que a autonomia média do Módulo 3 é o próprio objeto de avaliação da Rubrica 2 nesse momento do semestre.
 
@@ -209,7 +209,7 @@ A ênfase avaliativa muda ao longo do semestre mesmo sem mudar os pesos percentu
 
 - **Técnicas**: problemas de performance não identificados antes do Profiling da Semana 13, aparecendo tarde demais para correção confortável. Intervenção: sugerir profiling informal já na Semana 12.
 - **Conceituais**: confundir polimento técnico com qualidade artística — a disciplina explicitamente não avalia isso (Rubrica 7). Intervenção: reforçar que o critério é "eleva a experiência sem depender de qualidade artística dos assets", nunca "está bonito".
-- **Pedagógicas**: grupos atrasados chegando ao empacotamento da Semana 14 sem terem testado o build fora do editor antes. Intervenção: cobrar explicitamente um teste de build empacotado como pré-requisito do Playtest cruzado.
+- **Pedagógicas**: grupos atrasados chegando à exportação da Semana 14 sem terem testado o build fora do editor antes. Intervenção: cobrar explicitamente um teste de build exportado como pré-requisito do Playtest cruzado.
 
 ### Módulo 5 (Semanas 15–17)
 
@@ -225,7 +225,7 @@ A ênfase avaliativa muda ao longo do semestre mesmo sem mudar os pesos percentu
 
 **Como evitar retrabalho**: a causa mais comum de retrabalho é um grupo ignorar um sistema já construído e recriar uma versão paralela (ex.: um segundo sistema de vida em vez de reutilizar o HealthComponent). O Code Review é o ponto de controle formal para isso, mas revisões informais durante o laboratório evitam que o problema só apareça semanas depois.
 
-**Quando refatorar**: dentro do semestre, refatoração só se justifica quando o sistema atual impede a construção do próximo módulo (ex.: um GameMode mal estruturado que trava a integração da Semana 5). Refatoração por preferência estética, sem impacto funcional, não deve consumir tempo de laboratório às custas do conteúdo da semana.
+**Quando refatorar**: dentro do semestre, refatoração só se justifica quando o sistema atual impede a construção do próximo módulo (ex.: um `GameManager` mal estruturado que trava a integração da Semana 5). Refatoração por preferência estética, sem impacto funcional, não deve consumir tempo de laboratório às custas do conteúdo da semana.
 
 **Como lidar com estudantes atrasados**: identificar o quanto antes se o atraso é de execução (technical debt recuperável no próprio módulo) ou de compreensão conceitual (que se propaga e se agrava a cada módulo seguinte, já que a disciplina é cumulativa). Atrasos de compreensão merecem intervenção individual fora do ritmo do laboratório coletivo, o quanto antes.
 
@@ -235,10 +235,10 @@ A ênfase avaliativa muda ao longo do semestre mesmo sem mudar os pesos percentu
 
 ## 13. Comparações entre Motores
 
-A comparação com Unity já está embutida em praticamente todo Plano de Aula do semestre; com Godot, O3DE, Stride ou CryEngine ela aparece quando pertinente, mais concentrada no Módulo 5. Ao conduzir qualquer comparação:
+A comparação com Unity já está embutida em praticamente todo Plano de Aula do semestre; com Unreal Engine, O3DE ou Stride ela aparece quando pertinente, mais concentrada no Módulo 5. Ao conduzir qualquer comparação:
 
 - Ancorar sempre no conceito universal primeiro, e só então mostrar a implementação específica de cada motor — nunca o inverso.
-- Evitar transformar a comparação em inventário de diferenças de interface ("aqui o botão fica à esquerda, lá fica à direita"). O que importa é a decisão arquitetural por trás (ex.: Unreal formaliza GameMode como classe nativa; Unity depende de convenção própria do time — ver PROJECT_ARCHITECTURE.md, seção 12).
+- Evitar transformar a comparação em inventário de diferenças de interface ("aqui o botão fica à esquerda, lá fica à direita"). O que importa é a decisão arquitetural por trás (ex.: Godot formaliza Autoload como mecanismo nativo de singleton global; Unity depende de convenção própria do time — ver PROJECT_ARCHITECTURE.md, seção 12).
 - Não aprofundar além do que o Plano de Aula da semana já prevê. Algumas comparações são deliberadamente breves ("não aprofundar — será retomado na Semana X") porque serão revisitadas com mais profundidade adiante; respeitar esse ritmo evita gastar tempo de laboratório em uma discussão que ainda não tem base suficiente.
 - No Módulo 5, a comparação deixa de ser pontual e passa a ser o próprio objeto de estudo — aí sim cabe aprofundamento maior, incluindo motores além de Unity conforme a escolha de cada grupo na Semana 16.
 
@@ -246,13 +246,13 @@ A comparação com Unity já está embutida em praticamente todo Plano de Aula d
 
 ## 14. Recursos Recomendados
 
-Consulte REFERENCES.md para a lista completa; a organização abaixo é apenas um resumo de uso rápido, seguindo a mesma ordem de prioridade já definida naquele documento (documentação oficial da Epic em primeiro lugar, depois Learning Library, Samples, Unreal Community Wiki, livros, documentação da Unity e comunidade).
+Consulte REFERENCES.md para a lista completa; a organização abaixo é apenas um resumo de uso rápido, seguindo a mesma ordem de prioridade já definida naquele documento (documentação oficial do Godot em primeiro lugar, depois documentação do Orchestrator, Samples, Godot Docs — Community, livros, documentação da Unity e comunidade).
 
-- **Documentação**: Unreal Engine Documentation (dev.epicgames.com) como primeira fonte sempre; Unity Manual/Unity Learn e Godot Documentation para comparação.
-- **Samples**: Lyra Starter Game, Stack O Bot, Content Examples e Action RPG Sample — usados principalmente no Módulo 5, mas úteis como referência de boas práticas em qualquer módulo.
-- **Vídeos**: canais oficiais e da comunidade (Unreal Engine, Mathew Wadstein, PrismaticaDev, Ryan Laley, LeafBranchGames, Smart Poly) — sempre como apoio complementar, nunca substituindo a documentação oficial.
+- **Documentação**: Godot Documentation (docs.godotengine.org) como primeira fonte sempre; Orchestrator (orchestrator.cratercrash.space) para visual scripting; Unity Manual/Unity Learn e Unreal Engine Documentation para comparação.
+- **Samples**: Godot Demo Projects, TPS Demo e Platformer 2D Demo — usados principalmente no Módulo 5, mas úteis como referência de boas práticas em qualquer módulo.
+- **Vídeos**: canais oficiais e da comunidade (GDQuest, Brackeys, Clear Code, HeartBeast, KidsCanCode) — sempre como apoio complementar, nunca substituindo a documentação oficial.
 - **Livros**: a bibliografia oficial do PPC (Computação Gráfica, Real-Time Rendering, Level Up!, Regras do Jogo) deve ser citada integralmente no Plano de Ensino; livros técnicos complementares (Game Engine Architecture, Game Programming Patterns, Design Patterns) são apoio de leitura para o professor, não bibliografia do estudante.
-- **Comunidade**: Tom Looman, BenUI e Unreal Community Wiki para dúvidas técnicas específicas de Blueprint e boas práticas.
+- **Comunidade**: GDQuest e KidsCanCode para dúvidas técnicas específicas de GDScript/Orchestrator e boas práticas.
 - **Ferramentas**: Kenney Assets (CC0) como única fonte de arte do projeto — nunca produção artística própria dos estudantes, conforme PROJECT_ARCHITECTURE.md.
 
 ---
@@ -263,7 +263,7 @@ Consulte REFERENCES.md para a lista completa; a organização abaixo é apenas u
 
 - [ ] Ler o Plano de Ensino, o Cronograma completo e o PROJECT_ARCHITECTURE.md do início ao fim.
 - [ ] Preencher a tabela de "Ancoragem no Calendário Acadêmico" do Cronograma com o calendário letivo vigente do IFMS, identificando feriados e eventos que colidem com encontros.
-- [ ] Confirmar Unreal Engine 5.6 instalada e testada no laboratório (não apenas na máquina do professor).
+- [ ] Confirmar Godot 4.7 com o addon Orchestrator instalado e testado no laboratório (não apenas na máquina do professor).
 - [ ] Preparar um projeto de referência próprio, seguindo a estrutura de pastas de PROJECT_ARCHITECTURE.md, para demonstrações.
 - [ ] Revisar o "Plano de contingência" do Cronograma e identificar, no seu calendário real, quais encontros compressíveis e quais não-compressíveis coincidem com datas de risco (feriados, eventos).
 
@@ -300,7 +300,7 @@ Consulte REFERENCES.md para a lista completa; a organização abaixo é apenas u
 
 ### Final do semestre
 
-- [ ] Conferir que o build final empacotado (Semana 14) corresponde ao apresentado na Semana 17, sem mudanças não documentadas.
+- [ ] Conferir que o build final exportado (Semana 14) corresponde ao apresentado na Semana 17, sem mudanças não documentadas.
 - [ ] Aplicar a Rubrica 7 (Vertical Slice Final) em conjunto com a Rubrica 6 (Apresentações) na Semana 17.
 - [ ] Consolidar as notas de todos os componentes conforme os pesos da seção "Distribuição das notas" do Sistema de Avaliação.
 - [ ] Registrar, para uso em semestres futuros, quais adaptações de ritmo ou conteúdo funcionaram ou não com esta turma.
@@ -321,14 +321,14 @@ Só depois que o grupo já tentou de forma genuína e o tempo de aula está se e
 **Posso adaptar os desafios?**
 Sim, dentro do grau de liberdade já previsto em cada desafio do Cronograma — por exemplo, ajustar a dificuldade para cima para um grupo mais avançado. Não é recomendável substituir um desafio inteiro por outro fora do Cronograma, porque cada desafio tem correspondência direta com o roadmap de PROJECT_ARCHITECTURE.md.
 
-**E se a Unreal apresentar problemas técnicos durante a aula (crash, erro de compilação, plugin quebrado)?**
-Tenha sempre um projeto de referência próprio pronto para demonstração, independente do estado dos projetos dos estudantes. Se o problema afetar a turma inteira (ex.: erro de uma versão específica do Editor), documente o contorno encontrado — ele provavelmente se repetirá em semestres futuros com a mesma versão da engine.
+**E se o Godot apresentar problemas técnicos durante a aula (crash, erro de importação, addon quebrado)?**
+Tenha sempre um projeto de referência próprio pronto para demonstração, independente do estado dos projetos dos estudantes. Se o problema afetar a turma inteira (ex.: erro de uma versão específica do Editor ou do Orchestrator), documente o contorno encontrado — ele provavelmente se repetirá em semestres futuros com a mesma versão da engine.
 
 **O que fazer caso um conteúdo não caiba no tempo previsto?**
 Consulte primeiro o "Plano de contingência" do Cronograma: alguns encontros são identificados como compressíveis, outros explicitamente não devem ser comprimidos (os que concentram instrumentos avaliativos de encerramento de módulo). Comprimir um encontro compressível é preferível a atropelar um encontro de encerramento.
 
 **Um estudante pode propor ampliar o escopo do Vertical Slice (nova mecânica, sistema mais complexo)?**
-Não. O escopo é fixo desde o Módulo 1 (PROJECT_ARCHITECTURE.md, seção 4) e a lista de itens "Fora do Escopo" (multiplayer, GAS, Mass AI, C++ avançado, entre outros) nunca deve ser incorporada, independentemente do interesse de um grupo específico — extensões de escopo comprometem a viabilidade do projeto dentro do semestre.
+Não. O escopo é fixo desde o Módulo 1 (PROJECT_ARCHITECTURE.md, seção 4) e a lista de itens "Fora do Escopo" (multiplayer, GDExtension em C++ avançado, mundo aberto, entre outros) nunca deve ser incorporada, independentemente do interesse de um grupo específico — extensões de escopo comprometem a viabilidade do projeto dentro do semestre.
 
 **Por que não existe tutorial para as semanas do Módulo 3 em diante?**
 Ver seção 5.2 — é uma decisão estrutural, não uma lacuna. Produzir um tutorial passo a passo para essas semanas contradiz a metodologia de Challenge Based Learning que rege o módulo.
@@ -341,9 +341,9 @@ Ver seção 5.2 — é uma decisão estrutural, não uma lacuna. Produzir um tut
 
 **Turmas maiores** (muitos grupos): priorize intervenções coletivas quando o mesmo erro aparecer em múltiplos grupos (ver seção 6), e considere estender ligeiramente o tempo de laboratório às custas da fundamentação teórica nas semanas em que o conceito já for familiar à maioria.
 
-**Laboratórios com computadores mais lentos**: a Semana 3 (Nanite/Lumen) e o Módulo 4 (otimização) são os pontos mais sensíveis a hardware limitado. Considere, nessas semanas, demonstrar em uma máquina de referência mais potente (se disponível) e ajustar as expectativas de qualidade visual do Vertical Slice de cada grupo — sem nunca usar isso como critério de avaliação, já que a Rubrica 7 explicitamente não avalia qualidade artística.
+**Laboratórios com computadores mais lentos**: a Semana 3 (SDFGI/VoxelGI) e o Módulo 4 (otimização) são os pontos mais sensíveis a hardware limitado. Considere, nessas semanas, demonstrar em uma máquina de referência mais potente (se disponível) e ajustar as expectativas de qualidade visual do Vertical Slice de cada grupo — sem nunca usar isso como critério de avaliação, já que a Rubrica 7 explicitamente não avalia qualidade artística.
 
-**Estudantes com diferentes níveis de experiência prévia** (ex.: alguns com mais prática em Unity do que outros): use a comparação Unreal-Unity já prevista em cada semana como ponte para os estudantes mais experientes em Unity, mas nunca assuma esse nível como piso da turma — a fundamentação conceitual de cada semana deve continuar partindo do zero em Unreal, coerente com o público-alvo descrito em COURSE_CONTEXT.txt.
+**Estudantes com diferentes níveis de experiência prévia** (ex.: alguns com mais prática em Unity do que outros): use a comparação Godot-Unity já prevista em cada semana como ponte para os estudantes mais experientes em Unity, mas nunca assuma esse nível como piso da turma — a fundamentação conceitual de cada semana deve continuar partindo do zero em Godot, coerente com o público-alvo descrito em COURSE_CONTEXT.txt.
 
 Nenhuma dessas adaptações deve alterar os objetivos da disciplina, o escopo do Vertical Slice ou os marcos avaliativos já fixados no Cronograma — apenas o ritmo e a ênfase de condução.
 
