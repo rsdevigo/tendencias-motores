@@ -1,0 +1,79 @@
+[
+  {
+    "id": "DC-01",
+    "title": "Construção de Chest/Pickup nunca especificada",
+    "body_ref": "../Design_Backlog/Design_Cards.md#dc-01--construção-de-chestpickup-nunca-especificada",
+    "rulebook_doc": "PROJECT_ARCHITECTURE.md §6, §7",
+    "summary": "PROJECT_ARCHITECTURE.md lista Chest/Pickup como Scenes que implementam Interactable, mas nenhum Tutorial (Semanas 5–7) contém um único passo de construção dessas Scenes. ItemData (Semana 6) fica sem consumidor real em jogo.",
+    "decisions_needed": [
+      "Chest é contêiner com estado (aberto/fechado) ou fonte repetível? Pickup é item visível coletado instantaneamente?",
+      "Signal genérico (interacted) ou próprio (item_granted(item: ItemData))?",
+      "Destino do item entre a Semana 6/7 (Chest deveria existir) e a Semana 10 (InventoryComponent existe)?",
+      "Chest é reutilizável ou fica marcado como vazio permanentemente (persistência)?"
+    ],
+    "completion_criteria": "PROJECT_ARCHITECTURE.md §6 e §7 ganham uma linha própria para Chest/Pickup no mesmo nível de detalhe de Door/Lever/Checkpoint.",
+    "blocks": ["IC-VS06-03", "IC-VS07-04-partial", "IC-VS10-01-population"],
+    "status": "open"
+  },
+  {
+    "id": "DC-02",
+    "title": "Definição mecânica do objetivo final único",
+    "body_ref": "../Design_Backlog/Design_Cards.md#dc-02--definição-mecânica-do-objetivo-final-único",
+    "rulebook_doc": "PROJECT_ARCHITECTURE.md §2, §4",
+    "summary": "§4 lista 'um objetivo final único que encerra o Vertical Slice' como único ponto de escopo, sem gatilho, lógica ou reação definidos — vazio de design, não placeholder numérico.",
+    "decisions_needed": [
+      "Gatilho do objetivo final (localização, item, derrota do Enemy, combinação)?",
+      "Onde a lógica vive (Component, responsabilidade do GameManager, Scene dedicada)?",
+      "O que o jogador vê ao concluir?",
+      "Depende do combate (DC-04) ou é independente?"
+    ],
+    "completion_criteria": "PROJECT_ARCHITECTURE.md §4 detalha gatilho/reação; §6/§7 ganham a linha/Scene correspondente.",
+    "blocks": ["IC-VS14-03"],
+    "status": "open"
+  },
+  {
+    "id": "DC-03",
+    "title": "Fluxo de morte/respawn do Player",
+    "body_ref": "../Design_Backlog/Design_Cards.md#dc-03--fluxo-de-morterespawn-do-player",
+    "rulebook_doc": "PROJECT_ARCHITECTURE.md §6, §7",
+    "summary": "HealthComponent.died existe, mas nenhum documento define quem escuta esse sinal do lado do Player nem o que acontece a seguir (respawn, game over, reinício).",
+    "decisions_needed": [
+      "Respawn no último Checkpoint, reinício total, ou tela de game over com retry?",
+      "Vida restaurada ao máximo ou mantém dano parcial?",
+      "Existe limite de tentativas (gancho: contador de tentativas do desafio da Semana 4)?"
+    ],
+    "completion_criteria": "PROJECT_ARCHITECTURE.md §7 (linha HealthComponent) descreve o fluxo de morte do Player e integração com Checkpoint/SaveComponent.",
+    "blocks": ["IC-VS08-02-partial", "IC-VS11-04"],
+    "status": "open"
+  },
+  {
+    "id": "DC-04",
+    "title": "Consequência da morte do Enemy",
+    "body_ref": "../Design_Backlog/Design_Cards.md#dc-04--consequência-da-morte-do-enemy",
+    "rulebook_doc": "PROJECT_ARCHITECTURE.md §6, §7",
+    "summary": "Simétrico a DC-03: HealthComponent.died do Enemy não tem reação definida (remoção da cena, estado terminal na Behavior Tree, drop de item).",
+    "decisions_needed": [
+      "Enemy é removido (queue_free()) ou entra em estado terminal na Behavior Tree?",
+      "Derrota dropa item (reabre DC-01) ou contribui para o objetivo final (DC-02)?",
+      "Há apenas um Enemy no Vertical Slice, ou a solução precisa lidar com múltiplas instâncias?"
+    ],
+    "completion_criteria": "PROJECT_ARCHITECTURE.md §7 (linha Enemy) descreve o comportamento ao morrer.",
+    "blocks": ["IC-VS11-04"],
+    "status": "open"
+  },
+  {
+    "id": "DC-05",
+    "title": "Evolução do schema de SaveData para os Módulos 3–4",
+    "body_ref": "../Design_Backlog/Design_Cards.md#dc-05--evolução-do-schema-de-savedata-para-os-módulos-34",
+    "rulebook_doc": "PROJECT_ARCHITECTURE.md §7",
+    "summary": "SaveData (Semana 7) só define itens_coletados: Array[String] e ultimo_checkpoint: String — insuficiente para o InventoryComponent (ItemData completo) e para vida/estado de inimigo introduzidos nos Módulos 3–4.",
+    "decisions_needed": [
+      "itens_coletados passa a guardar caminhos de .tres recarregáveis, ou uma estrutura própria (Array[ItemData])?",
+      "Vida atual do Player é persistida, ou todo Checkpoint restaura vida máxima (cruza com DC-03)?",
+      "Estado do Enemy (vivo/morto/posição) precisa persistir (cruza com DC-04)?"
+    ],
+    "completion_criteria": "PROJECT_ARCHITECTURE.md §7 (linha SaveData) descreve o schema final cobrindo inventário, vida e, se DC-04 exigir, estado de inimigos.",
+    "blocks": ["IC-VS10-04", "IC-VS14-02"],
+    "status": "open"
+  }
+]

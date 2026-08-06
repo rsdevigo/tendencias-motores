@@ -1,0 +1,30 @@
+{
+  "project": {
+    "name": "O Templo Esquecido — Vertical Slice",
+    "subtitle": "Plano de produção — Tendências de Motores de Jogos (IN46A), IFMS Campus Dourados",
+    "engine": "Godot 4.7 + Orchestrator",
+    "generated_from": [
+      "PROJECT_ARCHITECTURE.md",
+      "docs/Cronograma_Tendencias_de_Motores_de_Jogos.md",
+      "docs/Tutoriais/Tutorial_Semana_01_Encontro_1.md .. Tutorial_Semana_07_Encontro_2.md"
+    ],
+    "priority_order_on_conflict": [
+      "docs/Cronograma_Tendencias_de_Motores_de_Jogos.md",
+      "PROJECT_ARCHITECTURE.md",
+      "docs/Tutoriais/*"
+    ]
+  },
+  "decks": [
+    { "id": "milestones", "name": "Milestones", "file": "../Milestones.md", "count": 5 },
+    { "id": "vertical_slices", "name": "Vertical Slices", "file": "../Vertical_Slices.md", "count": 17 },
+    { "id": "hero_cards", "name": "Hero Cards", "file": "../Design_Backlog/Hero_Cards.md", "count": 15 },
+    { "id": "design_cards", "name": "Design Cards", "file": "Design_Cards.json", "count": 5 },
+    { "id": "implementation_cards", "name": "Implementation Cards", "file": "Implementation_Cards.json", "count": 51 }
+  ],
+  "implementation_card_type_counts": {
+    "A": 30,
+    "B": 16,
+    "C_blocked_stub": 5
+  },
+  "notes": "Nenhuma integração de API/MCP Codecks estava disponível no ambiente em que este plano foi gerado. Esta pasta é o fallback em arquivo, pronto para importação manual ou scriptada. Ver Import_Instructions.md."
+}
