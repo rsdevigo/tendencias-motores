@@ -77,14 +77,14 @@ Por isso, engines modernas oferecem uma solução pronta para esse problema espe
 7. No Inspector, com `Malha` selecionado, atribua uma Mesh simples (por exemplo, uma `CapsuleMesh`) para representar visualmente o personagem.
 8. Ajuste a posição de `Malha` e da forma da `CollisionShape3D` para que ambas fiquem alinhadas visualmente — a base da cápsula deve tocar o `Chao`.
 9. Posicione o `Player` (usando o Gizmo de movimento no Viewport) sobre a área visível do `Chao`, evitando sobreposição com a geometria.
-10. Abra o painel do Orchestrator e crie uma nova Orchestration associada ao Node `Player`, salvando-a em `orchestrations/` com o nome `player.os`.
+10. Abra o painel do Orchestrator e crie uma nova Orchestration associada ao Node `Player`, salvando-a em `orchestrations/` com o nome `player.torch`.
 11. Dentro da Orchestration, adicione um nó de evento **PhysicsProcess** (equivalente ao `_physics_process()` do GDScript) e conecte-o a uma chamada do método `move_and_slide` do próprio `Player` — sem ainda atribuir nenhuma velocidade a `velocity`, apenas garantindo que a chamada existe e não gera erro.
 12. Com `Player` selecionado no painel Scene, clique com o botão direito e escolha **Save Branch as Scene**, salvando em `scenes/characters/Player.tscn` (ver PROJECT_ARCHITECTURE.md, seções 8 e 9). O `Player` continua na hierarquia de `level_exploration.tscn`, mas agora é uma Scene independente e reutilizável, instanciada dentro do nível — não um Node solto que só existe dentro dele.
 13. Salve a Scene (**Ctrl+S**) e pressione **Play Scene** (F6) para confirmar que o Player aparece na cena, sólido e sem erros, mesmo parado.
 
 ## Resultado esperado
 
-O `Player` (CharacterBody3D) existe como Scene própria em `scenes/characters/Player.tscn`, com `CollisionShape3D` e `Malha` (MeshInstance3D) como filhos, alinhados visualmente sobre o `Chao`, e instanciado dentro de `level_exploration.tscn`. Uma Orchestration `player.os` está associada ao Node e chama `move_and_slide` a cada frame de física, sem ainda produzir movimento.
+O `Player` (CharacterBody3D) existe como Scene própria em `scenes/characters/Player.tscn`, com `CollisionShape3D` e `Malha` (MeshInstance3D) como filhos, alinhados visualmente sobre o `Chao`, e instanciado dentro de `level_exploration.tscn`. Uma Orchestration `player.torch` está associada ao Node e chama `move_and_slide` a cada frame de física, sem ainda produzir movimento.
 
 ## Verificando
 
@@ -133,7 +133,7 @@ Ajuste a forma ou o tamanho da `CollisionShape3D` do próprio Player — por exe
 
 ☐ Player posicionado sobre o `Chao`, sem sobreposição ou flutuação
 
-☐ Orchestration `player.os` associada ao `Player`, chamando `move_and_slide` no PhysicsProcess
+☐ Orchestration `player.torch` associada ao `Player`, chamando `move_and_slide` no PhysicsProcess
 
 ☐ Scene testada com F6, Player visível e sem erros
 

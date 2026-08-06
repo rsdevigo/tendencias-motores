@@ -115,7 +115,7 @@ O Encontro 1 resolveu "como" um agente se move. O Encontro 2 resolve "o que" ele
 
 ## Recursos do Godot
 
-`NavigationAgent3D` (retomado do Encontro 1), Behavior Trees e Blackboards (addon LimboAI — `BTPlayer`, Blackboard), `Area3D`/`RayCast3D` (detecção de combate), `HealthComponent` (retomado da Semana 8).
+`NavigationAgent3D` (retomado do Encontro 1), Behavior Trees e Blackboards (addon LimboAI — `BTPlayer`, Blackboard), `Area3D`/`RayCast3D` (detecção de combate), `HealthComponent` (retomado da Semana 8). As tasks customizadas do LimboAI (`BTAction`/`BTCondition`) exigem GDScript — são classes que estendem tipos nativos do addon, fora do alcance do Orchestrator; já o sinal de combate que chama `apply_damage` pode ser implementado via Orchestrator ou GDScript, como qualquer outra conexão de Signal já praticada desde a Semana 5.
 
 ## Comparação com Unity
 
@@ -142,7 +142,7 @@ A Unity resolveria a mesma decisão autônoma com um asset de terceiros como Beh
 
 ## Desenvolvimento
 
-O encontro abre com a demonstração guiada de uma Behavior Tree simples via LimboAI, aplicando o padrão de patrulha (deslocamento entre pontos, reutilizando o `NavigationAgent3D` do Encontro 1) e perseguição (mudança de alvo ao detectar o `Player` via Blackboard), seguida da implementação do combate simples — uma `Area3D` ou `RayCast3D` do `Player` chamando `apply_damage` no `HealthComponent` do `Enemy`, o mesmo Component já existente desde a Semana 8. A partir daí, o professor apresenta o desafio: cada grupo propõe e implementa um comportamento autônomo adicional para o próprio `Enemy` (patrulha, alerta, fuga ou interação com o jogador), com liberdade de solução dentro da estrutura de Behavior Tree/Blackboard já demonstrada. O encontro fecha com o Playtest coletivo, em que os grupos jogam os Vertical Slices uns dos outros avaliando experiência de jogo e clareza (Rubrica 5), seguido do Showcase de apresentação e encerramento formal da Unidade III (Rubrica 6).
+O encontro abre com a demonstração guiada de uma Behavior Tree simples via LimboAI, aplicando o padrão de patrulha (deslocamento entre pontos, reutilizando o `NavigationAgent3D` do Encontro 1) e perseguição (mudança de alvo ao detectar o `Player` via Blackboard), seguida da implementação do combate simples — uma `Area3D` ou `RayCast3D` do `Player` chamando `apply_damage` no `HealthComponent` do `Enemy` (via Orchestrator ou GDScript), o mesmo Component já existente desde a Semana 8. As tasks da Behavior Tree em si (patrulha, perseguição) são escritas em GDScript, exigência do addon LimboAI — o professor deixa essa distinção explícita para a turma: nem todo sistema do projeto aceita Orchestrator como alternativa. A partir daí, o professor apresenta o desafio: cada grupo propõe e implementa um comportamento autônomo adicional para o próprio `Enemy` (patrulha, alerta, fuga ou interação com o jogador), com liberdade de solução dentro da estrutura de Behavior Tree/Blackboard já demonstrada. O encontro fecha com o Playtest coletivo, em que os grupos jogam os Vertical Slices uns dos outros avaliando experiência de jogo e clareza (Rubrica 5), seguido do Showcase de apresentação e encerramento formal da Unidade III (Rubrica 6).
 
 ## Desafio
 

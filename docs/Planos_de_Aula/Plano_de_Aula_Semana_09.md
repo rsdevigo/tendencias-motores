@@ -42,7 +42,7 @@ Toda engine moderna enfrenta o mesmo problema estrutural: o jogador precisa perc
 
 ## Recursos do Godot
 
-Control, containers (`HBoxContainer`/`VBoxContainer`), anchors, `HealthComponent` (retomado da Semana 8).
+Control, containers (`HBoxContainer`/`VBoxContainer`), anchors, `HealthComponent` (retomado da Semana 8). O binding de dados que conecta o Control ao `HealthComponent` é implementado via Orchestrator ou GDScript, à escolha do professor/grupo.
 
 ## Comparação com Unity
 
@@ -51,7 +51,7 @@ A Unity resolve o mesmo problema historicamente por dois caminhos: uGUI, baseado
 ## Preparação do Professor
 
 - Projeto do Vertical Slice retomado da Semana 8, com `HealthComponent`, State Machine e animação contextual já funcionais.
-- Cena de exemplo com um Control simples (Label vinculado à vida do `HealthComponent`) preparada para demonstração, sem distribuir antes da aula.
+- Cena de exemplo com um Control simples (Label vinculado à vida do `HealthComponent` via Orchestrator ou GDScript) preparada para demonstração, sem distribuir antes da aula.
 - Slides com o comparativo Control node (Godot) × uGUI/UI Toolkit (Unity).
 - Lista dos dados de gameplay já existentes no projeto disponíveis para binding (vida via `HealthComponent`, itens/progresso via `SaveComponent`/`SaveData`, estado de partida via `GameManager`).
 
@@ -68,7 +68,7 @@ A Unity resolve o mesmo problema historicamente por dois caminhos: uGUI, baseado
 
 ## Desenvolvimento
 
-O encontro parte do projeto herdado da Semana 8 sem alterar nenhum sistema de gameplay existente, introduzindo apenas uma nova camada de leitura sobre o que já existe. O professor demonstra primeiro os dois problemas estruturais de qualquer Control — organização automática via containers e ancoragem via anchors — com exemplos pequenos e isolados, antes de conectar qualquer dado real. Em seguida, demonstra a construção guiada de um Control simples (um Label de vida) vinculado ao `HealthComponent` já existente no Player, deixando explícito que o Control apenas lê o valor exposto pelo Component, sem duplicar ou recalcular o estado de vida. Cada grupo replica essa construção sobre seu próprio projeto, adaptando o layout do Control ao restante da sua interface.
+O encontro parte do projeto herdado da Semana 8 sem alterar nenhum sistema de gameplay existente, introduzindo apenas uma nova camada de leitura sobre o que já existe. O professor demonstra primeiro os dois problemas estruturais de qualquer Control — organização automática via containers e ancoragem via anchors — com exemplos pequenos e isolados, antes de conectar qualquer dado real. Em seguida, demonstra a construção guiada de um Control simples (um Label de vida) vinculado ao `HealthComponent` já existente no Player — o binding em si implementado via Orchestrator ou GDScript —, deixando explícito que o Control apenas lê o valor exposto pelo Component, sem duplicar ou recalcular o estado de vida. Cada grupo replica essa construção sobre seu próprio projeto, adaptando o layout do Control ao restante da sua interface.
 
 ## Desafio
 
@@ -110,7 +110,7 @@ O Encontro 1 resolveu a interface em tempo real no nível de um único elemento.
 
 ## Recursos do Godot
 
-CanvasLayer, Control (retomado do Encontro 1), `HealthComponent`, `SaveComponent`/`SaveData`, `GameManager` (retomados dos Módulos 2 e 3).
+CanvasLayer, Control (retomado do Encontro 1), `HealthComponent`, `SaveComponent`/`SaveData`, `GameManager` (retomados dos Módulos 2 e 3). O binding de cada elemento do HUD é implementado via Orchestrator ou GDScript, conforme a escolha já praticada no Encontro 1.
 
 ## Comparação com Unity
 

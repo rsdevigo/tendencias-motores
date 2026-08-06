@@ -105,12 +105,13 @@ Referência: PROJECT_ARCHITECTURE.md, seção de Componentes — HealthComponent
 ## `HealthComponent`: Vida, Dano e Morte como Component
 
 - Node customizado, seguindo o mesmo padrão de `InteractionComponent` (Semana 5) e `SaveComponent` (Semana 7)
+- Implementado via Orchestrator ou GDScript, à escolha do professor/grupo
 - Propriedades: vida atual e vida máxima
 - Método público `apply_damage(quantidade)`; sinal `died` emitido quando a vida chega a zero
 
 <!--
 Reforçar: HealthComponent não conhece quem é seu dono (Player ou Enemy) — apenas expõe vida, dano e o sinal died.
-Erro comum: implementar vida/dano diretamente no script do Player em vez de isolar em um HealthComponent.
+Erro comum: implementar vida/dano diretamente no script/Orchestration do Player em vez de isolar em um HealthComponent.
 -->
 
 ---
@@ -124,7 +125,7 @@ Erro comum: implementar vida/dano diretamente no script do Player em vez de isol
 
 ### Godot
 
-- `HealthComponent`: Node customizado, seguindo a convenção de Component já usada no projeto desde a Semana 5
+- `HealthComponent`: Node customizado (Orchestrator ou GDScript), seguindo a convenção de Component já usada no projeto desde a Semana 5
 
 </div>
 <div class="col negative">
@@ -145,7 +146,7 @@ O conceito universal — estado de vida isolado em um Component reutilizável �
 
 ## Demonstração — Construção do `HealthComponent`
 
-O que será construído:
+O que será construído (via Orchestrator ou GDScript):
 
 - `HealthComponent` (Node) com vida atual/máxima, `apply_damage` e sinal `died`
 - Aplicação do `HealthComponent` como filho do Player

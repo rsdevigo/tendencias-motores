@@ -162,7 +162,7 @@ Um projeto de jogo cresce rapidamente em número de arquivos. Organizar a estrut
 3. Dentro de `scenes`, crie as subpastas `characters`, `interactables`, `ui` e `levels`.
 4. Dentro de `levels`, crie as subpastas `exploration` e `dungeon`.
 5. Na raiz do projeto, crie a pasta `scripts` e, dentro dela, as subpastas `autoload` e `components`.
-6. Crie a pasta `orchestrations` na raiz (para os arquivos `.os` do Orchestrator).
+6. Crie a pasta `orchestrations` na raiz (para os arquivos `.torch` do Orchestrator).
 7. Crie a pasta `resources` na raiz e, dentro dela, as subpastas `items` e `save`.
 8. Crie as pastas `assets` (com subpastas `dungeon` e `nature`), `materials`, `audio` e `animations` na raiz.
 9. Confira a estrutura final no FileSystem Dock, comparando com a tabela de organização do PROJECT_ARCHITECTURE.md.

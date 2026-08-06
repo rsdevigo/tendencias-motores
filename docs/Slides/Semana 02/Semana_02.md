@@ -155,7 +155,7 @@ O que será construído:
 - Node `Player` (CharacterBody3D), filho de `NivelTeste`
 - `CollisionShape3D` — forma física de colisão
 - `Malha` (MeshInstance3D) — representação visual
-- Orchestration `player.os` chamando `move_and_slide` no PhysicsProcess
+- Orchestration `player.torch` chamando `move_and_slide` no PhysicsProcess
 - `Player` salvo como Scene própria (`scenes/characters/Player.tscn`), reaproveitável em outros níveis
 
 Por quê: primeiro personagem controlável do semestre, base direta do Input Map no Encontro 2.
@@ -188,7 +188,7 @@ Cada estudante replica, no próprio projeto:
 1. `Player` (CharacterBody3D) como filho de `NivelTeste`
 2. `CollisionShape3D` com uma Shape atribuída (ex.: `CapsuleShape3D`)
 3. `Malha` (MeshInstance3D) com uma Mesh atribuída, alinhada à colisão
-4. Orchestration `player.os` chamando `move_and_slide` no PhysicsProcess
+4. Orchestration `player.torch` chamando `move_and_slide` no PhysicsProcess
 5. `Player` salvo como Scene própria em `scenes/characters/Player.tscn`
 
 <!--
@@ -363,7 +363,7 @@ Pode ser desenhado ao vivo no quadro antes de abrir o Project Settings, retomand
 O que será construído:
 
 - Quatro Actions no Input Map: `move_forward`, `move_back`, `move_left`, `move_right`
-- Leitura das Actions dentro da Orchestration `player.os`
+- Leitura das Actions dentro da Orchestration `player.torch`
 - Combinação em um vetor de direção, aplicado à `velocity` do Player
 - `move_and_slide` chamado após a `velocity` ser atribuída
 
@@ -395,7 +395,7 @@ Usar esta imagem como referência caso a demonstração ao vivo não seja possí
 Cada estudante configura, no próprio projeto:
 
 1. Quatro Actions no Input Map (`move_forward`, `move_back`, `move_left`, `move_right`)
-2. Leitura das Actions na Orchestration `player.os`
+2. Leitura das Actions na Orchestration `player.torch`
 3. Vetor de direção combinado e aplicado à `velocity`
 4. Teste com F6, movendo o Player nas quatro direções
 
@@ -441,7 +441,7 @@ Circular pela sala observando as escolhas. Sem instrumento formal de avaliação
 
 - Player (CharacterBody3D) montado, com `CollisionShape3D` e `Malha` alinhados
 - Input Map com quatro Actions de movimentação, mais uma Action do desafio
-- Orchestration `player.os` lendo o Input Map e movendo o Player via `move_and_slide`
+- Orchestration `player.torch` lendo o Input Map e movendo o Player via `move_and_slide`
 - Turma relaciona CharacterBody3D/Input Map aos equivalentes na Unity
 
 <!--
@@ -453,7 +453,7 @@ Sem instrumento formal de avaliação nesta semana. Observado no Checkpoint de e
 ## Checklist da Semana
 
 - [ ] `Player` (CharacterBody3D) com `CollisionShape3D` e `Malha` alinhados, salvo em `scenes/characters/Player.tscn`
-- [ ] Orchestration `player.os` associada ao `Player`
+- [ ] Orchestration `player.torch` associada ao `Player`
 - [ ] Input Map com `move_forward`, `move_back`, `move_left`, `move_right`
 - [ ] `velocity` atribuída antes de `move_and_slide`
 - [ ] Player se move nas quatro direções, sem erros

@@ -281,6 +281,7 @@ Referência: LimboAI — github.com/limbonaut/limboai.
 
 - LimboAI (addon, não nativo) — `BTPlayer`, Blackboard
 - Nós de sequência, seletor e folha; memória compartilhada no Blackboard
+- Tasks customizadas (`BTAction`/`BTCondition`) exigem GDScript — fora do alcance do Orchestrator
 
 </div>
 <div class="col negative">
@@ -303,8 +304,8 @@ Princípio universal idêntico nas duas engines: nenhuma delas resolve Behavior 
 
 O que será construído:
 
-- Behavior Tree simples de patrulha (deslocamento entre pontos via `NavigationAgent3D`) e perseguição (mudança de alvo ao detectar o `Player`)
-- Combate simples: `Area3D`/`RayCast3D` do `Player` chamando `apply_damage` no `HealthComponent` do `Enemy`
+- Behavior Tree simples de patrulha (deslocamento entre pontos via `NavigationAgent3D`) e perseguição (mudança de alvo ao detectar o `Player`) — tasks em GDScript, exigência do LimboAI
+- Combate simples: `Area3D`/`RayCast3D` do `Player` chamando `apply_damage` no `HealthComponent` do `Enemy`, via Orchestrator ou GDScript
 
 Por quê: fixar o padrão guiado antes de abrir o desafio do comportamento autônomo adicional.
 

@@ -176,7 +176,7 @@ Este é o ponto pedagógico mais importante do encontro.
 O que será construído:
 
 - Um Control simples (Label) organizado por container e posicionado por anchor
-- Binding do Label à vida atual do `HealthComponent` do Player
+- Binding do Label à vida atual do `HealthComponent` do Player, via Orchestrator ou GDScript
 
 Por quê: dar a cada grupo a base direta para o HUD completo do Encontro 2, sem duplicar o estado de vida já existente.
 

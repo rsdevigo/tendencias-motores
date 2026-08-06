@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Modelo de Avaliação — Checkpoints</title>
+<style>
+  @page {
+    size: A4;
+    margin: 10mm 10mm;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', 'Open Sans', Arial, sans-serif;
+    color: #262233;
+    margin: 0;
+    padding: 0;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 277mm;
+    page-break-after: always;
+  }
+
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  .card {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 3mm 4mm 4mm 4mm;
+    border-bottom: 1px dashed #9a93ad;
+  }
+
+  .card:last-child {
+    border-bottom: none;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid #3b2f68;
+    padding-bottom: 1.5mm;
+    margin-bottom: 1.5mm;
+  }
+
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #3b2f68;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .card-subtitle {
+    font-size: 8px;
+    color: #6b6580;
+  }
+
+  .fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1mm 4mm;
+    font-size: 9px;
+    margin-bottom: 1.5mm;
+  }
+
+  .field {
+    display: flex;
+    align-items: flex-end;
+    gap: 1mm;
+    white-space: nowrap;
+  }
+
+  .field.grow {
+    flex: 1 1 auto;
+  }
+
+  .field label {
+    font-weight: 600;
+    color: #1f4e79;
+  }
+
+  .field .line {
+    flex: 1 1 auto;
+    border-bottom: 1px solid #262233;
+    min-width: 18mm;
+    height: 3mm;
+  }
+
+  table.rubrica {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5px;
+    margin-bottom: 1.5mm;
+  }
+
+  table.rubrica th {
+    background-color: #1f4e79;
+    color: #ffffff;
+    padding: 1mm 1.2mm;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  table.rubrica th.chk,
+  table.rubrica td.chk {
+    text-align: center;
+    width: 9%;
+  }
+
+  table.rubrica th.nota,
+  table.rubrica td.nota {
+    text-align: center;
+    width: 8%;
+  }
+
+  table.rubrica td {
+    padding: 0.8mm 1.2mm;
+    border-bottom: 1px solid #d7dde5;
+  }
+
+  table.rubrica tr:nth-child(even) td {
+    background-color: #f4f3f8;
+  }
+
+  .box {
+    display: inline-block;
+    width: 3mm;
+    height: 3mm;
+    border: 1px solid #262233;
+  }
+
+  .soma-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 9px;
+    margin-bottom: 1.5mm;
+    gap: 3mm;
+  }
+
+  .soma-row .line {
+    display: inline-block;
+    width: 10mm;
+    border-bottom: 1px solid #262233;
+    height: 3mm;
+  }
+
+  .aviso {
+    font-size: 8px;
+    font-style: italic;
+    color: #8a5a00;
+    margin-bottom: 1.5mm;
+  }
+
+  .text-line {
+    font-size: 8.5px;
+    margin-bottom: 1mm;
+    display: flex;
+    align-items: flex-end;
+    gap: 2mm;
+  }
+
+  .text-line label {
+    font-weight: 600;
+    color: #1f4e79;
+    white-space: nowrap;
+  }
+
+  .text-line .line {
+    flex: 1 1 auto;
+    border-bottom: 1px solid #262233;
+    height: 3mm;
+  }
+</style>
+</head>
+<body>
+
+<!-- Ficha repetida 3 vezes por página, em 2 páginas.
+     Imprima quantas páginas forem necessárias para cobrir o número de
+     grupos da turma. Gerado a partir de Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 3). -->
+
+<div class="page">
+  <div class="card">
+    <div>
+      <div class="card-header">
+        <span class="card-title">Modelo de Avaliação — Checkpoints</span>
+        <span class="card-subtitle">Rubrica 3 · Sistema de Avaliação — Tendências de Motores de Jogos (IN46A)</span>
+      </div>
+      <div class="fields">
+        <div class="field"><label>Turma:</label><span class="line" style="min-width:20mm"></span></div>
+        <div class="field"><label>Checkpoint (Semana 3 / 6 / 16):</label><span class="line" style="min-width:10mm"></span></div>
+        <div class="field"><label>Data:</label><span class="line" style="min-width:8mm"></span>/<span class="line" style="min-width:6mm"></span>/<span class="line" style="min-width:12mm"></span></div>
+        <div class="field grow"><label>Grupo avaliado:</label><span class="line"></span></div>
+      </div>
+      <table class="rubrica">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th class="chk">Excelente (4)</th>
+            <th class="chk">Bom (3)</th>
+            <th class="chk">Satisfatório (2)</th>
+            <th class="chk">Insuficiente (1)</th>
+            <th class="nota">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Progresso esperado</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Funcionalidades implementadas</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Qualidade técnica</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Estabilidade</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+        </tbody>
+      </table>
+      <div class="soma-row">
+        <span>Soma: <span class="line"></span> / 16</span>
+        <span>Nota do componente (0–10) = (Soma ÷ 16) × 10 = <span class="line"></span></span>
+      </div>
+      
+      <div class="text-line"><label>Pendências a resolver antes do próximo marco avaliativo:</label><span class="line"></span></div>
+      <div class="text-line"><label>Observações / feedback ao grupo:</label><span class="line"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div>
+      <div class="card-header">
+        <span class="card-title">Modelo de Avaliação — Checkpoints</span>
+        <span class="card-subtitle">Rubrica 3 · Sistema de Avaliação — Tendências de Motores de Jogos (IN46A)</span>
+      </div>
+      <div class="fields">
+        <div class="field"><label>Turma:</label><span class="line" style="min-width:20mm"></span></div>
+        <div class="field"><label>Checkpoint (Semana 3 / 6 / 16):</label><span class="line" style="min-width:10mm"></span></div>
+        <div class="field"><label>Data:</label><span class="line" style="min-width:8mm"></span>/<span class="line" style="min-width:6mm"></span>/<span class="line" style="min-width:12mm"></span></div>
+        <div class="field grow"><label>Grupo avaliado:</label><span class="line"></span></div>
+      </div>
+      <table class="rubrica">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th class="chk">Excelente (4)</th>
+            <th class="chk">Bom (3)</th>
+            <th class="chk">Satisfatório (2)</th>
+            <th class="chk">Insuficiente (1)</th>
+            <th class="nota">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Progresso esperado</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Funcionalidades implementadas</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Qualidade técnica</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Estabilidade</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+        </tbody>
+      </table>
+      <div class="soma-row">
+        <span>Soma: <span class="line"></span> / 16</span>
+        <span>Nota do componente (0–10) = (Soma ÷ 16) × 10 = <span class="line"></span></span>
+      </div>
+      
+      <div class="text-line"><label>Pendências a resolver antes do próximo marco avaliativo:</label><span class="line"></span></div>
+      <div class="text-line"><label>Observações / feedback ao grupo:</label><span class="line"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div>
+      <div class="card-header">
+        <span class="card-title">Modelo de Avaliação — Checkpoints</span>
+        <span class="card-subtitle">Rubrica 3 · Sistema de Avaliação — Tendências de Motores de Jogos (IN46A)</span>
+      </div>
+      <div class="fields">
+        <div class="field"><label>Turma:</label><span class="line" style="min-width:20mm"></span></div>
+        <div class="field"><label>Checkpoint (Semana 3 / 6 / 16):</label><span class="line" style="min-width:10mm"></span></div>
+        <div class="field"><label>Data:</label><span class="line" style="min-width:8mm"></span>/<span class="line" style="min-width:6mm"></span>/<span class="line" style="min-width:12mm"></span></div>
+        <div class="field grow"><label>Grupo avaliado:</label><span class="line"></span></div>
+      </div>
+      <table class="rubrica">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th class="chk">Excelente (4)</th>
+            <th class="chk">Bom (3)</th>
+            <th class="chk">Satisfatório (2)</th>
+            <th class="chk">Insuficiente (1)</th>
+            <th class="nota">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Progresso esperado</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Funcionalidades implementadas</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Qualidade técnica</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Estabilidade</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+        </tbody>
+      </table>
+      <div class="soma-row">
+        <span>Soma: <span class="line"></span> / 16</span>
+        <span>Nota do componente (0–10) = (Soma ÷ 16) × 10 = <span class="line"></span></span>
+      </div>
+      
+      <div class="text-line"><label>Pendências a resolver antes do próximo marco avaliativo:</label><span class="line"></span></div>
+      <div class="text-line"><label>Observações / feedback ao grupo:</label><span class="line"></span></div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="card">
+    <div>
+      <div class="card-header">
+        <span class="card-title">Modelo de Avaliação — Checkpoints</span>
+        <span class="card-subtitle">Rubrica 3 · Sistema de Avaliação — Tendências de Motores de Jogos (IN46A)</span>
+      </div>
+      <div class="fields">
+        <div class="field"><label>Turma:</label><span class="line" style="min-width:20mm"></span></div>
+        <div class="field"><label>Checkpoint (Semana 3 / 6 / 16):</label><span class="line" style="min-width:10mm"></span></div>
+        <div class="field"><label>Data:</label><span class="line" style="min-width:8mm"></span>/<span class="line" style="min-width:6mm"></span>/<span class="line" style="min-width:12mm"></span></div>
+        <div class="field grow"><label>Grupo avaliado:</label><span class="line"></span></div>
+      </div>
+      <table class="rubrica">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th class="chk">Excelente (4)</th>
+            <th class="chk">Bom (3)</th>
+            <th class="chk">Satisfatório (2)</th>
+            <th class="chk">Insuficiente (1)</th>
+            <th class="nota">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Progresso esperado</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Funcionalidades implementadas</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Qualidade técnica</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Estabilidade</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+        </tbody>
+      </table>
+      <div class="soma-row">
+        <span>Soma: <span class="line"></span> / 16</span>
+        <span>Nota do componente (0–10) = (Soma ÷ 16) × 10 = <span class="line"></span></span>
+      </div>
+      
+      <div class="text-line"><label>Pendências a resolver antes do próximo marco avaliativo:</label><span class="line"></span></div>
+      <div class="text-line"><label>Observações / feedback ao grupo:</label><span class="line"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div>
+      <div class="card-header">
+        <span class="card-title">Modelo de Avaliação — Checkpoints</span>
+        <span class="card-subtitle">Rubrica 3 · Sistema de Avaliação — Tendências de Motores de Jogos (IN46A)</span>
+      </div>
+      <div class="fields">
+        <div class="field"><label>Turma:</label><span class="line" style="min-width:20mm"></span></div>
+        <div class="field"><label>Checkpoint (Semana 3 / 6 / 16):</label><span class="line" style="min-width:10mm"></span></div>
+        <div class="field"><label>Data:</label><span class="line" style="min-width:8mm"></span>/<span class="line" style="min-width:6mm"></span>/<span class="line" style="min-width:12mm"></span></div>
+        <div class="field grow"><label>Grupo avaliado:</label><span class="line"></span></div>
+      </div>
+      <table class="rubrica">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th class="chk">Excelente (4)</th>
+            <th class="chk">Bom (3)</th>
+            <th class="chk">Satisfatório (2)</th>
+            <th class="chk">Insuficiente (1)</th>
+            <th class="nota">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Progresso esperado</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Funcionalidades implementadas</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Qualidade técnica</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Estabilidade</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+        </tbody>
+      </table>
+      <div class="soma-row">
+        <span>Soma: <span class="line"></span> / 16</span>
+        <span>Nota do componente (0–10) = (Soma ÷ 16) × 10 = <span class="line"></span></span>
+      </div>
+      
+      <div class="text-line"><label>Pendências a resolver antes do próximo marco avaliativo:</label><span class="line"></span></div>
+      <div class="text-line"><label>Observações / feedback ao grupo:</label><span class="line"></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div>
+      <div class="card-header">
+        <span class="card-title">Modelo de Avaliação — Checkpoints</span>
+        <span class="card-subtitle">Rubrica 3 · Sistema de Avaliação — Tendências de Motores de Jogos (IN46A)</span>
+      </div>
+      <div class="fields">
+        <div class="field"><label>Turma:</label><span class="line" style="min-width:20mm"></span></div>
+        <div class="field"><label>Checkpoint (Semana 3 / 6 / 16):</label><span class="line" style="min-width:10mm"></span></div>
+        <div class="field"><label>Data:</label><span class="line" style="min-width:8mm"></span>/<span class="line" style="min-width:6mm"></span>/<span class="line" style="min-width:12mm"></span></div>
+        <div class="field grow"><label>Grupo avaliado:</label><span class="line"></span></div>
+      </div>
+      <table class="rubrica">
+        <thead>
+          <tr>
+            <th>Critério</th>
+            <th class="chk">Excelente (4)</th>
+            <th class="chk">Bom (3)</th>
+            <th class="chk">Satisfatório (2)</th>
+            <th class="chk">Insuficiente (1)</th>
+            <th class="nota">Nota</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Progresso esperado</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Funcionalidades implementadas</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Qualidade técnica</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+          <tr><td>Estabilidade</td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="chk"><span class="box"></span></td><td class="nota"></td></tr>
+        </tbody>
+      </table>
+      <div class="soma-row">
+        <span>Soma: <span class="line"></span> / 16</span>
+        <span>Nota do componente (0–10) = (Soma ÷ 16) × 10 = <span class="line"></span></span>
+      </div>
+      
+      <div class="text-line"><label>Pendências a resolver antes do próximo marco avaliativo:</label><span class="line"></span></div>
+      <div class="text-line"><label>Observações / feedback ao grupo:</label><span class="line"></span></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

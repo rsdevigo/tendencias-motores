@@ -212,7 +212,7 @@ res://
 │   ├── autoload/         (game_manager.gd, save_manager.gd)
 │   ├── components/       (interaction_component.gd, inventory_component.gd, health_component.gd, save_component.gd)
 │   └── resources/        (classes de Resource customizado, ex.: item_data.gd — Semana 6)
-├── orchestrations/       (arquivos .os do Orchestrator equivalentes aos scripts acima)
+├── orchestrations/       (arquivos .torch do Orchestrator equivalentes aos scripts acima)
 ├── resources/
 │   ├── items/            (ItemData .tres)
 │   └── save/             (SaveData .tres)
@@ -236,7 +236,7 @@ Godot não usa prefixos de tipo de asset como a Unreal (`BP_`, `WBP_`); a conven
 |---|---|---|
 | Scene (nó raiz) | PascalCase | `Player.tscn` |
 | Script GDScript | snake_case, mesmo nome da Scene | `player.gd` |
-| Orchestration (Orchestrator) | snake_case, sufixo `.os` | `player.os` |
+| Orchestration (Orchestrator) | snake_case, sufixo `.torch` | `player.torch` |
 | Class name (GDScript) | PascalCase | `class_name HealthComponent` |
 | Autoload / Singleton | PascalCase (nome do node), snake_case (arquivo) | `GameManager` / `game_manager.gd` |
 | Resource customizado | PascalCase (classe), snake_case (arquivo `.tres`) | `ItemData` / `item_key.tres` |

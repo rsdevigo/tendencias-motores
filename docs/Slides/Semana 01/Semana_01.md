@@ -360,7 +360,7 @@ O que será construído:
 - Scene `level_exploration.tscn` em `scenes/levels/exploration/`
 - Nó raiz `NivelTeste` (Node3D)
 - Filhos: `Chao` (MeshInstance3D) e `LuzPrincipal` (DirectionalLight3D)
-- Orchestration `nivel_teste.os` com um evento **Ready** conectado a um log
+- Orchestration `nivel_teste.torch` com um evento **Ready** conectado a um log
 
 Por quê: primeira peça de conteúdo visível do semestre, base direta do Player na Semana 2.
 
@@ -391,7 +391,7 @@ Cada estudante replica, no próprio projeto:
 
 1. Scene `level_exploration.tscn` com nó raiz `NivelTeste`
 2. Filhos `Chao` e `LuzPrincipal`, renomeados e configurados
-3. Orchestration `nivel_teste.os` associada, com evento Ready testado
+3. Orchestration `nivel_teste.torch` associada, com evento Ready testado
 4. Teste da Scene isolada (F6), sem erros
 
 <!--
@@ -450,7 +450,7 @@ Sem instrumento formal de avaliação nesta semana (não é semana 🔴). Esta b
 - [ ] Projeto `TemploEsquecido` criado, abre sem erros
 - [ ] Estrutura de pastas completa (scenes, scripts, orchestrations, resources, assets, materials, audio, animations)
 - [ ] Scene `level_exploration.tscn` com `NivelTeste`, `Chao`, `LuzPrincipal`
-- [ ] Orchestration `nivel_teste.os` funcional
+- [ ] Orchestration `nivel_teste.torch` funcional
 - [ ] Node adicional do desafio, distinto do exemplo
 
 <!--

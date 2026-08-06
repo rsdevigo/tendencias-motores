@@ -18,7 +18,7 @@ Ao final da Semana 2 (Encontros 1 e 2), cada estudante terá um Player (Characte
 
 ## Pré-requisitos
 
-- Player (CharacterBody3D) montado na Scene `level_exploration.tscn`, com `CollisionShape3D`, `Malha` e Orchestration `player.os` chamando `move_and_slide` (ver Tutorial - Semana 2, Encontro 1).
+- Player (CharacterBody3D) montado na Scene `level_exploration.tscn`, com `CollisionShape3D`, `Malha` e Orchestration `player.torch` chamando `move_and_slide` (ver Tutorial - Semana 2, Encontro 1).
 
 ---
 
@@ -39,7 +39,7 @@ Ao final da Semana 2 (Encontros 1 e 2), cada estudante terá um Player (Characte
 ## Projeto esperado
 
 - Projeto aberto no Godot 4.7, com o Player do Encontro 1 pronto para receber input.
-- Orchestration `player.os` já existente, com o evento PhysicsProcess chamando `move_and_slide`.
+- Orchestration `player.torch` já existente, com o evento PhysicsProcess chamando `move_and_slide`.
 
 > **Imagem sugerida**
 >
@@ -70,7 +70,7 @@ No Godot, essa camada é o **Input Map**, configurado uma única vez no projeto 
 3. No campo de texto no topo, digite `move_forward` e clique em **Add**.
 4. Com a Action `move_forward` criada, clique no ícone de `+` ao lado dela para adicionar um evento de tecla, pressione a tecla **W** e confirme.
 5. Repita o processo para criar `move_back` (tecla **S**), `move_left` (tecla **A**) e `move_right` (tecla **D**).
-6. Feche o Project Settings e reabra a Orchestration `player.os` criada no Encontro 1.
+6. Feche o Project Settings e reabra a Orchestration `player.torch` criada no Encontro 1.
 7. Dentro do PhysicsProcess já existente, adicione nós do Orchestrator que leem o estado das quatro Actions (equivalente a `Input.get_action_strength()` em GDScript).
 8. Combine os valores lidos das quatro Actions em um vetor de direção 2D (frente/trás e esquerda/direita).
 9. Transforme esse vetor de direção em uma velocidade 3D, multiplicando por uma velocidade constante (por exemplo, 5.0) e atribuindo o resultado à propriedade `velocity` do `Player`.
@@ -80,7 +80,7 @@ No Godot, essa camada é o **Input Map**, configurado uma única vez no projeto 
 
 ## Resultado esperado
 
-O Player se move pelo nível de teste em resposta às teclas W, A, S e D, através de quatro Actions (`move_forward`, `move_back`, `move_left`, `move_right`) configuradas no Input Map do projeto e lidas pela Orchestration `player.os`, que aplica a direção resultante à `velocity` do CharacterBody3D antes de chamar `move_and_slide`.
+O Player se move pelo nível de teste em resposta às teclas W, A, S e D, através de quatro Actions (`move_forward`, `move_back`, `move_left`, `move_right`) configuradas no Input Map do projeto e lidas pela Orchestration `player.torch`, que aplica a direção resultante à `velocity` do CharacterBody3D antes de chamar `move_and_slide`.
 
 ## Verificando
 
@@ -113,7 +113,7 @@ Ao final da Semana 2 (Encontros 1 e 2), o projeto do Vertical Slice deve conter:
 
 - O Player (CharacterBody3D) montado no Encontro 1, com `CollisionShape3D` e `Malha` alinhados.
 - Um Input Map do projeto com as Actions `move_forward`, `move_back`, `move_left`, `move_right`, mais uma Action adicional criada no desafio deste encontro.
-- A Orchestration `player.os` lendo o Input Map e aplicando a direção resultante a `move_and_slide`, tornando o Player efetivamente controlável.
+- A Orchestration `player.torch` lendo o Input Map e aplicando a direção resultante a `move_and_slide`, tornando o Player efetivamente controlável.
 
 Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 1), este resultado corresponde à conclusão dos itens "Player (locomoção)" e "Input do jogador", pré-requisitos diretos para a Cena de teste (graybox) e para a Renderização/build, que serão construídas na Semana 3, encerrando o Módulo 1.
 
@@ -125,7 +125,7 @@ Adicione uma nova Action ao Input Map, não demonstrada neste tutorial — corre
 
 ☐ Input Map do projeto com as Actions `move_forward`, `move_back`, `move_left`, `move_right`
 
-☐ Orchestration `player.os` lendo as quatro Actions e combinando-as em um vetor de direção
+☐ Orchestration `player.torch` lendo as quatro Actions e combinando-as em um vetor de direção
 
 ☐ `velocity` do Player atribuída antes da chamada a `move_and_slide`
 

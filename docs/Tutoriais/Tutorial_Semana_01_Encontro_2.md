@@ -118,7 +118,7 @@ Uma Scene no Godot é salva como um único arquivo `.tscn`, que descreve a árvo
 6. No painel Inspector, com `Chao` selecionado, defina uma **Mesh** simples (ex.: um `BoxMesh` ou `PlaneMesh`) para que ele fique visível no Viewport.
 7. Adicione um segundo Node filho do tipo **DirectionalLight3D**, renomeando-o para `LuzPrincipal`.
 8. Confirme, no Viewport 3D, que o objeto `Chao` está visível e iluminado pela `LuzPrincipal`.
-9. Abra o painel do **Orchestrator** (geralmente disponível como aba adicional próxima ao editor de Script) e crie uma nova Orchestration associada ao Node raiz `NivelTeste`, salvando-a em `orchestrations/` com o nome `nivel_teste.os`.
+9. Abra o painel do **Orchestrator** (geralmente disponível como aba adicional próxima ao editor de Script) e crie uma nova Orchestration associada ao Node raiz `NivelTeste`, salvando-a em `orchestrations/` com o nome `nivel_teste.torch`.
 10. Dentro da Orchestration, adicione um nó de evento **Ready** (equivalente ao `_ready()` do GDScript) conectado a um nó simples de saída de log/print, apenas para confirmar que a Orchestration está ativa e conectada à Scene.
 11. Salve a Scene (**Ctrl+S**) com o nome `level_exploration.tscn`, seguindo a convenção de nomenclatura de cena de nível.
 12. Pressione **Play Scene** (ou F6) para testar a Scene isoladamente e confirmar que ela abre sem erros.
@@ -172,7 +172,7 @@ Adicione um Node filho adicional à Scene `level_exploration.tscn`, não demonst
 
 ☐ Todos os Nodes renomeados de forma descritiva (nenhum nome padrão do editor)
 
-☐ Orchestration `nivel_teste.os` associada à Scene e funcional (evento Ready testado)
+☐ Orchestration `nivel_teste.torch` associada à Scene e funcional (evento Ready testado)
 
 ☐ Scene testada com F6 sem erros
 

@@ -44,7 +44,7 @@ Vida e dano são um exemplo canônico de estado que precisa ser compartilhado po
 
 ## Recursos do Godot
 
-`HealthComponent` (Node customizado), AnimationTree, AnimationNodeStateMachine.
+`HealthComponent` (Node customizado, implementado via Orchestrator ou GDScript), AnimationTree, AnimationNodeStateMachine.
 
 ## Comparação com Unity
 
@@ -53,7 +53,7 @@ A Unity resolve o mesmo problema de transição de animações com o Animator Co
 ## Preparação do Professor
 
 - Projeto do Vertical Slice retomado da Semana 7, com `GameManager`, `SaveManager`, contrato `Interactable`, Signals, `ItemData`/Enum e `SaveData`/`Checkpoint` já integrados.
-- Script de referência de `HealthComponent` (vida atual/máxima, `apply_damage`, sinal `died`) já preparado para demonstração, sem distribuir antes da aula.
+- Script/Orchestration de referência de `HealthComponent` (vida atual/máxima, `apply_damage`, sinal `died`) já preparado para demonstração, sem distribuir antes da aula — o professor decide se demonstra via Orchestrator ou GDScript, mantendo a mesma opção já oferecida desde a Semana 5.
 - Animações de idle, andar e correr já disponíveis no asset do Player (ou placeholder equivalente) para a construção da State Machine.
 - Slides com o comparativo AnimationTree/AnimationNodeStateMachine (Godot) × Animator Controller (Unity).
 - Projeto de teste com o AnimationPlayer do Player já configurado com ao menos as três animações de locomoção.
@@ -71,7 +71,7 @@ A Unity resolve o mesmo problema de transição de animações com o Animator Co
 
 ## Desenvolvimento
 
-O encontro parte do projeto herdado da Semana 7 sem alterar nenhum sistema do Módulo 2, adicionando duas camadas novas e independentes entre si: estado de vida (`HealthComponent`) e transição de animação (AnimationTree). O professor demonstra primeiro a construção do `HealthComponent` como Node filho do Player, seguindo exatamente o padrão de Component já estabelecido — vida atual/máxima como propriedades, `apply_damage` como método público, `died` como sinal emitido quando a vida chega a zero. Em seguida, demonstra a fundamentação do AnimationTree: como um AnimationNodeStateMachine organiza estados de animação e transições entre eles, aplicando isso à construção guiada de uma State Machine básica de locomoção para o Player. Cada grupo replica ambas as construções sobre seu próprio projeto, adaptando a State Machine ao conjunto de animações já disponível.
+O encontro parte do projeto herdado da Semana 7 sem alterar nenhum sistema do Módulo 2, adicionando duas camadas novas e independentes entre si: estado de vida (`HealthComponent`) e transição de animação (AnimationTree). O professor demonstra primeiro a construção do `HealthComponent` como Node filho do Player, via Orchestrator ou GDScript, seguindo exatamente o padrão de Component já estabelecido — vida atual/máxima como propriedades, `apply_damage` como método público, `died` como sinal emitido quando a vida chega a zero. Em seguida, demonstra a fundamentação do AnimationTree: como um AnimationNodeStateMachine organiza estados de animação e transições entre eles, aplicando isso à construção guiada de uma State Machine básica de locomoção para o Player. Cada grupo replica ambas as construções sobre seu próprio projeto, adaptando a State Machine ao conjunto de animações já disponível.
 
 ## Desafio
 
@@ -87,7 +87,7 @@ Sem instrumento formal isolado neste encontro (Rubrica 1 — Desenvolvimento Sem
 
 ## Dificuldades Esperadas
 
-- Implementar vida/dano diretamente no script do Player em vez de isolar em um `HealthComponent` — reforçar o princípio de composição via Component, central desde a Semana 5.
+- Implementar vida/dano diretamente no script/Orchestration do Player em vez de isolar em um `HealthComponent` — reforçar o princípio de composição via Component, central desde a Semana 5.
 - Confundir o papel do AnimationPlayer (guarda as animações) com o do AnimationTree (decide qual delas toca e quando) — reforçar que são camadas complementares, não concorrentes.
 - Configurar transições da State Machine sem condição clara (ex.: sempre transicionar, nunca transicionar) — reforçar que cada transição depende de uma variável real de gameplay (velocidade, input).
 
