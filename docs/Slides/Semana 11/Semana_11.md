@@ -232,6 +232,18 @@ Reservar tempo real para o Playtest coletivo e o Showcase — são os instrument
 
 ---
 
+## Montando o `Enemy` — Mesmo Rig, Outra Skin
+
+- `Enemy` (CharacterBody3D) reutiliza o mesmo modelo do Kenney Mini Characters já usado pelo Player desde a Semana 8
+- Skin diferente, mesmo `AnimationPlayer` e mesmas animações (idle, walking, running) — nenhum asset novo é importado
+- Reforça o mesmo princípio de reutilização do `HealthComponent`: um pacote, dois personagens
+
+<!--
+Se o pacote Mini Characters do grupo só tiver uma skin, uma alternativa simples é aplicar um Material Override de cor diferente sobre o mesmo modelo — o objetivo é distinguir visualmente Player e Enemy, não a variedade de assets.
+-->
+
+---
+
 <!-- _class: question -->
 
 # O agente já sabe se mover até um ponto. Quem decide qual ponto?

@@ -310,7 +310,7 @@ Por quê: fixar o padrão guiado antes de cada grupo compor a própria zona exte
 
 <!--
 Não detalhar passo a passo aqui — sem Tutorial correspondente nesta semana (produção de tutoriais encerrada no Módulo 2, PEDAGOGICAL_RULES.txt).
-Assets do Kenney Nature Kit já disponíveis no projeto (direção de arte definida em PROJECT_ARCHITECTURE.md).
+Assets do Kenney Nature Kit, importados desde a Semana 1 (direção de arte definida em PROJECT_ARCHITECTURE.md).
 -->
 
 ---

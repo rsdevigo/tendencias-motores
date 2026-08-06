@@ -74,7 +74,7 @@ Por isso, engines modernas oferecem uma solução pronta para esse problema espe
 4. Com `Player` selecionado, clique novamente em **Add Child Node** e adicione um **CollisionShape3D** como filho direto de `Player`.
 5. No painel Inspector, com `CollisionShape3D` selecionado, defina uma **Shape** (por exemplo, uma `CapsuleShape3D`), que representa o volume físico usado pela colisão.
 6. Adicione um segundo Node filho a `Player`, do tipo **MeshInstance3D**, renomeando-o para `Malha`.
-7. No Inspector, com `Malha` selecionado, atribua uma Mesh simples (por exemplo, uma `CapsuleMesh`) para representar visualmente o personagem.
+7. No Inspector, com `Malha` selecionado, atribua uma Mesh simples (por exemplo, uma `CapsuleMesh`) para representar visualmente o personagem. Este é um placeholder de graybox, mesma filosofia do Kenney Prototype Kit — a `CapsuleMesh` será substituída pelo modelo animado do Kenney Mini Characters (já importado em `assets/characters/` desde a Semana 1) somente na Semana 8, quando a disciplina introduz AnimationTree e exige um modelo com esqueleto e animações.
 8. Ajuste a posição de `Malha` e da forma da `CollisionShape3D` para que ambas fiquem alinhadas visualmente — a base da cápsula deve tocar o `Chao`.
 9. Posicione o `Player` (usando o Gizmo de movimento no Viewport) sobre a área visível do `Chao`, evitando sobreposição com a geometria.
 10. Abra o painel do Orchestrator e crie uma nova Orchestration associada ao Node `Player`, salvando-a em `orchestrations/` com o nome `player.torch`.
@@ -106,6 +106,7 @@ O `Player` (CharacterBody3D) existe como Scene própria em `scenes/characters/Pl
 - Nomear o Node raiz do personagem como `Player`, seguindo a convenção de nomenclatura do projeto (PROJECT_ARCHITECTURE.md, seção 9), e não deixar o nome padrão `CharacterBody3D` gerado pelo editor.
 - Confirmar visualmente, no Viewport, que a forma de colisão está alinhada à malha antes de avançar para o próximo passo — erros de alinhamento aqui geram bugs de movimento difíceis de depurar depois.
 - Salvar o `Player` como Scene própria (`scenes/characters/Player.tscn`) assim que montado, em vez de deixá-lo apenas como Node dentro de `level_exploration.tscn` — é essa Scene independente que será reaproveitada em outros níveis do Vertical Slice (por exemplo, `level_dungeon.tscn`, no Módulo 2), sem duplicar sua montagem.
+- Não investir tempo ajustando a aparência da `CapsuleMesh` além do necessário para alinhar a colisão — ela é descartada na Semana 8, quando entra o modelo animado real.
 
 ## Comparação com Unity
 

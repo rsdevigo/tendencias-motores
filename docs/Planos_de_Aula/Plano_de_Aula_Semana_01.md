@@ -53,6 +53,7 @@ O Godot Editor e a Unity organizam o projeto de forma equivalente: um painel de 
 - Projeto Godot 4.7 vazio, pronto para projeção.
 - Orchestrator instalado e habilitado como plugin no projeto de demonstração.
 - Estrutura de pastas sugerida para o Vertical Slice (ex.: `scenes/`, `scripts/`, `assets/`, `resources/`) definida previamente para reprodução guiada.
+- Os quatro pacotes de assets Kenney (Prototype, Dungeon, Nature Kit e Mini Characters) já baixados pelo professor em `.zip` e disponibilizados na rede local do laboratório (pen drive ou compartilhamento de rede), evitando que a turma toda baixe os mesmos arquivos simultaneamente pela internet do laboratório.
 - Slides da Semana 1 com a definição de game engine e o roteiro do tour pelo editor.
 - Confirmar que a máquina de cada estudante (ou os laboratórios) já possui o Godot 4.7 e o addon Orchestrator instalados.
 
@@ -62,7 +63,7 @@ O Godot Editor e a Unity organizam o projeto de forma equivalente: um painel de 
 |---|---|
 | 20 min | Introdução: o que é uma game engine e por que ela existe (antes de qualquer botão) |
 | 35 min | Demonstração: tour guiado pelo Godot Editor — Viewport, FileSystem Dock |
-| 50 min | Laboratório: criação e organização da estrutura inicial do projeto do Vertical Slice |
+| 50 min | Laboratório: criação e organização da estrutura inicial do projeto do Vertical Slice, incluindo a importação dos quatro pacotes de assets Kenney (Prototype, Dungeon, Nature Kit, Mini Characters) para as respectivas subpastas de `assets/`, conforme o Tutorial da semana |
 | 20 min | Desafio: organizar uma pasta adicional própria coerente com o projeto |
 | 10 min | Feedback e fechamento |
 
@@ -70,7 +71,7 @@ O Godot Editor e a Unity organizam o projeto de forma equivalente: um painel de 
 
 ## Desenvolvimento
 
-O encontro abre com uma discussão curta sobre o que já foi vivido em Unity — o que a engine resolveu por trás dos GameObjects — antes de qualquer tela do Godot. Em seguida, o professor projeta o editor e percorre Viewport e FileSystem Dock, nomeando cada área e seu papel. A turma então cria o próprio projeto do Vertical Slice, replicando a estrutura de pastas demonstrada, preparando o terreno para a Scene inicial que será construída no Encontro 2.
+O encontro abre com uma discussão curta sobre o que já foi vivido em Unity — o que a engine resolveu por trás dos GameObjects — antes de qualquer tela do Godot. Em seguida, o professor projeta o editor e percorre Viewport e FileSystem Dock, nomeando cada área e seu papel. A turma então cria o próprio projeto do Vertical Slice, replicando a estrutura de pastas demonstrada, e importa os quatro pacotes de assets Kenney para as subpastas correspondentes de `assets/` — resolvendo de uma vez, nesta primeira semana, uma tarefa que senão interromperia o desenvolvimento de um sistema de gameplay em uma semana futura —, preparando o terreno para a Scene inicial que será construída no Encontro 2.
 
 ## Desafio
 
@@ -78,7 +79,7 @@ Cada estudante organiza uma pasta adicional dentro da estrutura do projeto (por 
 
 ## Critérios de Sucesso
 
-O projeto do Vertical Slice existe, abre sem erros no Godot 4.7, e possui uma estrutura de pastas organizada e coerente com o que será construído nas próximas semanas.
+O projeto do Vertical Slice existe, abre sem erros no Godot 4.7, possui uma estrutura de pastas organizada e coerente com o que será construído nas próximas semanas, e já contém os quatro pacotes de assets Kenney importados em `assets/prototype/`, `assets/dungeon/`, `assets/nature/` e `assets/characters/`.
 
 ## Evidências para Avaliação
 
@@ -161,7 +162,7 @@ Sem instrumento formal nesta semana. A Scene construída aqui é o alicerce obse
 
 # Resultado Esperado da Semana
 
-Ao final da Semana 1, cada estudante possui um projeto Godot 4.7 organizado, com uma Scene funcional composta por Nodes filhos (incluindo pelo menos um Node adicionado de forma autônoma). A turma domina a distinção entre composição (Godot/Unity) e consegue nomear o papel de FileSystem Dock, Node e Scene Tree, relacionando-os aos equivalentes na Unity (Project window, GameObject/Component).
+Ao final da Semana 1, cada estudante possui um projeto Godot 4.7 organizado, com os quatro pacotes de assets Kenney (Prototype, Dungeon, Nature Kit, Mini Characters) já importados em `assets/`, e uma Scene funcional composta por Nodes filhos (incluindo pelo menos um Node adicionado de forma autônoma). A turma domina a distinção entre composição (Godot/Unity) e consegue nomear o papel de FileSystem Dock, Node e Scene Tree, relacionando-os aos equivalentes na Unity (Project window, GameObject/Component).
 
 # Preparação para a Próxima Semana
 

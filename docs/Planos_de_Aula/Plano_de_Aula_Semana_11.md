@@ -103,6 +103,7 @@ Sem instrumento formal isolado neste encontro (Rubrica 1 — Desenvolvimento Sem
 
 ## Conteúdos
 
+- Montagem do `Enemy` (CharacterBody3D) reutilizando uma skin distinta do mesmo modelo do Kenney Mini Characters já usado pelo Player desde a Semana 8 — mesmo Node `AnimationPlayer`, aparência diferente.
 - Behavior Tree como estrutura de decisão hierárquica (sequências, seletores, folhas de ação/condição) e Blackboard como memória compartilhada entre os nós da árvore, via addon LimboAI — nenhum dos dois é nativo do Godot.
 - Implementação guiada de uma Behavior Tree simples de patrulha (deslocamento entre pontos via `NavigationAgent3D`) e perseguição (mudança de alvo ao detectar o `Player`).
 - Combate simples: detecção de acerto via `Area3D`/`RayCast3D` do `Player`, chamando `apply_damage` no `HealthComponent` do `Enemy` — reutilizando o mesmo Component fundamentado na Semana 8, sem duplicação de lógica.
@@ -115,7 +116,7 @@ O Encontro 1 resolveu "como" um agente se move. O Encontro 2 resolve "o que" ele
 
 ## Recursos do Godot
 
-`NavigationAgent3D` (retomado do Encontro 1), Behavior Trees e Blackboards (addon LimboAI — `BTPlayer`, Blackboard), `Area3D`/`RayCast3D` (detecção de combate), `HealthComponent` (retomado da Semana 8). As tasks customizadas do LimboAI (`BTAction`/`BTCondition`) exigem GDScript — são classes que estendem tipos nativos do addon, fora do alcance do Orchestrator; já o sinal de combate que chama `apply_damage` pode ser implementado via Orchestrator ou GDScript, como qualquer outra conexão de Signal já praticada desde a Semana 5.
+`NavigationAgent3D` (retomado do Encontro 1), Kenney Mini Characters (skin alternativa para o `Enemy`, mesmo pacote importado na Semana 1), Behavior Trees e Blackboards (addon LimboAI — `BTPlayer`, Blackboard), `Area3D`/`RayCast3D` (detecção de combate), `HealthComponent` (retomado da Semana 8). As tasks customizadas do LimboAI (`BTAction`/`BTCondition`) exigem GDScript — são classes que estendem tipos nativos do addon, fora do alcance do Orchestrator; já o sinal de combate que chama `apply_damage` pode ser implementado via Orchestrator ou GDScript, como qualquer outra conexão de Signal já praticada desde a Semana 5.
 
 ## Comparação com Unity
 
@@ -124,6 +125,7 @@ A Unity resolveria a mesma decisão autônoma com um asset de terceiros como Beh
 ## Preparação do Professor
 
 - Projeto de cada grupo com `NavigationRegion3D`/`NavigationAgent3D` funcionais do Encontro 1.
+- Confirmar que o pacote Kenney Mini Characters (`assets/characters/`, importado desde a Semana 1) oferece mais de uma skin do mesmo modelo, para o `Enemy` reutilizar o rig do Player com aparência distinta.
 - Addon LimboAI instalado e verificado previamente em todos os projetos (ou disponibilizado para instalação no início do encontro).
 - Cena de exemplo com Behavior Tree simples de patrulha/perseguição e combate via `Area3D`/`RayCast3D` preparada para demonstração, sem distribuir antes da aula.
 - Roteiro do desafio preparado: cada grupo escolhe um comportamento autônomo adicional (patrulha, alerta, fuga, interação com o jogador).

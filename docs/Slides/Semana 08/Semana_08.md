@@ -63,15 +63,29 @@ Encontro guiado. Retoma o projeto da Semana 7 sem alterar GameManager, SaveManag
 ## Agenda do Encontro 1
 
 - Revisão do Encontro 2 da Semana 7 (integração final do Módulo 2, Code Review e Playtest) (15 min)
-- Introdução: mudança de metodologia para Challenge Based Learning; o problema do estado de vida/dano compartilhado (20 min)
-- Demonstração: construção do `HealthComponent` aplicado ao Player (30 min)
+- Demonstração e laboratório: substituição da `CapsuleMesh` do Player pelo modelo do Kenney Mini Characters (15 min)
+- Introdução: mudança de metodologia para Challenge Based Learning; o problema do estado de vida/dano compartilhado (15 min)
+- Demonstração: construção do `HealthComponent` aplicado ao Player (25 min)
 - Demonstração: AnimationTree/AnimationNodeStateMachine e construção guiada da State Machine (30 min)
 - Laboratório: cada grupo aplica `HealthComponent` e ajusta a State Machine ao próprio conjunto de animações (25 min)
-- Feedback e fechamento (15 min)
+- Feedback e fechamento (10 min)
 
 <!--
 Ciclo pedagógico da disciplina: Conceito → Demonstração → Construção → Desafio → Revisão. Nunca inverter.
 Não há desafio de solução livre neste encontro — HealthComponent e State Machine básica são construção guiada, base direta do desafio de animação contextual do Encontro 2.
+-->
+
+---
+
+## Pré-requisito — Do Placeholder ao Modelo Animado
+
+- Desde a Semana 2, o Player usa uma `CapsuleMesh` (placeholder de graybox) como Node `Malha`
+- Hoje ela é substituída pelo modelo do **Kenney Mini Characters**, importado em `assets/characters/` desde a Semana 1
+- O modelo já traz um `AnimationPlayer` com as animações idle, walking e running — base direta da State Machine desta aula
+
+<!--
+Conferir a aba Import do modelo antes da demonstração: se as animações não aparecerem listadas, o arquivo foi importado sem o rig/animações (ver Tutorial Semana 1 Encontro 1, Parte 4).
+Erro comum: apagar o Node `Malha` inteiro em vez de só a Mesh — a `CollisionShape3D` é um Node irmão independente, não deve ser afetada pela troca.
 -->
 
 ---
@@ -479,6 +493,7 @@ Dificuldade esperada: escolher o mecanismo errado (BlendSpace para um evento pon
 
 ## Resultado Esperado da Semana
 
+- Modelo do Kenney Mini Characters substituindo a `CapsuleMesh` de placeholder no Player
 - `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, sinal `died`)
 - State Machine básica de locomoção via AnimationTree (idle, andar, correr)
 - Animação contextual própria — BlendSpace direcional ou animação pontual — conectada a um evento real de gameplay
@@ -492,6 +507,7 @@ Este resultado corresponde às linhas HealthComponent, AnimationTree e BlendSpac
 
 ## Checklist da Semana
 
+- [ ] `CapsuleMesh` de placeholder substituída pelo modelo do Kenney Mini Characters, com `AnimationPlayer` funcional
 - [ ] `HealthComponent` (Node) com vida atual/máxima, `apply_damage` e sinal `died`
 - [ ] State Machine via AnimationTree alternando corretamente entre idle, andar e correr
 - [ ] BlendSpace1D/2D ou faixa do AnimationPlayer configurados na demonstração

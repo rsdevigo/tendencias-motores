@@ -11,15 +11,17 @@ Este primeiro encontro da disciplina não trata de "como usar o Godot", mas de e
 - Compreender o papel de uma game engine na produção de um jogo.
 - Reconhecer as áreas principais do Godot Editor (Viewport, FileSystem Dock).
 - Criar e organizar a estrutura inicial do projeto do Vertical Slice.
+- Baixar e importar os quatro pacotes de assets Kenney (Prototype, Dungeon, Nature Kit e Mini Characters) usados pelo resto do semestre.
 
 ## Resultado esperado ao final da semana
 
-Ao final da Semana 1 (Encontros 1 e 2), cada estudante terá um projeto Godot 4.7 organizado, com uma primeira Scene funcional composta por Nodes filhos, relacionando o modelo de composição do Godot ao par GameObject/Component da Unity. Este tutorial cobre apenas o **Encontro 1**: a criação e organização do projeto.
+Ao final da Semana 1 (Encontros 1 e 2), cada estudante terá um projeto Godot 4.7 organizado, com uma primeira Scene funcional composta por Nodes filhos, relacionando o modelo de composição do Godot ao par GameObject/Component da Unity, e com os quatro pacotes de assets Kenney já importados. Este tutorial cobre apenas o **Encontro 1**: a criação e organização do projeto, e a importação dos assets Kenney.
 
 ## Pré-requisitos
 
 - Conhecimento prévio de desenvolvimento de jogos em Unity (a disciplina não ensina conceitos básicos de programação ou de game design).
 - Nenhum conhecimento prévio de Godot é exigido — esta é a primeira semana de contato com a engine.
+- Acesso à internet, para baixar os pacotes de assets Kenney na Parte 4 (ou os arquivos `.zip` já baixados previamente pelo professor, em laboratórios sem internet).
 
 ---
 
@@ -35,7 +37,7 @@ Ao final da Semana 1 (Encontros 1 e 2), cada estudante terá um projeto Godot 4.
 
 ## Assets utilizados
 
-- Nenhum asset é necessário no Encontro 1. Os pacotes Kenney (Prototype Kit, Dungeon Kit, Nature Kit) começam a ser utilizados a partir da Semana 3.
+- **Kenney Prototype Kit**, **Kenney Dungeon Kit**, **Kenney Nature Kit** e **Kenney Mini Characters** (todos CC0, ver PROJECT_ARCHITECTURE.md, seção 3) são baixados e importados neste encontro (Parte 4), de uma só vez, para que nenhuma semana futura precise interromper o desenvolvimento para buscar um pacote novo. O Prototype Kit começa a ser efetivamente usado na Semana 3, o Dungeon Kit a partir da Semana 5, o Mini Characters a partir da Semana 8 (substituindo a `CapsuleMesh` de placeholder do Player), e o Nature Kit a partir da Semana 12 — mas os quatro já estarão presentes no projeto desde hoje.
 
 ## Projeto esperado
 
@@ -164,7 +166,7 @@ Um projeto de jogo cresce rapidamente em número de arquivos. Organizar a estrut
 5. Na raiz do projeto, crie a pasta `scripts` e, dentro dela, as subpastas `autoload` e `components`.
 6. Crie a pasta `orchestrations` na raiz (para os arquivos `.torch` do Orchestrator).
 7. Crie a pasta `resources` na raiz e, dentro dela, as subpastas `items` e `save`.
-8. Crie as pastas `assets` (com subpastas `dungeon` e `nature`), `materials`, `audio` e `animations` na raiz.
+8. Crie as pastas `assets` (com subpastas `prototype`, `dungeon`, `nature` e `characters`), `materials`, `audio` e `animations` na raiz.
 9. Confira a estrutura final no FileSystem Dock, comparando com a tabela de organização do PROJECT_ARCHITECTURE.md.
 
 ## Resultado esperado
@@ -192,8 +194,10 @@ res://
 │   ├── items/
 │   └── save/
 ├── assets/
+│   ├── prototype/
 │   ├── dungeon/
-│   └── nature/
+│   ├── nature/
+│   └── characters/
 ├── materials/
 ├── audio/
 └── animations/
@@ -215,13 +219,63 @@ Na Unity, a convenção mais comum é organizar o painel Project em pastas como 
 
 ---
 
+# Parte 4 — Download e importação dos pacotes de assets Kenney
+
+## Objetivo
+
+Baixar e importar, de uma só vez, os quatro pacotes de assets gratuitos que sustentam toda a direção de arte do Vertical Slice pelo resto do semestre — evitando que uma semana futura interrompa o desenvolvimento de um sistema para resolver a importação de um asset.
+
+## Conceito
+
+Todo projeto de jogo depende de assets externos (modelos 3D, texturas, materiais) que a engine não gera sozinha. A Kenney (kenney.nl) distribui pacotes de assets sob licença CC0 (domínio público, sem exigência de atribuição), amplamente usados por projetos didáticos e protótipos por sua qualidade consistente e ausência de restrição de uso. A disciplina usa quatro desses pacotes, cada um com um papel de direção de arte diferente (ver PROJECT_ARCHITECTURE.md, seção 3): o **Prototype Kit** para graybox e testes de gameplay, o **Dungeon Kit** para os ambientes internos do templo, o **Nature Kit** para a zona externa de exploração, e o **Mini Characters** para o modelo animado (idle, andar, correr, entre dezenas de outras animações) que substituirá, na Semana 8, a `CapsuleMesh` de placeholder do Player. Importar os quatro agora, mesmo que só um seja usado nesta semana, evita que a disciplina precise ensinar "como importar um asset" de novo a cada pacote novo — a mecânica de importação é a mesma para todos.
+
+## Passo a passo
+
+1. Em um navegador, acesse https://kenney.nl/assets e localize o pacote **Prototype Kit**; clique em **Download** para baixar o arquivo `.zip`.
+2. Repita a busca e o download para os pacotes **Dungeon Kit** (busque por "Dungeon Remastered" ou "Mini Dungeon", conforme disponibilidade no site) e **Nature Kit** (busque por "Nature Kit" ou "Nature Remastered").
+3. Baixe também o pacote **Kenney Mini Characters** (kenney.nl/assets/mini-characters) — modelos rigged com dezenas de animações prontas (incluindo idle, walk e run).
+4. Extraia os quatro arquivos `.zip` baixados em uma pasta temporária fora do projeto Godot (ex.: na Área de Trabalho), mantendo cada pacote em sua própria subpasta extraída.
+5. No Godot, com o projeto do Vertical Slice aberto, localize no FileSystem Dock a pasta `assets/prototype/` criada na Parte 3.
+6. No explorador de arquivos do sistema operacional, abra a pasta extraída do Prototype Kit e localize a subpasta de modelos (geralmente `Models/GLB` ou equivalente, conforme a organização interna do pacote baixado).
+7. Arraste os arquivos de modelo (`.glb` ou `.gltf`) do Prototype Kit para dentro da pasta `assets/prototype/` no FileSystem Dock do Godot, soltando o arquivo diretamente sobre a pasta.
+8. Aguarde a barra de progresso de importação do Godot concluir — o motor gera automaticamente os metadados de importação (arquivos `.import`) para cada asset novo.
+9. Repita os passos 6–8 para o Dungeon Kit (`assets/dungeon/`) e para o Nature Kit (`assets/nature/`).
+10. Para o Mini Characters, localize a subpasta de modelos e arraste ao menos um modelo de personagem (`.glb` ou `.gltf`, conforme a organização do pacote) para `assets/characters/`, do mesmo modo que os demais pacotes.
+11. No FileSystem Dock, confirme que as quatro subpastas (`assets/prototype/`, `assets/dungeon/`, `assets/nature/`, `assets/characters/`) agora contêm arquivos, e que nenhum ícone de erro (exclamação vermelha) aparece sobre os arquivos importados.
+
+## Resultado esperado
+
+As quatro subpastas de `assets/` contêm os modelos dos respectivos pacotes Kenney, todos importados sem erro pelo Godot. Nenhum desses assets é usado em uma Scene ainda — a importação de hoje apenas os deixa disponíveis para quando cada um for necessário (Prototype Kit na Semana 3, Dungeon Kit na Semana 5, Mini Characters na Semana 8, Nature Kit na Semana 12).
+
+## Verificando
+
+Clique em um dos arquivos `.glb` importados dentro do FileSystem Dock e observe a pré-visualização no painel de importação (aba **Import**, geralmente ao lado do Inspector). Se a pré-visualização não carregar ou um ícone de erro aparecer, o arquivo pode ter sido copiado incompleto — repita o arrasto daquele arquivo específico. Para o Mini Characters, confirme também que a aba **Import** lista as animações do modelo (idle, walk, run, entre outras) — isso indica que o rig foi lido corretamente.
+
+## Problemas comuns
+
+- Copiar o arquivo `.zip` inteiro para dentro de `assets/`, em vez de extraí-lo antes — o Godot não abre pacotes `.zip` como asset, apenas os arquivos de modelo já extraídos.
+- Importar todos os arquivos de um pacote (texturas em múltiplas resoluções, arquivos de exemplo, licenças) em vez de apenas os modelos necessários — isso não quebra o projeto, mas polui o FileSystem Dock; se preferir, importe só a subpasta de modelos de cada pacote.
+- Nomes de arquivo com espaços ou acentos vindos do pacote original — o Godot aceita, mas a convenção da disciplina (snake_case) recomenda renomear pelo próprio FileSystem Dock, nunca pelo explorador do sistema operacional.
+- Importar um modelo do Mini Characters sem suas animações (arquivo de modelo e arquivos de animação separados, dependendo de como o pacote foi organizado) — conferir a aba **Import** antes de seguir em frente.
+
+## Boas práticas
+
+- Sempre importar assets arrastando para dentro do FileSystem Dock do Godot, nunca copiando arquivos diretamente pela pasta do projeto no sistema operacional enquanto o editor está aberto — isso pode gerar inconsistência entre o arquivo em disco e o cache de importação do Godot.
+- Manter os `.zip` originais baixados fora da pasta do projeto (ex.: em uma pasta pessoal de downloads), já que o projeto Godot só precisa dos arquivos já extraídos e importados.
+
+## Comparação com Unity
+
+A Unity resolve a importação de um asset externo de forma equivalente: arrastar o arquivo para dentro do painel Project, que também gera metadados de importação próprios (arquivos `.meta`). A diferença mais visível é o formato desses metadados — arquivos `.import` no Godot, arquivos `.meta` na Unity —, mas o princípio universal é o mesmo: nenhuma engine "adota" um asset externo sem antes gerar seus próprios dados de importação.
+
+---
+
 # Ao final da semana
 
-Este tutorial cobre apenas o Encontro 1. Ao final da Semana 1 completa (Encontros 1 e 2), o projeto deverá conter a estrutura de pastas criada aqui, mais uma primeira Scene funcional com Nodes filhos (construída no Encontro 2). Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 1), este encontro corresponde ao item "Estrutura inicial do projeto", pré-requisito para todos os sistemas do Módulo 1.
+Este tutorial cobre apenas o Encontro 1. Ao final da Semana 1 completa (Encontros 1 e 2), o projeto deverá conter a estrutura de pastas criada aqui, os quatro pacotes de assets Kenney já importados, mais uma primeira Scene funcional com Nodes filhos (construída no Encontro 2). Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 1), este encontro corresponde ao item "Estrutura inicial do projeto", pré-requisito para todos os sistemas do Módulo 1.
 
 # Desafio
 
-Organize uma pasta adicional dentro da estrutura do projeto (por exemplo, uma pasta `prototypes` ou `references`) que ainda não foi sugerida neste tutorial, e justifique brevemente a um colega por que ela é útil para o Vertical Slice. Não há solução única — o objetivo é praticar organização própria dentro da convenção compartilhada.
+Organize uma pasta adicional dentro da estrutura do projeto (por exemplo, uma pasta `references` ou `concepts`) que ainda não foi sugerida neste tutorial, e justifique brevemente a um colega por que ela é útil para o Vertical Slice. Não há solução única — o objetivo é praticar organização própria dentro da convenção compartilhada.
 
 # Checklist
 
@@ -232,6 +286,8 @@ Organize uma pasta adicional dentro da estrutura do projeto (por exemplo, uma pa
 ☐ Estrutura de pastas completa (scenes, scripts, orchestrations, resources, assets, materials, audio, animations, com todas as subpastas)
 
 ☐ Nenhum arquivo solto na raiz de `res://`
+
+☐ Kenney Prototype Kit, Dungeon Kit, Nature Kit e Mini Characters importados em `assets/prototype/`, `assets/dungeon/`, `assets/nature/` e `assets/characters/`, sem ícones de erro
 
 ☐ Pasta adicional do desafio criada e justificada
 
@@ -247,5 +303,7 @@ Organize uma pasta adicional dentro da estrutura do projeto (por exemplo, uma pa
 
 - Godot Documentation — Getting Started / Introduction: https://docs.godotengine.org/en/stable/getting_started/introduction/index.html
 - Godot Documentation — Nodes and Scenes: https://docs.godotengine.org/en/stable/tutorials/scripting/nodes_and_scene_instances.html
+- Godot Documentation — Importing 3D Scenes: https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_3d_scenes/index.html
+- Kenney Assets (CC0): https://kenney.nl/
 - GDQuest: https://www.gdquest.com/
 - Unity Manual (consulta comparativa): https://docs.unity3d.com/Manual/

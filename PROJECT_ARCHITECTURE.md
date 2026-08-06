@@ -39,6 +39,7 @@ A disciplina não tem foco em produção de arte. Toda a direção de arte é re
 | **Kenney Prototype Kit** | Prototipagem rápida, graybox de níveis, testes de gameplay de novos sistemas antes de qualquer composição de cena definitiva. |
 | **Kenney Dungeon Kit** | Ambientes internos: o templo/masmorra, corredores, salas, portas, baús e demais elementos de arquitetura interna. |
 | **Kenney Nature Kit** | Ambientes externos: a zona de exploração inicial, vegetação, terreno e transições entre áreas externas e internas. |
+| **Kenney Mini Characters** | Modelo de personagem rigged com dezenas de animações (incluindo idle, walk, run) para `Player` e `Enemy` — substitui, a partir da Semana 8, a `CapsuleMesh` de placeholder usada desde a Semana 2. |
 
 Nenhum estudante ou grupo deve depender de produção artística própria para atingir os critérios de avaliação. Assets adicionais da Kenney podem ser incorporados livremente, desde que mantenham a mesma função didática de apoio.
 
@@ -217,8 +218,10 @@ res://
 │   ├── items/            (ItemData .tres)
 │   └── save/             (SaveData .tres)
 ├── assets/
+│   ├── prototype/        (assets do Kenney Prototype Kit)
 │   ├── dungeon/          (assets do Kenney Dungeon Kit)
-│   └── nature/           (assets do Kenney Nature Kit)
+│   ├── nature/           (assets do Kenney Nature Kit)
+│   └── characters/       (assets do Kenney Mini Characters — modelo e animações de Player/Enemy)
 ├── materials/
 ├── audio/
 └── animations/

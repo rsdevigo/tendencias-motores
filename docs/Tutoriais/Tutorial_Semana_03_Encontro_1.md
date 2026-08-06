@@ -35,13 +35,13 @@ Ao final da Semana 3 (Encontros 1 e 2), cada estudante terá um nível de teste 
 
 ## Assets utilizados
 
-- **Kenney Prototype Kit** (CC0), conforme PROJECT_ARCHITECTURE.md (seção 3), usado para dar textura de referência ao material do graybox. É o primeiro pacote Kenney utilizado na disciplina.
+- **Kenney Prototype Kit** (CC0), conforme PROJECT_ARCHITECTURE.md (seção 3), usado para dar textura de referência ao material do graybox. Já foi baixado e importado em `assets/prototype/` na Semana 1 (Tutorial - Semana 1, Encontro 1, Parte 4); este é o primeiro encontro em que o pacote é efetivamente usado.
 
 ## Projeto esperado
 
 - Projeto aberto no Godot 4.7, com a Scene `level_exploration.tscn` pronta para receber material e terreno.
 - Addon Terrain3D já instalado e habilitado em **Project Settings > Plugins**.
-- Pacote Kenney Prototype Kit importado em `assets/` (subpasta a ser criada, se ainda não existir).
+- Pacote Kenney Prototype Kit já importado em `assets/prototype/` desde a Semana 1.
 
 > **Imagem sugerida**
 >
@@ -68,7 +68,7 @@ No Godot, essa solução tem duas camadas. A mais simples é o **StandardMateria
 ## Passo a passo
 
 1. Reabra o projeto do Vertical Slice e, no FileSystem Dock, dê duplo clique em `scenes/levels/exploration/level_exploration.tscn` para reabrir a Scene das Semanas 1 e 2.
-2. Confirme, no FileSystem Dock, que o pacote Kenney Prototype Kit foi importado em `assets/` (crie a subpasta `assets/prototype/` caso ainda não exista, seguindo a organização do PROJECT_ARCHITECTURE.md, seção 8).
+2. Confirme, no FileSystem Dock, que o pacote Kenney Prototype Kit segue disponível em `assets/prototype/`, importado desde a Semana 1 (Tutorial - Semana 1, Encontro 1, Parte 4).
 3. Crie a pasta `materials/` na raiz do projeto, caso ainda não exista.
 4. No painel Scene, selecione o Node `Chao`.
 5. No Inspector, localize a propriedade **Material Override** (ou **Surface Material Override**, dependendo do tipo de MeshInstance3D usado) e clique em **New StandardMaterial3D**.
@@ -172,7 +172,7 @@ Ajuste ao menos um parâmetro do material aplicado ao `Chao` — cor do Albedo, 
 
 ☐ Scene `level_exploration.tscn` reaberta sem erros
 
-☐ Kenney Prototype Kit importado em `assets/prototype/`
+☐ Kenney Prototype Kit disponível em `assets/prototype/` (importado desde a Semana 1)
 
 ☐ StandardMaterial3D criado, salvo em `materials/chao_prototype.tres` e aplicado ao `Chao`
 

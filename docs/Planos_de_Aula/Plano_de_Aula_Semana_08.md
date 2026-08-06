@@ -32,6 +32,7 @@ Ao final da semana, cada grupo possui um `HealthComponent` funcional aplicado ao
 
 ## Conteúdos
 
+- Substituição da `CapsuleMesh` de placeholder do Player (Semana 2) pelo modelo animado do Kenney Mini Characters, já importado em `assets/characters/` desde a Semana 1.
 - O problema de onde armazenar e expor o estado de vida/dano de um personagem sem duplicar lógica entre Player e Enemy.
 - `HealthComponent`: vida atual/máxima, `apply_damage(quantidade)`, sinal `died`, seguindo o mesmo padrão de Component (Node customizado) já usado por `InteractionComponent` e `SaveComponent`.
 - AnimationTree como camada que decide qual animação toca e como a transição entre elas ocorre, separada da lógica de gameplay.
@@ -44,7 +45,7 @@ Vida e dano são um exemplo canônico de estado que precisa ser compartilhado po
 
 ## Recursos do Godot
 
-`HealthComponent` (Node customizado, implementado via Orchestrator ou GDScript), AnimationTree, AnimationNodeStateMachine.
+Kenney Mini Characters (modelo animado do Player, importado desde a Semana 1), `HealthComponent` (Node customizado, implementado via Orchestrator ou GDScript), AnimationTree, AnimationNodeStateMachine.
 
 ## Comparação com Unity
 
@@ -54,7 +55,7 @@ A Unity resolve o mesmo problema de transição de animações com o Animator Co
 
 - Projeto do Vertical Slice retomado da Semana 7, com `GameManager`, `SaveManager`, contrato `Interactable`, Signals, `ItemData`/Enum e `SaveData`/`Checkpoint` já integrados.
 - Script/Orchestration de referência de `HealthComponent` (vida atual/máxima, `apply_damage`, sinal `died`) já preparado para demonstração, sem distribuir antes da aula — o professor decide se demonstra via Orchestrator ou GDScript, mantendo a mesma opção já oferecida desde a Semana 5.
-- Animações de idle, andar e correr já disponíveis no asset do Player (ou placeholder equivalente) para a construção da State Machine.
+- Modelo animado do Kenney Mini Characters já testado pelo professor, com as animações idle, walking e running visíveis na aba Import do Godot (o pacote foi importado em `assets/characters/` na Semana 1, mas ainda não usado em nenhuma Scene até aqui).
 - Slides com o comparativo AnimationTree/AnimationNodeStateMachine (Godot) × Animator Controller (Unity).
 - Projeto de teste com o AnimationPlayer do Player já configurado com ao menos as três animações de locomoção.
 
@@ -63,15 +64,16 @@ A Unity resolve o mesmo problema de transição de animações com o Animator Co
 | Duração | Atividade |
 |---|---|
 | 15 min | Revisão do Encontro 2 da Semana 7 (integração final do Módulo 2, Code Review e Playtest) |
-| 20 min | Introdução: mudança de metodologia para Challenge Based Learning; o problema do estado de vida/dano compartilhado |
-| 30 min | Demonstração: construção do `HealthComponent` (vida, `apply_damage`, sinal `died`) aplicado ao Player |
+| 15 min | Demonstração e laboratório: substituição da `CapsuleMesh` do Player pelo modelo do Kenney Mini Characters (`assets/characters/`, importado desde a Semana 1) |
+| 15 min | Introdução: mudança de metodologia para Challenge Based Learning; o problema do estado de vida/dano compartilhado |
+| 25 min | Demonstração: construção do `HealthComponent` (vida, `apply_damage`, sinal `died`) aplicado ao Player |
 | 30 min | Demonstração: fundamentação de AnimationTree/AnimationNodeStateMachine e construção guiada da State Machine (idle, andar, correr) |
 | 25 min | Laboratório: cada grupo aplica `HealthComponent` ao próprio Player e ajusta a State Machine ao seu conjunto de animações |
-| 15 min | Feedback e fechamento |
+| 10 min | Feedback e fechamento |
 
 ## Desenvolvimento
 
-O encontro parte do projeto herdado da Semana 7 sem alterar nenhum sistema do Módulo 2, adicionando duas camadas novas e independentes entre si: estado de vida (`HealthComponent`) e transição de animação (AnimationTree). O professor demonstra primeiro a construção do `HealthComponent` como Node filho do Player, via Orchestrator ou GDScript, seguindo exatamente o padrão de Component já estabelecido — vida atual/máxima como propriedades, `apply_damage` como método público, `died` como sinal emitido quando a vida chega a zero. Em seguida, demonstra a fundamentação do AnimationTree: como um AnimationNodeStateMachine organiza estados de animação e transições entre eles, aplicando isso à construção guiada de uma State Machine básica de locomoção para o Player. Cada grupo replica ambas as construções sobre seu próprio projeto, adaptando a State Machine ao conjunto de animações já disponível.
+O encontro abre com uma tarefa curta de pré-requisito: substituir o Node `Malha` (a `CapsuleMesh` de placeholder usada desde a Semana 2) pelo modelo do Kenney Mini Characters, já importado em `assets/characters/` desde a Semana 1 — o professor demonstra a troca no próprio `Player.tscn`, e cada grupo repete no seu projeto, conferindo que o novo modelo carrega com um `AnimationPlayer` já contendo as animações idle, walking e running. A partir daqui, o restante do projeto herdado da Semana 7 segue sem alteração, e o encontro adiciona duas camadas novas e independentes entre si: estado de vida (`HealthComponent`) e transição de animação (AnimationTree). O professor demonstra a construção do `HealthComponent` como Node filho do Player, via Orchestrator ou GDScript, seguindo exatamente o padrão de Component já estabelecido — vida atual/máxima como propriedades, `apply_damage` como método público, `died` como sinal emitido quando a vida chega a zero. Em seguida, demonstra a fundamentação do AnimationTree: como um AnimationNodeStateMachine organiza estados de animação e transições entre eles, referenciando as animações reais do modelo recém-importado, aplicando isso à construção guiada de uma State Machine básica de locomoção para o Player. Cada grupo replica ambas as construções sobre seu próprio projeto.
 
 ## Desafio
 
@@ -87,6 +89,8 @@ Sem instrumento formal isolado neste encontro (Rubrica 1 — Desenvolvimento Sem
 
 ## Dificuldades Esperadas
 
+- Remover a `CollisionShape3D` ao apagar o Node `Malha` antigo, em vez de apagar apenas a Mesh de placeholder — reforçar que a colisão e a malha visual são Nodes independentes desde a Semana 2.
+- Modelo do Kenney Mini Characters importado sem as animações visíveis na aba Import (arquivo de animação separado do arquivo de modelo, dependendo de como o pacote foi extraído) — voltar à Parte 4 do Tutorial da Semana 1 e reimportar incluindo os arquivos de animação.
 - Implementar vida/dano diretamente no script/Orchestration do Player em vez de isolar em um `HealthComponent` — reforçar o princípio de composição via Component, central desde a Semana 5.
 - Confundir o papel do AnimationPlayer (guarda as animações) com o do AnimationTree (decide qual delas toca e quando) — reforçar que são camadas complementares, não concorrentes.
 - Configurar transições da State Machine sem condição clara (ex.: sempre transicionar, nunca transicionar) — reforçar que cada transição depende de uma variável real de gameplay (velocidade, input).
