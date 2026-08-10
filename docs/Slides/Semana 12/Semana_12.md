@@ -303,14 +303,14 @@ A diferença está no escopo da ferramenta, não no princípio.
 
 O que será construído:
 
-- Um `MultiMeshInstance3D` configurado sobre um terreno de teste, com elementos do Kenney Nature Kit
+- Um `MultiMeshInstance3D` configurado sobre um terreno de teste, com elementos do Kenney Mini Forest
 - Ajuste de densidade e distribuição de instâncias
 
 Por quê: fixar o padrão guiado antes de cada grupo compor a própria zona externa.
 
 <!--
 Não detalhar passo a passo aqui — sem Tutorial correspondente nesta semana (produção de tutoriais encerrada no Módulo 2, PEDAGOGICAL_RULES.txt).
-Assets do Kenney Nature Kit, importados desde a Semana 1 (direção de arte definida em PROJECT_ARCHITECTURE.md).
+Assets do Kenney Mini Forest, importados desde a Semana 1 (direção de arte definida em PROJECT_ARCHITECTURE.md).
 -->
 
 ---
@@ -319,7 +319,7 @@ Assets do Kenney Nature Kit, importados desde a Semana 1 (direção de arte defi
 >
 > Objetivo: mostrar a diferença de escala entre instanciar Scenes individuais e usar MultiMeshInstance3D para o mesmo conjunto de vegetação.
 > Enquadramento: comparação lado a lado da mesma área externa do nível, antes (Scenes individuais, esparsa) e depois (MultiMeshInstance3D, densa).
-> Elementos presentes: elementos de vegetação do Kenney Nature Kit (grama, arbustos, pedras) distribuídos sobre a zona externa do Vertical Slice.
+> Elementos presentes: elementos de vegetação do Kenney Mini Forest (grama, arbustos, pedras) distribuídos sobre a zona externa do Vertical Slice.
 > Destaque visual: indicador de número de chamadas de desenho (draw calls) menor na versão com MultiMeshInstance3D.
 > Legenda sugerida: "MultiMeshInstance3D agrupa múltiplas instâncias da mesma malha em uma única chamada de desenho."
 
@@ -333,7 +333,7 @@ Usar esta imagem durante a demonstração, antes do laboratório.
 
 Cada grupo, na zona externa do próprio projeto:
 
-1. Configura um `MultiMeshInstance3D` com elementos do Kenney Nature Kit
+1. Configura um `MultiMeshInstance3D` com elementos do Kenney Mini Forest
 2. Ajusta densidade e distribuição, com liberdade de escolha entre os elementos já disponíveis
 3. Observa o impacto no desempenho ao aumentar a densidade
 
@@ -352,7 +352,7 @@ Como diretor técnico, o professor orienta densidade e distribuição sem impor 
 - Nenhum dos dois sistemas altera geometria, mecânica ou sistemas de gameplay já funcionais
 
 <!--
-Diagrama sugerido: Materiais existentes (Semana 3+) → Auditoria → Material base + Override. Em paralelo: Kenney Nature Kit → MultiMeshInstance3D → Zona externa composta.
+Diagrama sugerido: Materiais existentes (Semana 3+) → Auditoria → Material base + Override. Em paralelo: Kenney Mini Forest → MultiMeshInstance3D → Zona externa composta.
 Erro comum: confundir a camada de apresentação visual (materiais, composição) com sistemas de gameplay — nenhuma lógica é adicionada nesta semana.
 -->
 

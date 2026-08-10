@@ -12,7 +12,7 @@ Cada Milestone corresponde a um Módulo/Unidade do [Cronograma](../docs/Cronogra
 
 **Escopo:**
 - Projeto Godot 4.7 criado e estruturado conforme `PROJECT_ARCHITECTURE.md` (seção 8).
-- Os 4 pacotes de assets Kenney importados (Prototype, Dungeon, Nature, Mini Characters).
+- Os 3 pacotes de assets Kenney importados (Mini Dungeon, Mini Forest, Mini Characters).
 - Player (`CharacterBody3D`) controlável via Input Map.
 - Nível de teste com terreno (Terrain3D), material e iluminação global (SDFGI/VoxelGI).
 - Primeiro build exportado e executável fora do editor.

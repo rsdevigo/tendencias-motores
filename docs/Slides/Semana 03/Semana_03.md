@@ -181,7 +181,7 @@ O que será construído:
 
 - `StandardMaterial3D` aplicado ao Node `Chao`, salvo em `materials/chao_prototype.tres`
 - Node `Terrain3D` como filho de `NivelTeste`, com Terrain3D Storage em `resources/terrain/`
-- Elevação e depressão esculpidas, com textura do Kenney Prototype Kit pintada
+- Elevação e depressão esculpidas, com textura do Kenney Mini Dungeon pintada
 
 Por quê: primeira composição visual real do nível, base direta da iluminação global no Encontro 2.
 
@@ -211,7 +211,7 @@ Usar esta imagem como referência caso a demonstração ao vivo não seja possí
 Cada estudante replica, no próprio projeto:
 
 1. `StandardMaterial3D` aplicado ao `Chao`, salvo em `materials/chao_prototype.tres`
-2. Textura do Kenney Prototype Kit no Albedo, Roughness ajustado
+2. Textura do Kenney Mini Dungeon no Albedo, Roughness ajustado
 3. Node `Terrain3D` com Storage salva em `resources/terrain/`
 4. Elevação e depressão esculpidas, com textura pintada sobre a superfície
 5. Player reposicionado sobre área plana do novo terreno

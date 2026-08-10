@@ -20,3 +20,6 @@ $RECYCLE.BIN/
 # Arquivos temporários
 *.tmp
 *.bak
+
+# Segredos locais (tokens de MCP/API)
+.mcp.json

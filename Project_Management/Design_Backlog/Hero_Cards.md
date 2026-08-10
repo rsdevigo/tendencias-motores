@@ -8,7 +8,7 @@ Cada Hero Card agrupa os Implementation Cards de um sistema (ou família de sist
 
 **Objetivo:** estabelecer a estrutura física do projeto (pastas, assets, primeira Scene) sobre a qual todo o resto é construído.
 
-**Escopo:** criação do projeto Godot 4.7; estrutura de pastas (`PROJECT_ARCHITECTURE.md` §8); importação dos 4 pacotes Kenney; primeira Scene com Nodes filhos (`NivelTeste`, `Chao`, `LuzPrincipal`); primeira Orchestration.
+**Escopo:** criação do projeto Godot 4.7; estrutura de pastas (`PROJECT_ARCHITECTURE.md` §8); importação dos 3 pacotes Kenney; primeira Scene com Nodes filhos (`NivelTeste`, `Chao`, `LuzPrincipal`); primeira Orchestration.
 
 **Documentos relacionados:** `PROJECT_ARCHITECTURE.md` §3, §8, §9; `Tutorial_Semana_01_Encontro_1.md`; `Tutorial_Semana_01_Encontro_2.md`.
 

@@ -33,7 +33,7 @@ Este tutorial cobre apenas o **Encontro 2**: ao final dele, cada grupo tem um fl
 
 ## Assets utilizados
 
-- Os mesmos assets do Dungeon Kit já em uso pelo grupo desde a Semana 5, importados em `assets/dungeon/` desde a Semana 1.
+- Os mesmos assets do Mini Dungeon já em uso pelo grupo desde a Semana 5, importados em `assets/dungeon/` desde a Semana 1.
 
 ## Projeto esperado
 

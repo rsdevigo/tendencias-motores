@@ -109,6 +109,15 @@ https://github.com/bitbrain/beehave
 Kenney Assets (CC0)
 https://kenney.nl/
 
+Kenney Mini Dungeon
+https://kenney.nl/assets/mini-dungeon
+
+Kenney Mini Forest
+https://kenney.nl/assets/mini-forest
+
+Kenney Mini Characters
+https://kenney.nl/assets/mini-characters
+
 ---
 
 ## Samples

@@ -35,13 +35,13 @@ Ao final da Semana 3 (Encontros 1 e 2), cada estudante terá um nível de teste 
 
 ## Assets utilizados
 
-- **Kenney Prototype Kit** (CC0), conforme PROJECT_ARCHITECTURE.md (seção 3), usado para dar textura de referência ao material do graybox. Já foi baixado e importado em `assets/prototype/` na Semana 1 (Tutorial - Semana 1, Encontro 1, Parte 4); este é o primeiro encontro em que o pacote é efetivamente usado.
+- **Kenney Mini Dungeon** (CC0), conforme PROJECT_ARCHITECTURE.md (seção 3), usado para dar textura de referência ao material do graybox. Já foi baixado e importado em `assets/dungeon/` na Semana 1 (Tutorial - Semana 1, Encontro 1, Parte 4); este é o primeiro encontro em que o pacote é efetivamente usado.
 
 ## Projeto esperado
 
 - Projeto aberto no Godot 4.7, com a Scene `level_exploration.tscn` pronta para receber material e terreno.
 - Addon Terrain3D já instalado e habilitado em **Project Settings > Plugins**.
-- Pacote Kenney Prototype Kit já importado em `assets/prototype/` desde a Semana 1.
+- Pacote Kenney Mini Dungeon já importado em `assets/dungeon/` desde a Semana 1.
 
 > **Imagem sugerida**
 >
@@ -68,19 +68,19 @@ No Godot, essa solução tem duas camadas. A mais simples é o **StandardMateria
 ## Passo a passo
 
 1. Reabra o projeto do Vertical Slice e, no FileSystem Dock, dê duplo clique em `scenes/levels/exploration/level_exploration.tscn` para reabrir a Scene das Semanas 1 e 2.
-2. Confirme, no FileSystem Dock, que o pacote Kenney Prototype Kit segue disponível em `assets/prototype/`, importado desde a Semana 1 (Tutorial - Semana 1, Encontro 1, Parte 4).
+2. Confirme, no FileSystem Dock, que o pacote Kenney Mini Dungeon segue disponível em `assets/dungeon/`, importado desde a Semana 1 (Tutorial - Semana 1, Encontro 1, Parte 4).
 3. Crie a pasta `materials/` na raiz do projeto, caso ainda não exista.
 4. No painel Scene, selecione o Node `Chao`.
 5. No Inspector, localize a propriedade **Material Override** (ou **Surface Material Override**, dependendo do tipo de MeshInstance3D usado) e clique em **New StandardMaterial3D**.
 6. Clique no material recém-criado para abri-lo no Inspector e salve-o como recurso externo em `materials/chao_prototype.tres` (botão direito sobre o material > **Save As**).
-7. No Inspector do material, expanda a seção **Albedo** e atribua uma textura do Kenney Prototype Kit (por exemplo, uma textura de grade ou concreto) ao campo **Texture**.
+7. No Inspector do material, expanda a seção **Albedo** e atribua uma textura do Kenney Mini Dungeon (por exemplo, uma textura de grade ou concreto) ao campo **Texture**.
 8. Ajuste o parâmetro **Roughness** para um valor entre 0.6 e 0.8, produzindo uma superfície fosca compatível com um piso de teste.
 9. Confirme visualmente, no Viewport, que a textura aparece corretamente esticada sobre o `Chao`, sem distorção exagerada.
 10. Salve a Scene (**Ctrl+S**).
 
 ## Resultado esperado
 
-O Node `Chao` possui um `StandardMaterial3D` próprio, salvo como recurso externo em `materials/chao_prototype.tres`, com uma textura do Kenney Prototype Kit aplicada ao Albedo e um valor de Roughness ajustado.
+O Node `Chao` possui um `StandardMaterial3D` próprio, salvo como recurso externo em `materials/chao_prototype.tres`, com uma textura do Kenney Mini Dungeon aplicada ao Albedo e um valor de Roughness ajustado.
 
 ## Verificando
 
@@ -91,7 +91,7 @@ O Node `Chao` possui um `StandardMaterial3D` próprio, salvo como recurso extern
 ## Problemas comuns
 
 - Material criado como recurso embutido (sem salvar como `.tres`), impedindo reutilização em outras Scenes: sempre usar **Save As** para tornar o material um recurso externo.
-- Textura do Kenney Prototype Kit não aparece após atribuída: verificar se o arquivo de textura foi de fato importado (aparece no FileSystem Dock) antes de tentar atribuí-lo.
+- Textura do Kenney Mini Dungeon não aparece após atribuída: verificar se o arquivo de textura foi de fato importado (aparece no FileSystem Dock) antes de tentar atribuí-lo.
 - Textura esticada ou repetida de forma exagerada: ajustar os parâmetros de **UV1 Scale** no StandardMaterial3D, comparando visualmente até a proporção ficar coerente com o tamanho do `Chao`.
 
 ## Boas práticas
@@ -126,14 +126,14 @@ Essa ausência não é um detalhe menor — é uma diferença arquitetural real 
 4. Abra o painel de ferramentas do Terrain3D (geralmente exibido na parte inferior do editor quando o Node está selecionado).
 5. Selecione a ferramenta de escultura de altura (**Sculpt** ou equivalente) e ajuste o tamanho e a força do pincel para um valor pequeno, adequado a ajustes suaves.
 6. No Viewport, esculpa uma elevação suave e uma depressão rasa em áreas distintas do terreno, simulando uma variação básica de relevo.
-7. Selecione a ferramenta de textura do Terrain3D e associe pelo menos uma textura do Kenney Prototype Kit a uma camada do terreno.
+7. Selecione a ferramenta de textura do Terrain3D e associe pelo menos uma textura do Kenney Mini Dungeon a uma camada do terreno.
 8. Pinte a textura sobre a área esculpida, cobrindo toda a extensão visível do terreno.
 9. Posicione o `Player` (existente desde a Semana 1) sobre uma área plana do terreno esculpido, evitando spawná-lo dentro de uma elevação.
 10. Salve a Scene (**Ctrl+S**) e pressione **Play Scene** (F6) para confirmar que o Player aparece corretamente sobre o novo terreno, sem afundar nem flutuar.
 
 ## Resultado esperado
 
-Um Node `Terrain3D` existe dentro de `level_exploration.tscn`, com uma Terrain3D Storage salva em `resources/terrain/`, contendo uma elevação e uma depressão esculpidas, e ao menos uma textura do Kenney Prototype Kit pintada sobre a superfície. O `Player` está posicionado sobre uma área plana do novo terreno.
+Um Node `Terrain3D` existe dentro de `level_exploration.tscn`, com uma Terrain3D Storage salva em `resources/terrain/`, contendo uma elevação e uma depressão esculpidas, e ao menos uma textura do Kenney Mini Dungeon pintada sobre a superfície. O `Player` está posicionado sobre uma área plana do novo terreno.
 
 ## Verificando
 
@@ -172,7 +172,7 @@ Ajuste ao menos um parâmetro do material aplicado ao `Chao` — cor do Albedo, 
 
 ☐ Scene `level_exploration.tscn` reaberta sem erros
 
-☐ Kenney Prototype Kit disponível em `assets/prototype/` (importado desde a Semana 1)
+☐ Kenney Mini Dungeon disponível em `assets/dungeon/` (importado desde a Semana 1)
 
 ☐ StandardMaterial3D criado, salvo em `materials/chao_prototype.tres` e aplicado ao `Chao`
 

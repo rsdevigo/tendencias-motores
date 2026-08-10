@@ -192,8 +192,10 @@ res://
 ├── scripts/ (autoload, components)
 ├── orchestrations/
 ├── resources/ (items, save)
-├── assets/ (prototype, dungeon, nature, characters)
-├── materials/  ├── audio/  └── animations/
+├── assets/ (dungeon, forest, characters)
+├── materials/  
+├── audio/  
+└── animations/
 ```
 
 <!--
@@ -205,9 +207,9 @@ Erro comum: nomear pastas em PascalCase ou com espaços — a convenção do pro
 
 ## Laboratório — Importação dos Pacotes Kenney
 
-- Download de **Prototype Kit**, **Dungeon Kit**, **Nature Kit** e **Mini Characters** (kenney.nl, CC0)
-- Cada pacote arrastado para sua subpasta em `assets/` (`prototype/`, `dungeon/`, `nature/`, `characters/`)
-- Os quatro pacotes ficam disponíveis desde hoje — cada um só é efetivamente usado quando o Cronograma exigir (Prototype na Semana 3, Dungeon na Semana 5, Mini Characters na Semana 8, Nature na Semana 12)
+- Download de **Mini Dungeon**, **Mini Forest** e **Mini Characters** (kenney.nl, CC0)
+- Cada pacote arrastado para sua subpasta em `assets/` (`dungeon/`, `forest/`, `characters/`)
+- Os três pacotes ficam disponíveis desde hoje — cada um só é efetivamente usado quando o Cronograma exigir (texturas do Mini Dungeon na Semana 3, modelos do Mini Dungeon na Semana 5, Mini Characters na Semana 8, Mini Forest na Semana 12)
 
 <!--
 Ver Tutorial Semana 1 Encontro 1, Parte 4, para o passo a passo completo de download e importação.
@@ -448,7 +450,7 @@ Exemplos possíveis: um segundo MeshInstance3D com outra forma, ou uma OmniLight
 ## Resultado Esperado da Semana
 
 - Projeto Godot 4.7 organizado, estrutura de pastas completa
-- Quatro pacotes Kenney (Prototype, Dungeon, Nature Kit, Mini Characters) importados em `assets/`
+- Três pacotes Kenney (Mini Dungeon, Mini Forest, Mini Characters) importados em `assets/`
 - Scene funcional com ao menos três Nodes em hierarquia
 - Um Node adicional criado de forma autônoma (desafio)
 - Turma relaciona Node/Scene Tree ao par GameObject/Component da Unity
@@ -463,7 +465,7 @@ Sem instrumento formal de avaliação nesta semana (não é semana 🔴). Esta b
 
 - [ ] Projeto `TemploEsquecido` criado, abre sem erros
 - [ ] Estrutura de pastas completa (scenes, scripts, orchestrations, resources, assets, materials, audio, animations)
-- [ ] Kenney Prototype, Dungeon, Nature Kit e Mini Characters importados em `assets/`, sem erro de importação
+- [ ] Kenney Mini Dungeon, Mini Forest e Mini Characters importados em `assets/`, sem erro de importação
 - [ ] Scene `level_exploration.tscn` com `NivelTeste`, `Chao`, `LuzPrincipal`
 - [ ] Orchestration `nivel_teste.torch` funcional
 - [ ] Node adicional do desafio, distinto do exemplo

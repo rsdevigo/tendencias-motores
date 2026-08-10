@@ -42,14 +42,14 @@
 
 **Contexto:** segunda etapa da Semana 12.
 
-**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §3 (Kenney Nature Kit), §6; `Cronograma` (Semana 12, Encontro 2).
+**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §3 (Kenney Mini Forest), §6; `Cronograma` (Semana 12, Encontro 2).
 
 **Tipo:** A
 
 **Arquivos Esperados:** modificação em `level_exploration.tscn` (Node `MultiMeshInstance3D`).
 
 **Implementação:**
-1. Adicionar `MultiMeshInstance3D` à zona externa, usando assets do Kenney Nature Kit (`assets/nature/`, importado desde a Semana 1).
+1. Adicionar `MultiMeshInstance3D` à zona externa, usando assets do Kenney Mini Forest (`assets/forest/`, importado desde a Semana 1).
 2. Compor vegetação/elementos de cena com atenção à densidade e ao impacto de performance.
 
 **Restrições:** elementos compostos via `MultiMeshInstance3D` não têm lógica própria (sem colisão/interação individual) — não confundir com Scenes de gameplay.
@@ -127,9 +127,31 @@
 
 **Definition of Done:** Feedback formal sobre a otimização (Semana 13) recebido.
 
-**Dependências:** Blocked By: IC-VS13-01. Blocks: IC-VS14-01.
+**Dependências:** Blocked By: IC-VS13-01. Blocks: IC-VS13-D.
 
 **Story Points:** 5
+
+---
+
+## IC-VS13-D — Desafio Técnico Semana 13: Escolha e Justificativa da Otimização
+
+**Objetivo:** rastrear como unidade avaliada pela **Rubrica 2** o desafio da Semana 13, cujo conteúdo técnico integral já está em IC-VS13-02.
+
+**Contexto:** Sistema de Avaliação lista a Semana 13 entre as semanas com Desafio Técnico formal — última semana da lista (1, 2, 4, 5, 6, 8, 9, 10, 11, 13).
+
+**Documentos de Referência:** `Cronograma` (Semana 13, Encontro 2); Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 2).
+
+**Tipo:** B (idêntico a IC-VS13-02).
+
+**Implementação:** ver IC-VS13-02 na íntegra — nenhum passo adicional.
+
+**Critérios de Aceite:** idênticos aos de IC-VS13-02.
+
+**Definition of Done:** avaliado pela Rubrica 2.
+
+**Dependências:** Blocked By: IC-VS13-02. Blocks: IC-VS14-01. Ver também: IC-VS13-02 (mesma implementação).
+
+**Story Points:** 3
 
 ---
 
@@ -163,7 +185,7 @@
 
 **Definition of Done:** entrega parcial + Code Review de encerramento (Semana 14 🔴) cumpridos.
 
-**Dependências:** Blocked By: IC-VS13-02. Blocks: IC-VS14-02, IC-VS14-03.
+**Dependências:** Blocked By: IC-VS13-D. Blocks: IC-VS14-02, IC-VS14-03.
 
 **Story Points:** 5
 

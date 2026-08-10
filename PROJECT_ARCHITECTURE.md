@@ -36,9 +36,8 @@ A disciplina não tem foco em produção de arte. Toda a direção de arte é re
 
 | Pacote | Uso no projeto |
 |---|---|
-| **Kenney Prototype Kit** | Prototipagem rápida, graybox de níveis, testes de gameplay de novos sistemas antes de qualquer composição de cena definitiva. |
-| **Kenney Dungeon Kit** | Ambientes internos: o templo/masmorra, corredores, salas, portas, baús e demais elementos de arquitetura interna. |
-| **Kenney Nature Kit** | Ambientes externos: a zona de exploração inicial, vegetação, terreno e transições entre áreas externas e internas. |
+| **Kenney Mini Dungeon** | Ambientes internos: o templo/masmorra, corredores, salas, portas, baús e demais elementos de arquitetura interna. Suas texturas de piso/parede também cobrem a prototipagem rápida e o graybox de níveis (Semana 3), antes de qualquer composição de cena definitiva. |
+| **Kenney Mini Forest** | Ambientes externos: a zona de exploração inicial, vegetação, terreno e transições entre áreas externas e internas. |
 | **Kenney Mini Characters** | Modelo de personagem rigged com dezenas de animações (incluindo idle, walk, run) para `Player` e `Enemy` — substitui, a partir da Semana 8, a `CapsuleMesh` de placeholder usada desde a Semana 2. |
 
 Nenhum estudante ou grupo deve depender de produção artística própria para atingir os critérios de avaliação. Assets adicionais da Kenney podem ser incorporados livremente, desde que mantenham a mesma função didática de apoio.
@@ -108,7 +107,7 @@ O roadmap segue estritamente a ordem dos módulos definida no Plano de Ensino e 
 | Node base + composição | Compreender composição como unidade universal | Node, Scene Tree, Orchestrator | Estrutura inicial |
 | Player (locomoção) | Configurar CharacterBody3D e movimentação | CharacterBody3D, move_and_slide | Node base + composição |
 | Input do jogador | Desacoplar intenção do jogador da ação no mundo | Input Map, InputEvent | Player |
-| Cena de teste (graybox) | Aplicar Prototype Kit à exploração de terreno e materiais | Materiais, Terrain3D (addon) | Player |
+| Cena de teste (graybox) | Aplicar texturas do Mini Dungeon à exploração de terreno e materiais | Materiais, Terrain3D (addon) | Player |
 | Renderização moderna e build | Compreender SDFGI/VoxelGI e gerar o primeiro executável | SDFGI/VoxelGI, Exportação de projeto | Cena de teste |
 
 **Produto do módulo:** primeiro build executável, com o jogador explorando um graybox do ambiente externo.
@@ -151,7 +150,7 @@ O roadmap segue estritamente a ordem dos módulos definida no Plano de Ensino e 
 | Sistema | Objetivo pedagógico | Recursos do Godot | Dependências |
 |---|---|---|---|
 | Material Overrides / Unique Materials | Padronizar e otimizar materiais do projeto | StandardMaterial3D, Material Overrides | Módulo 1 |
-| Foliage (Nature Kit) | Compor a zona externa com performance controlada | MultiMeshInstance3D | Material Overrides |
+| Foliage (Mini Forest) | Compor a zona externa com performance controlada | MultiMeshInstance3D | Material Overrides |
 | Áudio de eventos | Integrar som a interação, passos e ambiente | AudioStreamPlayer | Sistemas de interação |
 | Profiling e otimização | Identificar e tratar gargalos técnicos antes da entrega | Profiler/Debugger do Godot, instancing, LOD, occlusion culling | Vertical Slice do Módulo 3 |
 | Exportação final | Empacotar build distribuível | Export Templates / Project Export | Profiling |
@@ -218,9 +217,8 @@ res://
 │   ├── items/            (ItemData .tres)
 │   └── save/             (SaveData .tres)
 ├── assets/
-│   ├── prototype/        (assets do Kenney Prototype Kit)
-│   ├── dungeon/          (assets do Kenney Dungeon Kit)
-│   ├── nature/           (assets do Kenney Nature Kit)
+│   ├── dungeon/          (assets do Kenney Mini Dungeon — inclui texturas usadas na prototipagem/graybox)
+│   ├── forest/           (assets do Kenney Mini Forest)
 │   └── characters/       (assets do Kenney Mini Characters — modelo e animações de Player/Enemy)
 ├── materials/
 ├── audio/

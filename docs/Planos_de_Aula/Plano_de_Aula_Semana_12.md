@@ -103,7 +103,7 @@ Sem instrumento formal isolado neste encontro (Rubrica 1 — Desenvolvimento Sem
 
 - MultiMeshInstance3D como solução de desempenho para grandes quantidades de instâncias de uma mesma malha (vegetação, rochas, elementos repetidos de cenário), equivalente à Foliage Tool.
 - Diferença entre instanciar uma Scene por elemento (custo alto em escala) e usar MultiMeshInstance3D (uma única chamada de desenho para múltiplas instâncias).
-- Composição guiada de vegetação/elementos de cena na zona externa do Vertical Slice (Kenney Nature Kit) usando MultiMeshInstance3D, com atenção à densidade e à performance.
+- Composição guiada de vegetação/elementos de cena na zona externa do Vertical Slice (Kenney Mini Forest) usando MultiMeshInstance3D, com atenção à densidade e à performance.
 - Code Review (Rubrica 4) sobre os materiais refatorados no Encontro 1 e a composição de cena deste encontro — organização, nomenclatura, modularidade e reutilização.
 
 ## Conceitos Fundamentais
@@ -112,7 +112,7 @@ O Encontro 1 resolveu a parametrização de um material por instância. O Encont
 
 ## Recursos do Godot
 
-`MultiMeshInstance3D`, Kenney Nature Kit (assets de vegetação importados em `assets/nature/` desde a Semana 1, conforme direção de arte definida em PROJECT_ARCHITECTURE.md).
+`MultiMeshInstance3D`, Kenney Mini Forest (assets de vegetação importados em `assets/forest/` desde a Semana 1, conforme direção de arte definida em PROJECT_ARCHITECTURE.md).
 
 ## Comparação com Unity
 
@@ -122,7 +122,7 @@ A Unity resolve o mesmo problema de composição em escala com a Foliage Tool (p
 
 - Projetos de cada grupo com materiais refatorados do Encontro 1.
 - Cena de exemplo com MultiMeshInstance3D configurado sobre um terreno de teste, preparada para demonstração, sem distribuir antes da aula.
-- Assets do Kenney Nature Kit, importados em `assets/nature/` desde a Semana 1 (direção de arte definida em PROJECT_ARCHITECTURE.md), conferidos previamente quanto à compatibilidade com MultiMesh.
+- Assets do Kenney Mini Forest, importados em `assets/forest/` desde a Semana 1 (direção de arte definida em PROJECT_ARCHITECTURE.md), conferidos previamente quanto à compatibilidade com MultiMesh.
 - Ficha de Code Review (Rubrica 4) do Sistema de Avaliação, impressa ou digital.
 - Slides com o comparativo MultiMeshInstance3D (Godot) × Foliage Tool/GPU Instancing (Unity).
 
@@ -137,11 +137,11 @@ A Unity resolve o mesmo problema de composição em escala com a Foliage Tool (p
 
 ## Desenvolvimento
 
-O encontro abre com a demonstração guiada de um `MultiMeshInstance3D` configurado sobre um terreno de teste, cobrindo a diferença entre instanciar Scenes individuais e agrupar instâncias em uma única chamada de desenho. Cada grupo aplica essa ferramenta à própria zona externa do Vertical Slice, compondo vegetação e elementos de cena do Kenney Nature Kit importados desde a Semana 1, com atenção à densidade visual e ao impacto de performance — como diretor técnico, o professor orienta decisões de densidade e distribuição sem impor uma composição única para todos os grupos. O encontro fecha com o Code Review de materiais e composição de cena, em que cada grupo apresenta a refatoração de materiais do Encontro 1 e a composição de vegetação deste encontro, justificando as decisões de parametrização e otimização adotadas diante do professor.
+O encontro abre com a demonstração guiada de um `MultiMeshInstance3D` configurado sobre um terreno de teste, cobrindo a diferença entre instanciar Scenes individuais e agrupar instâncias em uma única chamada de desenho. Cada grupo aplica essa ferramenta à própria zona externa do Vertical Slice, compondo vegetação e elementos de cena do Kenney Mini Forest importados desde a Semana 1, com atenção à densidade visual e ao impacto de performance — como diretor técnico, o professor orienta decisões de densidade e distribuição sem impor uma composição única para todos os grupos. O encontro fecha com o Code Review de materiais e composição de cena, em que cada grupo apresenta a refatoração de materiais do Encontro 1 e a composição de vegetação deste encontro, justificando as decisões de parametrização e otimização adotadas diante do professor.
 
 ## Desafio
 
-Não há desafio de solução livre com liberdade ampla neste encontro: a composição de cena com MultiMeshInstance3D é guiada quanto à ferramenta, mas cada grupo decide livremente a distribuição, densidade e escolha de elementos de vegetação/cena para a própria zona externa, dentro do que já existe no Kenney Nature Kit do projeto. **Entrega: Code Review de materiais e composição de cena.**
+Não há desafio de solução livre com liberdade ampla neste encontro: a composição de cena com MultiMeshInstance3D é guiada quanto à ferramenta, mas cada grupo decide livremente a distribuição, densidade e escolha de elementos de vegetação/cena para a própria zona externa, dentro do que já existe no Kenney Mini Forest do projeto. **Entrega: Code Review de materiais e composição de cena.**
 
 ## Critérios de Sucesso
 

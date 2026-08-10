@@ -46,11 +46,11 @@ res://animations/
 
 ---
 
-## IC-VS01-02 — Download e Importação dos 4 Pacotes Kenney
+## IC-VS01-02 — Download e Importação dos 3 Pacotes Kenney
 
 **Objetivo:** ter todos os assets de arte do projeto disponíveis desde a primeira semana.
 
-**Contexto:** os 4 pacotes (Prototype, Dungeon, Nature, Mini Characters) só serão *usados* em semanas distintas (3, 5, 8, 12), mas são importados de uma só vez para não interromper semanas futuras.
+**Contexto:** os 3 pacotes (Mini Dungeon, Mini Forest, Mini Characters) só serão *usados* em semanas distintas (3/5, 8, 12), mas são importados de uma só vez para não interromper semanas futuras.
 
 **Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §3; `Tutorial_Semana_01_Encontro_1.md` (Parte 4).
 
@@ -58,14 +58,13 @@ res://animations/
 
 **Arquivos Esperados:**
 ```
-res://assets/prototype/*.glb (ou .gltf)
-res://assets/dungeon/*.glb
-res://assets/nature/*.glb
+res://assets/dungeon/*.glb (ou .gltf)
+res://assets/forest/*.glb
 res://assets/characters/*.glb (Kenney Mini Characters)
 ```
 
 **Implementação:**
-1. Baixar em kenney.nl: Prototype Kit, Dungeon Kit (ou Mini Dungeon), Nature Kit, Mini Characters.
+1. Baixar em kenney.nl: Mini Dungeon, Mini Forest, Mini Characters.
 2. Extrair cada `.zip` fora do projeto.
 3. Arrastar os arquivos de modelo de cada pacote para a subpasta correspondente em `assets/` via FileSystem Dock.
 4. Aguardar importação; conferir ausência de ícone de erro em cada arquivo.
@@ -266,11 +265,11 @@ res://orchestrations/player.torch
 
 ---
 
-## IC-VS03-01 — Material do Graybox (StandardMaterial3D + Kenney Prototype Kit)
+## IC-VS03-01 — Material do Graybox (StandardMaterial3D + Kenney Mini Dungeon)
 
 **Objetivo:** dar aparência de superfície ao `Chao`.
 
-**Contexto:** primeira etapa da Semana 3; primeiro uso efetivo do Kenney Prototype Kit (importado desde a Semana 1).
+**Contexto:** primeira etapa da Semana 3; primeiro uso efetivo das texturas do Kenney Mini Dungeon (importado desde a Semana 1).
 
 **Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §3; `Tutorial_Semana_03_Encontro_1.md` (Parte 1).
 
@@ -281,7 +280,7 @@ res://orchestrations/player.torch
 **Implementação:**
 1. Selecionar `Chao`; no Inspector, criar **New StandardMaterial3D** em Material Override.
 2. Salvar como recurso externo: `materials/chao_prototype.tres`.
-3. Atribuir textura do Kenney Prototype Kit ao campo Albedo.
+3. Atribuir textura do Kenney Mini Dungeon ao campo Albedo.
 4. Ajustar Roughness entre 0.6 e 0.8.
 5. Confirmar visualmente textura sem distorção exagerada (ajustar UV1 Scale se necessário).
 
@@ -316,7 +315,7 @@ res://orchestrations/player.torch
 1. Confirmar addon Terrain3D instalado/habilitado em Project Settings > Plugins.
 2. Adicionar Node `Terrain3D` a `level_exploration.tscn`; Storage salva em `resources/terrain/`.
 3. Esculpir uma elevação suave e uma depressão rasa em áreas distintas.
-4. Pintar ao menos uma textura do Kenney Prototype Kit sobre a área esculpida.
+4. Pintar ao menos uma textura do Kenney Mini Dungeon sobre a área esculpida.
 5. Reposicionar o `Player` sobre uma área plana do novo terreno (evitar spawn dentro de elevação).
 
 **Restrições:** não esculpir relevo sob o ponto de spawn do Player.

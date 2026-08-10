@@ -30,7 +30,7 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 - [ ] `game_manager.gd` com `class_name GameManager`, registrado e habilitado como Autoload.
 - [ ] Acesso validado a partir de um script fora do próprio Autoload.
 
-**Definition of Done:** checklist do Tutorial (Semana 4, Encontro 1) 100% (exceto desafio, ver IC-VS04-03).
+**Definition of Done:** checklist do Tutorial (Semana 4, Encontro 1) 100% (exceto desafio, ver IC-VS04-D).
 
 **Dependências:** Blocked By: IC-VS03-04. Blocks: IC-VS04-02.
 
@@ -70,25 +70,24 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 
 ---
 
-## IC-VS04-03 — Persistência Entre Cenas + Desafios do Módulo
+## IC-VS04-03 — Persistência Entre Cenas (Demonstração Guiada)
 
-**Objetivo:** validar, com uma troca de cena real, que uma variável do `SaveManager` sobrevive; e implementar as variáveis de desafio de ambos os encontros.
+**Objetivo:** validar, com uma troca de cena real, que uma variável do `SaveManager` sobrevive à troca de Scene.
 
-**Contexto:** fecha a Semana 4 — sem este teste, o Autoload não está comprovadamente funcional.
+**Contexto:** demonstração guiada apenas — a variável usada aqui (`itens_coletados`) é o exemplo do tutorial. O desafio avaliado (uma variável própria, DIFERENTE desta) é uma carta separada: **IC-VS04-D — Desafio Técnico Semana 4**.
 
-**Documentos de Referência:** `Tutorial_Semana_04_Encontro_1.md` (Desafio); `Tutorial_Semana_04_Encontro_2.md` (Parte 3 + Desafio).
+**Documentos de Referência:** `Tutorial_Semana_04_Encontro_2.md` (Parte 3).
 
-**Tipo:** B — as variáveis de exemplo (`itens_coletados: int`, `progresso_atual`, `porta_principal_aberta`) são sugestões explícitas do tutorial ("por exemplo"); a variável final fica a critério de quem implementa.
+**Tipo:** A (a parte guiada em si não tem ambiguidade — a variável de exemplo é dada pelo tutorial).
 
-**Arquivos Esperados:** modificação em `save_manager.gd`, `game_manager.gd`; nova Scene temporária `res://scenes/levels/exploration/level_teste_persistencia.tscn` (descartável, não faz parte do nível final).
+**Arquivos Esperados:** modificação em `save_manager.gd`; nova Scene temporária `res://scenes/levels/exploration/level_teste_persistencia.tscn` (descartável, não faz parte do nível final).
 
 **Implementação:**
-1. Em `save_manager.gd`, declarar uma variável persistente (`# PLACEHOLDER: exemplo do tutorial — itens_coletados: int`) e uma função para alterá-la.
+1. Em `save_manager.gd`, declarar a variável de exemplo `itens_coletados: int` e uma função para alterá-la.
 2. Criar `level_teste_persistencia.tscn` (Node3D + Label3D) apenas para o teste.
 3. No Player, acionar temporariamente a função via uma tecla livre; validar incremento.
 4. Trocar a Main Scene para `level_teste_persistencia.tscn`, confirmar que o valor persiste; reverter a Main Scene para `level_exploration.tscn`.
-5. Adicionar ao `GameManager` uma variável de estado de partida própria (desafio do Encontro 1), comentando por que pertence ao `GameManager` e não a uma Scene.
-6. Remover código de teste temporário (prints, tecla de debug) ao final.
+5. Remover código de teste temporário (prints, tecla de debug) ao final.
 
 **Restrições:** nenhuma variável de teste deve permanecer hardcoded fora do Autoload; a Main Scene do projeto deve terminar revertida para `level_exploration.tscn`.
 
@@ -96,14 +95,43 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 
 **Critérios de Aceite:**
 - [ ] Variável do `SaveManager` confirmadamente persistente entre duas Scenes reais.
-- [ ] Variável de estado própria no `GameManager`, comentada.
 - [ ] Main Scene revertida; nenhum código de teste residual.
 
-**Definition of Done:** checklist dos dois tutoriais da Semana 4 100%.
+**Definition of Done:** mecânica de persistência comprovada — serve de modelo direto para o desafio (IC-VS04-D).
 
-**Dependências:** Blocked By: IC-VS04-02. Blocks: IC-VS05-01.
+**Dependências:** Blocked By: IC-VS04-02. Blocks: IC-VS04-D.
 
-**Story Points:** 3
+**Story Points:** 2
+
+---
+
+## IC-VS04-D — Desafio Técnico Semana 4: Variável Própria em GameManager/SaveManager
+
+**Objetivo:** praticar autonomia sobre Autoload com liberdade de escolha total — este é o entregável avaliado pela **Rubrica 2 (Desafios Técnicos)** do Sistema de Avaliação para a Semana 4 (ver `docs/Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md`).
+
+**Contexto:** o Cronograma define dois desafios na Semana 4, um por encontro. A demonstração guiada (IC-VS04-01/02/03) não os substitui — o Encontro 2 pede explicitamente uma variável "diferente do usado na demonstração".
+
+**Documentos de Referência:** `Tutorial_Semana_04_Encontro_1.md` (Desafio); `Tutorial_Semana_04_Encontro_2.md` (Desafio); Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 2).
+
+**Tipo:** B — liberdade de escolha total, sem solução única, conforme o próprio Cronograma.
+
+**Implementação:**
+1. Encontro 1: adicionar ao `GameManager` UMA variável de estado de partida própria, não demonstrada em aula (ex.: contador de tentativas, flag de evento). Comentar por que ela pertence ao `GameManager`.
+2. Encontro 2: implementar no `SaveManager` um dado próprio que deve persistir entre cenas — DIFERENTE de `itens_coletados` (a variável de exemplo de IC-VS04-03). Validar com uma troca de cena real, repetindo o procedimento de IC-VS04-03.
+
+**Restrições:** a variável do Encontro 2 não pode ser a mesma já usada na demonstração de IC-VS04-03.
+
+**Testes:** `print()` temporário confirmando leitura de ambas as variáveis; troca de cena real para a do `SaveManager`.
+
+**Critérios de Aceite:**
+- [ ] Variável própria no `GameManager`, comentada.
+- [ ] Variável própria (distinta da demo) no `SaveManager`, validada com troca de cena real.
+
+**Definition of Done:** avaliado pela Rubrica 2 — Solução proposta, Uso correto do Godot, Criatividade, Organização, Funcionamento.
+
+**Dependências:** Blocked By: IC-VS04-03. Blocks: IC-VS05-01.
+
+**Story Points:** 2
 
 ---
 
@@ -124,7 +152,7 @@ res://scripts (ou orchestrations) — door.gd ou door.torch
 ```
 
 **Implementação:**
-1. Criar `Door.tscn` em `scenes/interactables/`: Node raiz (ex.: `Area3D` ou `StaticBody3D`, conforme a detecção escolhida), `CollisionShape3D`, `MeshInstance3D` (Kenney Dungeon Kit).
+1. Criar `Door.tscn` em `scenes/interactables/`: Node raiz (ex.: `Area3D` ou `StaticBody3D`, conforme a detecção escolhida), `CollisionShape3D`, `MeshInstance3D` (Kenney Mini Dungeon).
 2. Criar script/Orchestration com `class_name Door`, implementando `interact() -> void`.
 3. Corpo inicial de `interact()`: efeito direto simples (ex.: `print()` ou alteração visual imediata) — será substituído por Signal em IC-VS05-03.
 
@@ -307,7 +335,29 @@ res://resources/items/item_chave.tres
 
 **Definition of Done:** Checkpoint de progresso do Módulo 2 (Cronograma, Semana 6) apresentado; checklist do Tutorial 100%.
 
-**Dependências:** Blocked By: IC-VS06-01. Blocks: IC-VS07-01.
+**Dependências:** Blocked By: IC-VS06-01. Blocks: IC-VS06-D.
+
+**Story Points:** 2
+
+---
+
+## IC-VS06-D — Desafio Técnico Semana 6: Campo Extra + Conjunto Próprio de Itens
+
+**Objetivo:** consolidar, como entregável avaliado pela **Rubrica 2 (Desafios Técnicos)**, os dois desafios da Semana 6 (Sistema de Avaliação — Semanas com Desafio Técnico: 1, 2, 4, 5, 6, 8, 9, 10, 11, 13).
+
+**Contexto:** o campo extra (IC-VS06-01, passo 4) e o conjunto próprio de itens (IC-VS06-02, conteúdo integral) já cobrem tecnicamente este desafio — esta carta existe para que ele seja rastreável como unidade avaliada, em vez de ficar implícito dentro de outras cartas.
+
+**Documentos de Referência:** `Tutorial_Semana_06_Encontro_1.md` (Desafio); `Tutorial_Semana_06_Encontro_2.md` (Desafio); Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 2).
+
+**Tipo:** B — "liberdade de categorias e atributos", explícito no Cronograma.
+
+**Implementação:** ver IC-VS06-01 (passo 4) e IC-VS06-02 (conteúdo integral). Nenhum passo adicional além do já descrito nessas duas cartas.
+
+**Critérios de Aceite:** idênticos à soma de IC-VS06-01 (campo extra) + IC-VS06-02 (3+ itens temáticos).
+
+**Definition of Done:** avaliado pela Rubrica 2 — Solução proposta, Uso correto do Godot, Criatividade, Organização, Funcionamento.
+
+**Dependências:** Blocked By: IC-VS06-02. Blocks: IC-VS07-01.
 
 **Story Points:** 2
 
@@ -407,7 +457,7 @@ res://resources/items/item_chave.tres
 **Arquivos Esperados:** `res://scenes/interactables/Checkpoint.tscn`
 
 **Implementação:**
-1. Criar `Checkpoint.tscn` em `scenes/interactables/`: `Area3D` + `CollisionShape3D` + malha/marcador visual (Prototype ou Dungeon Kit).
+1. Criar `Checkpoint.tscn` em `scenes/interactables/`: `Area3D` + `CollisionShape3D` + malha/marcador visual (asset do Mini Dungeon).
 2. Implementar `interact()` (mesmo contrato de `Door`/`Lever`, via `has_method`).
 3. Dentro de `interact()`, obter referência ao `SaveComponent` e chamar `salvar()`, passando itens coletados atuais e um `id_checkpoint` (campo `@export` próprio, único por instância).
 4. Posicionar ao menos uma instância no nível.

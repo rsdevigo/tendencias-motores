@@ -193,7 +193,7 @@ O `Checkpoint` não introduz um novo mecanismo de interação: ele reaproveita, 
 
 1. No FileSystem Dock, dentro de `scenes/interactables/`, crie uma nova Scene chamada `Checkpoint.tscn`, com um Node raiz apropriado (por exemplo, `Area3D`, seguindo o mesmo padrão já usado por `Door` ou `Lever`).
 2. Adicione um `CollisionShape3D` filho, definindo a área de detecção do checkpoint.
-3. Adicione uma malha ou marcador visual simples (Prototype Kit ou Dungeon Kit) como filho, apenas para o checkpoint ser identificável no nível.
+3. Adicione uma malha ou marcador visual simples (asset do Mini Dungeon) como filho, apenas para o checkpoint ser identificável no nível.
 4. Crie o script `checkpoint.gd` em `scripts/`, ou, se o grupo optar por Orchestrator, a Orchestration correspondente em `orchestrations/`.
 5. Implemente o método exigido pelo contrato `Interactable` (o mesmo nome já usado por `Door`/`Lever`, por exemplo `interact()`), seguindo o padrão de duck typing (`has_method`) já estabelecido na Semana 5.
 6. Dentro de `interact()`, obtenha a referência ao `SaveComponent` (do Player ou do Autoload, conforme a organização já adotada pelo grupo) e chame `salvar()`, passando os itens coletados atuais e um identificador do próprio checkpoint.

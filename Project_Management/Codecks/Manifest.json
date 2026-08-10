@@ -19,12 +19,19 @@
     { "id": "vertical_slices", "name": "Vertical Slices", "file": "../Vertical_Slices.md", "count": 17 },
     { "id": "hero_cards", "name": "Hero Cards", "file": "../Design_Backlog/Hero_Cards.md", "count": 15 },
     { "id": "design_cards", "name": "Design Cards", "file": "Design_Cards.json", "count": 5 },
-    { "id": "implementation_cards", "name": "Implementation Cards", "file": "Implementation_Cards.json", "count": 51 }
+    { "id": "implementation_cards", "name": "Implementation Cards", "file": "Implementation_Cards.json", "count": 58 }
   ],
   "implementation_card_type_counts": {
-    "A": 30,
-    "B": 16,
+    "A": 31,
+    "B": 22,
     "C_blocked_stub": 5
   },
-  "notes": "Nenhuma integração de API/MCP Codecks estava disponível no ambiente em que este plano foi gerado. Esta pasta é o fallback em arquivo, pronto para importação manual ou scriptada. Ver Import_Instructions.md."
+  "notes": "Nenhuma integração de API/MCP Codecks estava disponível no momento em que este plano foi gerado inicialmente; um MCP local (codecks-mcp) foi conectado posteriormente e usado para importar de fato o plano para o projeto 'Templo Esquecido' no Codecks. Esta pasta continua sendo a fonte de verdade em arquivo.",
+  "codecks_import_status": {
+    "imported": true,
+    "project_name": "Templo Esquecido",
+    "total_cards_in_codecks": 100,
+    "decks_in_codecks": 9,
+    "last_sync_note": "7 cartas 'Desafio Técnico' (IC-VS04-D, IC-VS06-D, IC-VS08-D, IC-VS09-D, IC-VS10-D, IC-VS11-D, IC-VS13-D) foram adicionadas após a importação inicial, para tornar rastreável a Rubrica 2 (Desafios Técnicos) do Sistema de Avaliação, que antes estava embutida sem rótulo em outras cartas."
+  }
 }

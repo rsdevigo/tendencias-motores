@@ -8,7 +8,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 ## VS-01 — Arquitetura do Godot, Nodes e Scene Tree
 
-**Objetivo:** ter um projeto Godot 4.7 estruturado, com os 4 pacotes de assets importados, e uma primeira Scene com Nodes filhos.
+**Objetivo:** ter um projeto Godot 4.7 estruturado, com os 3 pacotes de assets importados, e uma primeira Scene com Nodes filhos.
 
 **Experiência Jogável:** nada "jogável" no sentido de gameplay ainda — mas o projeto abre, roda (F6) e mostra uma cena 3D simples com uma luz e um chão, validável visualmente. É o piso mínimo sobre o qual tudo mais é construído.
 
@@ -22,8 +22,8 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Critérios de Aceite:**
 - [ ] Projeto `TemploEsquecido` criado em Godot 4.7, abre sem erros.
-- [ ] Estrutura de pastas completa conforme `PROJECT_ARCHITECTURE.md` §8 (incluindo `assets/prototype/`, `dungeon/`, `nature/`, `characters/`).
-- [ ] Os 4 pacotes Kenney importados sem erro (ver Tutorial Semana 1, Encontro 1, Parte 4).
+- [ ] Estrutura de pastas completa conforme `PROJECT_ARCHITECTURE.md` §8 (incluindo `assets/dungeon/`, `forest/`, `characters/`).
+- [ ] Os 3 pacotes Kenney importados sem erro (ver Tutorial Semana 1, Encontro 1, Parte 4).
 - [ ] Scene `level_exploration.tscn` existe, com `NivelTeste` > `Chao` (MeshInstance3D + StaticBody3D/CollisionShape3D) e `LuzPrincipal` (DirectionalLight3D ou OmniLight3D).
 - [ ] Orchestration `nivel_teste.torch` com evento Ready funcional (log de teste).
 
@@ -70,7 +70,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 **Cards necessários:** HC-03; IC-VS03-01, IC-VS03-02, IC-VS03-03, IC-VS03-04.
 
 **Critérios de Aceite:**
-- [ ] `StandardMaterial3D` aplicado ao `Chao`, salvo em `materials/chao_prototype.tres`, com textura do Kenney Prototype Kit.
+- [ ] `StandardMaterial3D` aplicado ao `Chao`, salvo em `materials/chao_prototype.tres`, com textura do Kenney Mini Dungeon.
 - [ ] Terreno esculpido via Terrain3D, com Storage salva em `resources/terrain/`.
 - [ ] `WorldEnvironment` com recurso `Environment` (`resources/environment_exploration.tres`) e SDFGI habilitado, com efeito visível.
 - [ ] Export Templates instalados; preset de exportação criado; build gerado em `builds/semana_03/`.
@@ -92,7 +92,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Dependências:** VS-03 (projeto e Player estáveis; nenhuma alteração de nível nesta slice).
 
-**Cards necessários:** HC-04; IC-VS04-01, IC-VS04-02, IC-VS04-03.
+**Cards necessários:** HC-04; IC-VS04-01, IC-VS04-02, IC-VS04-03, IC-VS04-D (Desafio Técnico — Rubrica 2).
 
 **Critérios de Aceite:**
 - [ ] `scripts/autoload/game_manager.gd` com `class_name GameManager`, registrado em Project Settings > Autoload.
@@ -141,7 +141,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Dependências:** VS-05.
 
-**Cards necessários:** HC-06; IC-VS06-01, IC-VS06-02; **DC-01 aberto (ver abaixo) — bloqueia a aplicação prática do `ItemData` a um objeto coletável em cena.**
+**Cards necessários:** HC-06; IC-VS06-01, IC-VS06-02, IC-VS06-D (Desafio Técnico — Rubrica 2); **DC-01 aberto (ver abaixo) — bloqueia a aplicação prática do `ItemData` a um objeto coletável em cena.**
 
 **Critérios de Aceite:**
 - [ ] Classe `ItemData` (`scripts/resources/item_data.gd`), estendendo `Resource`, com campos `nome`, `icone`, `valor`, `descricao`.
@@ -190,7 +190,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Dependências:** VS-07.
 
-**Cards necessários:** HC-08; IC-VS08-01, IC-VS08-02, IC-VS08-03, IC-VS08-04; **DC-03 (morte do Player) impacta o comportamento do sinal `died`, mas não bloqueia a construção do Component em si.**
+**Cards necessários:** HC-08; IC-VS08-01, IC-VS08-02, IC-VS08-03, IC-VS08-04, IC-VS08-D (Desafio Técnico — Rubrica 2); **DC-03 (morte do Player) impacta o comportamento do sinal `died`, mas não bloqueia a construção do Component em si.**
 
 **Critérios de Aceite:**
 - [ ] `Malha` (CapsuleMesh) do Player substituída pelo modelo do Kenney Mini Characters, com `AnimationPlayer` funcional (idle/walk/run confirmados na aba Import).
@@ -214,7 +214,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Dependências:** VS-08 (HUD exibe `HealthComponent`).
 
-**Cards necessários:** HC-09; IC-VS09-01, IC-VS09-02, IC-VS09-03.
+**Cards necessários:** HC-09; IC-VS09-01, IC-VS09-02, IC-VS09-D (Desafio Técnico — Rubrica 2), IC-VS09-03.
 
 **Critérios de Aceite:**
 - [ ] Control simples (Label) vinculado à vida do `HealthComponent`, organizado por container/anchor.
@@ -238,7 +238,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Dependências:** VS-09; **DC-01 deve estar resolvido antes desta slice ser dada como concluída** — sem `Chest`/`Pickup` funcionais, não há como popular o inventário a partir de gameplay real.
 
-**Cards necessários:** HC-10; IC-VS10-01, IC-VS10-02, IC-VS10-03, IC-VS10-04 (a IC-VS10-04, que persiste o inventário no `SaveData`, está `Blocked By: DC-05`).
+**Cards necessários:** HC-10; IC-VS10-01, IC-VS10-02, IC-VS10-03, IC-VS10-D (Desafio Técnico — Rubrica 2), IC-VS10-04 (a IC-VS10-04, que persiste o inventário no `SaveData`, está `Blocked By: DC-05`).
 
 **Critérios de Aceite:**
 - [ ] `InventoryComponent` armazena/adiciona/remove `ItemData` coletados, expondo dados para a `InventoryUI` sem conhecer detalhes de UI.
@@ -262,7 +262,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Dependências:** VS-10.
 
-**Cards necessários:** HC-11; IC-VS11-01, IC-VS11-02, IC-VS11-03; IC-VS11-04 está `Blocked By: DC-03, DC-04`.
+**Cards necessários:** HC-11; IC-VS11-01, IC-VS11-02, IC-VS11-D (Desafio Técnico — Rubrica 2), IC-VS11-03; IC-VS11-04 está `Blocked By: DC-03, DC-04`.
 
 **Critérios de Aceite:**
 - [ ] `NavigationRegion3D` calculado sobre o nível; `Enemy` (CharacterBody3D, reaproveitando skin do Kenney Mini Characters) se desloca via `NavigationAgent3D` até um ponto.
@@ -291,7 +291,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Critérios de Aceite:**
 - [ ] Auditoria dos materiais existentes (desde a Semana 3); ao menos um conjunto de objetos refatorado para material base + Override, sem duplicar material equivalente.
-- [ ] `MultiMeshInstance3D` compondo vegetação/elementos de cena do Kenney Nature Kit na zona externa, sem regressão de performance perceptível.
+- [ ] `MultiMeshInstance3D` compondo vegetação/elementos de cena do Kenney Mini Forest na zona externa, sem regressão de performance perceptível.
 - [ ] Nenhuma alteração de mecânica, geometria ou sistema de gameplay.
 - [ ] Code Review de materiais e composição de cena realizado.
 
@@ -311,7 +311,7 @@ Convenção de IDs de card usada abaixo: `IC-VSxx-yy` (Implementation Card), `DC
 
 **Dependências:** VS-12.
 
-**Cards necessários:** HC-13; IC-VS13-01, IC-VS13-02.
+**Cards necessários:** HC-13; IC-VS13-01, IC-VS13-02, IC-VS13-D (Desafio Técnico — Rubrica 2).
 
 **Critérios de Aceite:**
 - [ ] Sons integrados a interação (`Interactable`), passos do Player e ambiente, via `AudioStreamPlayer` (placeholder de asset — Kenney Audio, Tipo B quanto ao SFX exato escolhido).

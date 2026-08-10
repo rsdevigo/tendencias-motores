@@ -11,11 +11,11 @@ Este primeiro encontro da disciplina não trata de "como usar o Godot", mas de e
 - Compreender o papel de uma game engine na produção de um jogo.
 - Reconhecer as áreas principais do Godot Editor (Viewport, FileSystem Dock).
 - Criar e organizar a estrutura inicial do projeto do Vertical Slice.
-- Baixar e importar os quatro pacotes de assets Kenney (Prototype, Dungeon, Nature Kit e Mini Characters) usados pelo resto do semestre.
+- Baixar e importar os três pacotes de assets Kenney (Mini Dungeon, Mini Forest e Mini Characters) usados pelo resto do semestre.
 
 ## Resultado esperado ao final da semana
 
-Ao final da Semana 1 (Encontros 1 e 2), cada estudante terá um projeto Godot 4.7 organizado, com uma primeira Scene funcional composta por Nodes filhos, relacionando o modelo de composição do Godot ao par GameObject/Component da Unity, e com os quatro pacotes de assets Kenney já importados. Este tutorial cobre apenas o **Encontro 1**: a criação e organização do projeto, e a importação dos assets Kenney.
+Ao final da Semana 1 (Encontros 1 e 2), cada estudante terá um projeto Godot 4.7 organizado, com uma primeira Scene funcional composta por Nodes filhos, relacionando o modelo de composição do Godot ao par GameObject/Component da Unity, e com os três pacotes de assets Kenney já importados. Este tutorial cobre apenas o **Encontro 1**: a criação e organização do projeto, e a importação dos assets Kenney.
 
 ## Pré-requisitos
 
@@ -37,7 +37,7 @@ Ao final da Semana 1 (Encontros 1 e 2), cada estudante terá um projeto Godot 4.
 
 ## Assets utilizados
 
-- **Kenney Prototype Kit**, **Kenney Dungeon Kit**, **Kenney Nature Kit** e **Kenney Mini Characters** (todos CC0, ver PROJECT_ARCHITECTURE.md, seção 3) são baixados e importados neste encontro (Parte 4), de uma só vez, para que nenhuma semana futura precise interromper o desenvolvimento para buscar um pacote novo. O Prototype Kit começa a ser efetivamente usado na Semana 3, o Dungeon Kit a partir da Semana 5, o Mini Characters a partir da Semana 8 (substituindo a `CapsuleMesh` de placeholder do Player), e o Nature Kit a partir da Semana 12 — mas os quatro já estarão presentes no projeto desde hoje.
+- **Kenney Mini Dungeon**, **Kenney Mini Forest** e **Kenney Mini Characters** (todos CC0, ver PROJECT_ARCHITECTURE.md, seção 3) são baixados e importados neste encontro (Parte 4), de uma só vez, para que nenhuma semana futura precise interromper o desenvolvimento para buscar um pacote novo. As texturas do Mini Dungeon começam a ser efetivamente usadas na Semana 3 (prototipagem/graybox) e seus modelos de arquitetura interna a partir da Semana 5, o Mini Characters a partir da Semana 8 (substituindo a `CapsuleMesh` de placeholder do Player), e o Mini Forest a partir da Semana 12 — mas os três já estarão presentes no projeto desde hoje.
 
 ## Projeto esperado
 
@@ -166,7 +166,7 @@ Um projeto de jogo cresce rapidamente em número de arquivos. Organizar a estrut
 5. Na raiz do projeto, crie a pasta `scripts` e, dentro dela, as subpastas `autoload` e `components`.
 6. Crie a pasta `orchestrations` na raiz (para os arquivos `.torch` do Orchestrator).
 7. Crie a pasta `resources` na raiz e, dentro dela, as subpastas `items` e `save`.
-8. Crie as pastas `assets` (com subpastas `prototype`, `dungeon`, `nature` e `characters`), `materials`, `audio` e `animations` na raiz.
+8. Crie as pastas `assets` (com subpastas `dungeon`, `forest` e `characters`), `materials`, `audio` e `animations` na raiz.
 9. Confira a estrutura final no FileSystem Dock, comparando com a tabela de organização do PROJECT_ARCHITECTURE.md.
 
 ## Resultado esperado
@@ -194,9 +194,8 @@ res://
 │   ├── items/
 │   └── save/
 ├── assets/
-│   ├── prototype/
 │   ├── dungeon/
-│   ├── nature/
+│   ├── forest/
 │   └── characters/
 ├── materials/
 ├── audio/
@@ -223,29 +222,29 @@ Na Unity, a convenção mais comum é organizar o painel Project em pastas como 
 
 ## Objetivo
 
-Baixar e importar, de uma só vez, os quatro pacotes de assets gratuitos que sustentam toda a direção de arte do Vertical Slice pelo resto do semestre — evitando que uma semana futura interrompa o desenvolvimento de um sistema para resolver a importação de um asset.
+Baixar e importar, de uma só vez, os três pacotes de assets gratuitos que sustentam toda a direção de arte do Vertical Slice pelo resto do semestre — evitando que uma semana futura interrompa o desenvolvimento de um sistema para resolver a importação de um asset.
 
 ## Conceito
 
-Todo projeto de jogo depende de assets externos (modelos 3D, texturas, materiais) que a engine não gera sozinha. A Kenney (kenney.nl) distribui pacotes de assets sob licença CC0 (domínio público, sem exigência de atribuição), amplamente usados por projetos didáticos e protótipos por sua qualidade consistente e ausência de restrição de uso. A disciplina usa quatro desses pacotes, cada um com um papel de direção de arte diferente (ver PROJECT_ARCHITECTURE.md, seção 3): o **Prototype Kit** para graybox e testes de gameplay, o **Dungeon Kit** para os ambientes internos do templo, o **Nature Kit** para a zona externa de exploração, e o **Mini Characters** para o modelo animado (idle, andar, correr, entre dezenas de outras animações) que substituirá, na Semana 8, a `CapsuleMesh` de placeholder do Player. Importar os quatro agora, mesmo que só um seja usado nesta semana, evita que a disciplina precise ensinar "como importar um asset" de novo a cada pacote novo — a mecânica de importação é a mesma para todos.
+Todo projeto de jogo depende de assets externos (modelos 3D, texturas, materiais) que a engine não gera sozinha. A Kenney (kenney.nl) distribui pacotes de assets sob licença CC0 (domínio público, sem exigência de atribuição), amplamente usados por projetos didáticos e protótipos por sua qualidade consistente e ausência de restrição de uso. A disciplina usa três desses pacotes, cada um com um papel de direção de arte diferente (ver PROJECT_ARCHITECTURE.md, seção 3): o **Mini Dungeon** para os ambientes internos do templo (suas texturas também cobrem o graybox e os testes de gameplay), o **Mini Forest** para a zona externa de exploração, e o **Mini Characters** para o modelo animado (idle, andar, correr, entre dezenas de outras animações) que substituirá, na Semana 8, a `CapsuleMesh` de placeholder do Player. Importar os três agora, mesmo que só um seja usado nesta semana, evita que a disciplina precise ensinar "como importar um asset" de novo a cada pacote novo — a mecânica de importação é a mesma para todos.
 
 ## Passo a passo
 
-1. Em um navegador, acesse https://kenney.nl/assets e localize o pacote **Prototype Kit**; clique em **Download** para baixar o arquivo `.zip`.
-2. Repita a busca e o download para os pacotes **Dungeon Kit** (busque por "Dungeon Remastered" ou "Mini Dungeon", conforme disponibilidade no site) e **Nature Kit** (busque por "Nature Kit" ou "Nature Remastered").
-3. Baixe também o pacote **Kenney Mini Characters** (kenney.nl/assets/mini-characters) — modelos rigged com dezenas de animações prontas (incluindo idle, walk e run).
-4. Extraia os quatro arquivos `.zip` baixados em uma pasta temporária fora do projeto Godot (ex.: na Área de Trabalho), mantendo cada pacote em sua própria subpasta extraída.
-5. No Godot, com o projeto do Vertical Slice aberto, localize no FileSystem Dock a pasta `assets/prototype/` criada na Parte 3.
-6. No explorador de arquivos do sistema operacional, abra a pasta extraída do Prototype Kit e localize a subpasta de modelos (geralmente `Models/GLB` ou equivalente, conforme a organização interna do pacote baixado).
-7. Arraste os arquivos de modelo (`.glb` ou `.gltf`) do Prototype Kit para dentro da pasta `assets/prototype/` no FileSystem Dock do Godot, soltando o arquivo diretamente sobre a pasta.
+1. Em um navegador, acesse https://kenney.nl/assets/mini-dungeon e clique em **Download** para baixar o arquivo `.zip` do **Mini Dungeon**.
+2. Repita o download para o pacote **Mini Forest** (https://kenney.nl/assets/mini-forest).
+3. Baixe também o pacote **Mini Characters** (https://kenney.nl/assets/mini-characters) — modelos rigged com dezenas de animações prontas (incluindo idle, walk e run).
+4. Extraia os três arquivos `.zip` baixados em uma pasta temporária fora do projeto Godot (ex.: na Área de Trabalho), mantendo cada pacote em sua própria subpasta extraída.
+5. No Godot, com o projeto do Vertical Slice aberto, localize no FileSystem Dock a pasta `assets/dungeon/` criada na Parte 3.
+6. No explorador de arquivos do sistema operacional, abra a pasta extraída do Mini Dungeon e localize a subpasta de modelos (geralmente `Models/GLB` ou equivalente, conforme a organização interna do pacote baixado).
+7. Arraste os arquivos de modelo (`.glb` ou `.gltf`) do Mini Dungeon para dentro da pasta `assets/dungeon/` no FileSystem Dock do Godot, soltando o arquivo diretamente sobre a pasta.
 8. Aguarde a barra de progresso de importação do Godot concluir — o motor gera automaticamente os metadados de importação (arquivos `.import`) para cada asset novo.
-9. Repita os passos 6–8 para o Dungeon Kit (`assets/dungeon/`) e para o Nature Kit (`assets/nature/`).
+9. Repita os passos 6–8 para o Mini Forest (`assets/forest/`).
 10. Para o Mini Characters, localize a subpasta de modelos e arraste ao menos um modelo de personagem (`.glb` ou `.gltf`, conforme a organização do pacote) para `assets/characters/`, do mesmo modo que os demais pacotes.
-11. No FileSystem Dock, confirme que as quatro subpastas (`assets/prototype/`, `assets/dungeon/`, `assets/nature/`, `assets/characters/`) agora contêm arquivos, e que nenhum ícone de erro (exclamação vermelha) aparece sobre os arquivos importados.
+11. No FileSystem Dock, confirme que as três subpastas (`assets/dungeon/`, `assets/forest/`, `assets/characters/`) agora contêm arquivos, e que nenhum ícone de erro (exclamação vermelha) aparece sobre os arquivos importados.
 
 ## Resultado esperado
 
-As quatro subpastas de `assets/` contêm os modelos dos respectivos pacotes Kenney, todos importados sem erro pelo Godot. Nenhum desses assets é usado em uma Scene ainda — a importação de hoje apenas os deixa disponíveis para quando cada um for necessário (Prototype Kit na Semana 3, Dungeon Kit na Semana 5, Mini Characters na Semana 8, Nature Kit na Semana 12).
+As três subpastas de `assets/` contêm os modelos dos respectivos pacotes Kenney, todos importados sem erro pelo Godot. Nenhum desses assets é usado em uma Scene ainda — a importação de hoje apenas os deixa disponíveis para quando cada um for necessário (Mini Dungeon a partir da Semana 3, Mini Characters na Semana 8, Mini Forest na Semana 12).
 
 ## Verificando
 
@@ -271,7 +270,7 @@ A Unity resolve a importação de um asset externo de forma equivalente: arrasta
 
 # Ao final da semana
 
-Este tutorial cobre apenas o Encontro 1. Ao final da Semana 1 completa (Encontros 1 e 2), o projeto deverá conter a estrutura de pastas criada aqui, os quatro pacotes de assets Kenney já importados, mais uma primeira Scene funcional com Nodes filhos (construída no Encontro 2). Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 1), este encontro corresponde ao item "Estrutura inicial do projeto", pré-requisito para todos os sistemas do Módulo 1.
+Este tutorial cobre apenas o Encontro 1. Ao final da Semana 1 completa (Encontros 1 e 2), o projeto deverá conter a estrutura de pastas criada aqui, os três pacotes de assets Kenney já importados, mais uma primeira Scene funcional com Nodes filhos (construída no Encontro 2). Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 1), este encontro corresponde ao item "Estrutura inicial do projeto", pré-requisito para todos os sistemas do Módulo 1.
 
 # Desafio
 
@@ -287,7 +286,7 @@ Organize uma pasta adicional dentro da estrutura do projeto (por exemplo, uma pa
 
 ☐ Nenhum arquivo solto na raiz de `res://`
 
-☐ Kenney Prototype Kit, Dungeon Kit, Nature Kit e Mini Characters importados em `assets/prototype/`, `assets/dungeon/`, `assets/nature/` e `assets/characters/`, sem ícones de erro
+☐ Kenney Mini Dungeon, Mini Forest e Mini Characters importados em `assets/dungeon/`, `assets/forest/` e `assets/characters/`, sem ícones de erro
 
 ☐ Pasta adicional do desafio criada e justificada
 

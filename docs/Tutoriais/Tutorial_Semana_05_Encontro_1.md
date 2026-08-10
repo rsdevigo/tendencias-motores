@@ -33,7 +33,7 @@ Ao final da Semana 5 (Encontros 1 e 2), cada estudante terá, sobre o `GameManag
 
 ## Assets utilizados
 
-- Um mesh simples para representar a porta (pode ser um `MeshInstance3D` com `BoxMesh`, ou um asset do Kenney Dungeon Kit, importado em `assets/dungeon/` desde a Semana 1 — Tutorial - Semana 1, Encontro 1, Parte 4).
+- Um mesh simples para representar a porta (pode ser um `MeshInstance3D` com `BoxMesh`, ou um asset do Kenney Mini Dungeon, importado em `assets/dungeon/` desde a Semana 1 — Tutorial - Semana 1, Encontro 1, Parte 4).
 
 ## Projeto esperado
 

@@ -129,9 +129,31 @@
 
 **Definition of Done:** State Machine de locomoção (IC-VS08-03) permanece funcional após a integração.
 
-**Dependências:** Blocked By: IC-VS08-03. Blocks: IC-VS09-01.
+**Dependências:** Blocked By: IC-VS08-03. Blocks: IC-VS08-D.
 
 **Story Points:** 5
+
+---
+
+## IC-VS08-D — Desafio Técnico Semana 8: Animação Contextual Própria
+
+**Objetivo:** rastrear como unidade avaliada pela **Rubrica 2 (Desafios Técnicos)** o desafio da Semana 8, cujo conteúdo técnico integral já está em IC-VS08-04.
+
+**Contexto:** Sistema de Avaliação lista a Semana 8 entre as semanas com Desafio Técnico formal (Semanas 1, 2, 4, 5, 6, 8, 9, 10, 11, 13).
+
+**Documentos de Referência:** `Cronograma` (Semana 8, Encontro 2); Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 2).
+
+**Tipo:** B (idêntico a IC-VS08-04).
+
+**Implementação:** ver IC-VS08-04 na íntegra — nenhum passo adicional.
+
+**Critérios de Aceite:** idênticos aos de IC-VS08-04.
+
+**Definition of Done:** avaliado pela Rubrica 2.
+
+**Dependências:** Blocked By: IC-VS08-04. Blocks: IC-VS09-01. Ver também: IC-VS08-04 (mesma implementação).
+
+**Story Points:** 3
 
 ---
 
@@ -191,9 +213,31 @@
 
 **Definition of Done:** Feedback formal (Semana 9) recebido.
 
-**Dependências:** Blocked By: IC-VS09-01. Blocks: IC-VS09-03, IC-VS10-02 (InventoryUI reaproveita o mesmo padrão).
+**Dependências:** Blocked By: IC-VS09-01. Blocks: IC-VS09-D.
 
 **Story Points:** 3
+
+---
+
+## IC-VS09-D — Desafio Técnico Semana 9: Escolha dos Dados do HUD
+
+**Objetivo:** rastrear como unidade avaliada pela **Rubrica 2** o desafio da Semana 9 — decidir quais dados compõem o HUD e propor solução visual/de binding própria.
+
+**Contexto:** este desafio está embutido no passo 1 de IC-VS09-02 (escolha do "segundo dado" e da solução visual). Esta carta existe apenas para rastreamento formal da avaliação.
+
+**Documentos de Referência:** `Cronograma` (Semana 9, Encontro 2); Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 2).
+
+**Tipo:** B — "cada grupo define quais dados... devem compor o HUD, propondo a própria solução visual e de binding" (explícito no Cronograma).
+
+**Implementação:** ver IC-VS09-02. O critério avaliado é que o segundo dado do HUD (além da vida) e sua solução visual sejam escolha própria — não apenas repetir o placeholder sugerido (`SaveManager.itens_coletados`) sem adaptação.
+
+**Critérios de Aceite:** HUD com vida + segundo dado escolhido e justificado pelo grupo, com solução visual própria.
+
+**Definition of Done:** avaliado pela Rubrica 2.
+
+**Dependências:** Blocked By: IC-VS09-02. Blocks: IC-VS09-03, IC-VS10-02.
+
+**Story Points:** 2
 
 ---
 
@@ -319,7 +363,29 @@
 
 **Definition of Done:** Code Review dos sistemas de inventário/interação (Semana 10) cumprido.
 
-**Dependências:** Blocked By: IC-VS10-02. Blocks: IC-VS11-01.
+**Dependências:** Blocked By: IC-VS10-02. Blocks: IC-VS10-D.
+
+**Story Points:** 3
+
+---
+
+## IC-VS10-D — Desafio Técnico Semana 10: Novo Tipo de Interação
+
+**Objetivo:** rastrear como unidade avaliada pela **Rubrica 2** o desafio da Semana 10, cujo conteúdo técnico integral já está em IC-VS10-03.
+
+**Contexto:** Sistema de Avaliação lista a Semana 10 entre as semanas com Desafio Técnico formal.
+
+**Documentos de Referência:** `Cronograma` (Semana 10, Encontro 2); Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 2).
+
+**Tipo:** B (idêntico a IC-VS10-03).
+
+**Implementação:** ver IC-VS10-03 na íntegra — nenhum passo adicional.
+
+**Critérios de Aceite:** idênticos aos de IC-VS10-03.
+
+**Definition of Done:** avaliado pela Rubrica 2.
+
+**Dependências:** Blocked By: IC-VS10-03. Blocks: IC-VS11-01. Ver também: IC-VS10-03 (mesma implementação).
 
 **Story Points:** 3
 
@@ -370,7 +436,7 @@ res://scenes/characters/Enemy.tscn
 
 **Definition of Done:** malha de navegação cobre corretamente as áreas de circulação pretendidas.
 
-**Dependências:** Blocked By: IC-VS10-03, IC-VS08-02. Blocks: IC-VS11-02.
+**Dependências:** Blocked By: IC-VS10-D, IC-VS08-02. Blocks: IC-VS11-02.
 
 **Story Points:** 5
 
@@ -404,9 +470,31 @@ res://scenes/characters/Enemy.tscn
 
 **Definition of Done:** Behavior Tree não excede o escopo de patrulha/perseguição básicas (IA avançada é Fora do Escopo, `PROJECT_ARCHITECTURE.md` §13).
 
-**Dependências:** Blocked By: IC-VS11-01. Blocks: IC-VS11-03.
+**Dependências:** Blocked By: IC-VS11-01. Blocks: IC-VS11-D.
 
 **Story Points:** 5
+
+---
+
+## IC-VS11-D — Desafio Técnico Semana 11: Comportamento Autônomo Adicional do Enemy
+
+**Objetivo:** rastrear como unidade avaliada pela **Rubrica 2** o desafio da Semana 11 — o comportamento autônomo adicional embutido no passo 5 de IC-VS11-02.
+
+**Contexto:** Sistema de Avaliação lista a Semana 11 entre as semanas com Desafio Técnico formal.
+
+**Documentos de Referência:** `Cronograma` (Semana 11, Encontro 2); Sistema_de_Avaliacao_Tendencias_de_Motores_de_Jogos.md (Rubrica 2).
+
+**Tipo:** B — "cada grupo propõe um comportamento autônomo próprio... com liberdade de solução" (explícito no Cronograma).
+
+**Implementação:** ver IC-VS11-02, passo 5. O critério avaliado é que o comportamento adicional seja distinto do padrão guiado de patrulha/perseguição — não uma repetição com nomes diferentes.
+
+**Critérios de Aceite:** comportamento adicional funcional e claramente distinto da patrulha/perseguição básica.
+
+**Definition of Done:** avaliado pela Rubrica 2.
+
+**Dependências:** Blocked By: IC-VS11-02. Blocks: IC-VS11-03.
+
+**Story Points:** 3
 
 ---
 
@@ -436,7 +524,7 @@ res://scenes/characters/Enemy.tscn
 
 **Definition of Done:** valores de placeholder (dano, cooldown) documentados no código.
 
-**Dependências:** Blocked By: IC-VS11-02. Blocks: IC-VS11-04.
+**Dependências:** Blocked By: IC-VS11-D. Blocks: IC-VS11-04.
 
 **Story Points:** 3
 
