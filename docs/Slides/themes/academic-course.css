@@ -229,7 +229,9 @@ pre {
   padding: 0.9em 1.1em;
   font-size: var(--code-font-size);
   line-height: 1.45;
-  overflow: auto;
+  overflow: visible;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 pre code {
