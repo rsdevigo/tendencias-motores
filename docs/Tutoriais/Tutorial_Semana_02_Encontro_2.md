@@ -11,6 +11,7 @@ Este tutorial dá continuidade direta ao Encontro 1 — o Player já deve existi
 - Explicar Input Map e InputEvent como camada de desacoplamento entre dispositivo físico e ação lógica.
 - Configurar um Input Map para movimentação.
 - Conectar o Input Map ao `move_and_slide` do Player.
+- Corrigir o `Chao` para ter colisão física real, entendendo a diferença entre `MeshInstance3D` (malha visual) e `StaticBody3D` (corpo físico estático).
 - Configurar uma câmera em terceira pessoa (`SpringArm3D` + `Camera3D`) que acompanha o Player sem atravessar paredes.
 - Ajustar o movimento para ser relativo à direção da câmera, e não a eixos fixos do mundo.
 
@@ -141,21 +142,29 @@ Uma câmera de terceira pessoa "ingênua" — apenas um Node posicionado atrás 
 
 No Godot, esse problema é resolvido pelo **SpringArm3D**: um Node que funciona como um "braço" entre um ponto de origem e a câmera, encurtando automaticamente sua extensão quando um raycast interno detecta que algo bloqueia a linha entre os dois pontos. A rotação da câmera é dividida em dois eixos, cada um resolvido por um Node diferente: o giro horizontal (yaw), que gira o personagem em torno de si, fica em um `Node3D` pivô; o giro vertical (pitch), que olha para cima e para baixo, fica no próprio SpringArm3D — separar os dois evita que a câmera vire de cabeça para baixo, já que o pitch pode ser limitado (clamp) independentemente do yaw.
 
+O SpringArm3D só consegue encurtar sua extensão se houver, de fato, um corpo físico contra o qual colidir. E aqui aparece um problema arrastado desde a Semana 1: o `Chao` foi montado como um `MeshInstance3D` puro — apenas malha visual, sem nenhum volume físico. O Player "parecia" parado sobre o `Chao` só porque foi posicionado manualmente ali; nada nunca colidiu de verdade com ele. Este é o momento certo para corrigir isso e, de quebra, fixar uma distinção fundamental do Godot: **MeshInstance3D** é puramente visual (o que a câmera renderiza), enquanto **StaticBody3D** é o Node de física para corpos sólidos que nunca se movem sozinhos (cenário, paredes, chão) — é ele quem entrega volume físico real para outros sistemas (CharacterBody3D, SpringArm3D, RayCast3D) colidirem contra.
+
 ## Passo a passo
 
 1. Sem abrir o editor ainda, discuta com a turma: se a câmera fosse apenas um Node3D fixo atrás do Player, sem nenhum tratamento, o que aconteceria ao encostar o personagem em uma parede?
 2. Reabra a Scene `level_exploration.tscn` com o Player já controlável do Passo a passo anterior.
-3. Selecione o Node `Player` e adicione um Node filho `Node3D`, renomeado para `CameraPivot`, posicionado na altura aproximada dos ombros do personagem.
-4. Dentro de `CameraPivot`, adicione um Node `SpringArm3D`.
-5. No Inspector do `SpringArm3D`, ajuste **Spring Length** (por exemplo, 4.0) e configure a **Collision Mask** para detectar apenas as camadas de colisão do cenário (nunca a camada do próprio Player).
-6. Dentro do `SpringArm3D`, adicione um Node `Camera3D` como filho — ele herda automaticamente a posição resolvida pelo SpringArm3D a cada frame.
-7. Confirme que o `Camera3D` está marcado como **Current** (ou que é a única câmera ativa na Scene).
-8. Reabra a Orchestration `player.torch` e, no evento Ready, adicione a lógica que captura o mouse (equivalente a `Input.mouse_mode = Input.MOUSE_MODE_CAPTURED` em GDScript).
-9. Adicione um nó de evento de Input não tratado (Unhandled Input) que só reage a eventos de movimento do mouse (`InputEventMouseMotion`).
-10. Dentro desse evento, rotacione o `CameraPivot` no eixo Y (yaw), proporcionalmente ao deslocamento horizontal do mouse.
-11. Rotacione o `SpringArm3D` no eixo X (pitch), proporcionalmente ao deslocamento vertical do mouse, limitando (clamp) o valor para impedir que a câmera vire de cabeça para baixo.
-12. Salve a Orchestration e a Scene, e pressione **Play Scene** (F6).
-13. Movimente o mouse para confirmar que a câmera gira suavemente ao redor do Player, e encoste o personagem em uma parede do nível de teste para confirmar que a câmera se aproxima automaticamente, sem atravessar a geometria.
+3. Selecione o Node `Chao` no painel Scene e observe, no Inspector, que seu tipo é `MeshInstance3D` — puramente visual, sem volume físico. Até agora, nada no nível colide de fato com ele.
+4. Renomeie temporariamente `Chao` para `Malha` (ele continua sendo o mesmo Node visual, só muda de nome).
+5. Clique com o botão direito sobre `NivelTeste` e adicione um novo Node filho do tipo **StaticBody3D**, renomeando-o para `Chao`.
+6. No painel Scene, arraste `Malha` para dentro do novo `Chao` (StaticBody3D), tornando-o filho dele.
+7. Com `Chao` (StaticBody3D) selecionado, adicione um Node filho **CollisionShape3D** e, no Inspector, atribua uma Shape (por exemplo, uma `BoxShape3D`) do mesmo tamanho da `Malha`.
+8. Salve a Scene (**Ctrl+S**) e confirme, no painel Scene, que a hierarquia agora é `NivelTeste` > `Chao` (StaticBody3D) > `Malha` (MeshInstance3D) + `CollisionShape3D`.
+9. Selecione o Node `Player` e adicione um Node filho `Node3D`, renomeado para `CameraPivot`, posicionado na altura aproximada dos ombros do personagem.
+10. Dentro de `CameraPivot`, adicione um Node `SpringArm3D`.
+11. No Inspector do `SpringArm3D`, ajuste **Spring Length** (por exemplo, 4.0) e configure a **Collision Mask** para detectar apenas as camadas de colisão do cenário (nunca a camada do próprio Player).
+12. Dentro do `SpringArm3D`, adicione um Node `Camera3D` como filho — ele herda automaticamente a posição resolvida pelo SpringArm3D a cada frame.
+13. Confirme que o `Camera3D` está marcado como **Current** (ou que é a única câmera ativa na Scene).
+14. Reabra a Orchestration `player.torch` e, no evento Ready, adicione a lógica que captura o mouse (equivalente a `Input.mouse_mode = Input.MOUSE_MODE_CAPTURED` em GDScript).
+15. Adicione um nó de evento de Input não tratado (Unhandled Input) que só reage a eventos de movimento do mouse (`InputEventMouseMotion`).
+16. Dentro desse evento, rotacione o `CameraPivot` no eixo Y (yaw), proporcionalmente ao deslocamento horizontal do mouse.
+17. Rotacione o `SpringArm3D` no eixo X (pitch), proporcionalmente ao deslocamento vertical do mouse, limitando (clamp) o valor para impedir que a câmera vire de cabeça para baixo.
+18. Salve a Orchestration e a Scene, e pressione **Play Scene** (F6).
+19. Movimente o mouse para confirmar que a câmera gira suavemente ao redor do Player, e encoste o personagem em uma parede do nível de teste para confirmar que a câmera se aproxima automaticamente, sem atravessar a geometria.
 
 > **Código de referência (GDScript)**
 >
@@ -186,16 +195,18 @@ No Godot, esse problema é resolvido pelo **SpringArm3D**: um Node que funciona 
 
 ## Resultado esperado
 
-A câmera acompanha o Player em terceira pessoa, gira suavemente com o movimento do mouse (yaw no `CameraPivot`, pitch com clamp no `SpringArm3D`) e nunca atravessa paredes ou obstáculos do nível de teste, graças à colisão automática resolvida pelo `SpringArm3D`.
+O `Chao`, que até este encontro era apenas uma malha visual (`MeshInstance3D`), passa a ser um corpo físico estático (`StaticBody3D` + `CollisionShape3D`). A câmera acompanha o Player em terceira pessoa, gira suavemente com o movimento do mouse (yaw no `CameraPivot`, pitch com clamp no `SpringArm3D`) e nunca atravessa paredes ou obstáculos do nível de teste, graças à colisão automática resolvida pelo `SpringArm3D` contra esse novo corpo físico.
 
 ## Verificando
 
-1. Gire a câmera 360° ao redor do Player com o mouse e confirme que não há travamentos nem giros bruscos.
-2. Tente olhar bem para cima e para baixo e confirme que o clamp de pitch impede a câmera de virar de cabeça para baixo.
-3. Encoste o Player em uma parede ou canto do nível de teste e confirme que a câmera se aproxima automaticamente, sem atravessar a geometria.
+1. Confirme, no painel Scene, que `Chao` é um `StaticBody3D` com `Malha` (MeshInstance3D) e `CollisionShape3D` como filhos.
+2. Gire a câmera 360° ao redor do Player com o mouse e confirme que não há travamentos nem giros bruscos.
+3. Tente olhar bem para cima e para baixo e confirme que o clamp de pitch impede a câmera de virar de cabeça para baixo.
+4. Encoste o Player em uma parede ou canto do nível de teste e confirme que a câmera se aproxima automaticamente, sem atravessar a geometria.
 
 ## Problemas comuns
 
+- Câmera atravessa o `Chao` mesmo depois de configurar a Collision Mask: confirmar que `Chao` foi de fato convertido em `StaticBody3D` com `CollisionShape3D` — um `MeshInstance3D` sozinho nunca gera colisão, não importa a Collision Mask configurada no SpringArm3D.
 - Câmera atravessando paredes: confirmar que a Collision Mask do `SpringArm3D` inclui a camada de colisão do cenário (`Chao` e demais obstáculos).
 - Mouse não é capturado, cursor continua visível: confirmar que `Input.mouse_mode = Input.MOUSE_MODE_CAPTURED` está sendo chamado no evento Ready da Orchestration.
 - Câmera vira de cabeça para baixo: confirmar que o clamp do pitch (rotação em X do `SpringArm3D`) está sendo aplicado antes de atribuir o valor.
@@ -203,6 +214,7 @@ A câmera acompanha o Player em terceira pessoa, gira suavemente com o movimento
 
 ## Boas práticas
 
+- Tratar todo cenário estático (chão, paredes, plataformas) sempre como `StaticBody3D` + `CollisionShape3D` + `MeshInstance3D` — o mesmo princípio de separar física e visual já aplicado ao Player no Encontro 1, agora estendido a qualquer objeto sólido do nível.
 - Separar yaw (`CameraPivot`) e pitch (`SpringArm3D`) em Nodes distintos — misturar as duas rotações no mesmo Node dificulta o clamp do pitch.
 - Sempre limitar (clamp) o pitch da câmera — sem isso, a câmera pode girar 360° verticalmente e quebrar a legibilidade da cena.
 - Ajustar a Collision Mask do `SpringArm3D` para detectar apenas o cenário, nunca o próprio Player.
@@ -306,6 +318,7 @@ O mesmo ajuste na Unity é feito projetando os vetores `Camera.main.transform.fo
 Ao final da Semana 2 (Encontros 1 e 2), o projeto do Vertical Slice deve conter:
 
 - O Player (CharacterBody3D) montado no Encontro 1, com `CollisionShape3D` e `Malha` alinhados.
+- O `Chao` convertido de `MeshInstance3D` solto para `StaticBody3D` + `CollisionShape3D` + `Malha` (MeshInstance3D), com colisão física real.
 - Um Input Map do projeto com as Actions `move_forward`, `move_back`, `move_left`, `move_right`, mais uma Action adicional criada no desafio deste encontro.
 - Uma câmera em terceira pessoa (`CameraPivot` + `SpringArm3D` + `Camera3D`) filha do Player, acompanhando o personagem sem atravessar paredes.
 - A Orchestration `player.torch` lendo o Input Map e aplicando a direção resultante — já rotacionada pela Basis do `CameraPivot` — a `move_and_slide`, tornando o Player efetivamente controlável e com movimento relativo à câmera.
@@ -317,6 +330,8 @@ Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 1), este resultado corresp
 Adicione uma nova Action ao Input Map, não demonstrada neste tutorial — correr, agachar ou pular —, com liberdade de implementação (por exemplo, correr como multiplicador de velocidade aplicado à `velocity`, ou pular como um impulso vertical simples somado a `velocity.y`). Não há solução única.
 
 # Checklist
+
+☐ `Chao` convertido em `StaticBody3D`, com `Malha` (MeshInstance3D) e `CollisionShape3D` como filhos
 
 ☐ Input Map do projeto com as Actions `move_forward`, `move_back`, `move_left`, `move_right`
 
@@ -344,6 +359,7 @@ Adicione uma nova Action ao Input Map, não demonstrada neste tutorial — corre
 - **velocity:** propriedade do CharacterBody3D que define a direção e intensidade do movimento antes da chamada a `move_and_slide`.
 - **PhysicsProcess:** evento chamado a cada frame de física, ponto correto para ler input e mover o CharacterBody3D.
 - **SpringArm3D:** Node que resolve automaticamente a colisão da câmera com o cenário, encurtando a distância entre a origem e a ponta do braço quando algo bloqueia a linha entre os dois pontos.
+- **StaticBody3D:** Node de física para corpos sólidos que nunca se movem sozinhos (cenário, paredes, chão) — fornece colisão real contra CharacterBody3D, SpringArm3D e outros sistemas de física, ao contrário de um MeshInstance3D, que é puramente visual.
 - **CameraPivot:** convenção de nome para um Node3D usado como eixo de rotação horizontal (yaw) da câmera, filho do Player.
 - **Yaw / Pitch:** rotação horizontal e vertical da câmera, respectivamente — no Godot, resolvidas em Nodes separados (CameraPivot e SpringArm3D) para facilitar o clamp do pitch.
 - **MOUSE_MODE_CAPTURED:** modo de captura do mouse do Godot que trava e oculta o cursor, entregando apenas o delta de movimento via `InputEventMouseMotion`.

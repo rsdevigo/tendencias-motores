@@ -35,6 +35,7 @@ Metodologia da semana: Scaffolded Learning, autonomia muito baixa — professor 
 - Compreender por que uma engine desacopla a intenção do jogador da ação no mundo
 - Configurar um CharacterBody3D controlável usando `move_and_slide`
 - Configurar um Input Map e conectar Actions à movimentação do Player
+- Corrigir o `Chao` para ter colisão física real, distinguindo `MeshInstance3D` (visual) de `StaticBody3D` (física)
 - Configurar uma câmera em terceira pessoa (`SpringArm3D` + `Camera3D`) que acompanha o Player sem atravessar paredes
 - Ajustar o movimento para ser relativo à direção da câmera, não a eixos fixos do mundo
 
@@ -282,8 +283,8 @@ Este encontro passou a cobrir dois blocos de conteúdo (Input Map e Câmera); re
 - Introdução: por que desacoplar dispositivo físico de ação lógica (15 min)
 - Demonstração: Input Map + conexão com move_and_slide (25 min)
 - Laboratório: cada estudante configura o próprio Input Map (30 min)
-- Introdução + Demonstração: câmera em terceira pessoa (`SpringArm3D` + `Camera3D`) (15 min)
-- Laboratório: cada estudante configura a própria câmera (25 min)
+- Introdução + Demonstração: correção do `Chao` (StaticBody3D) e câmera em terceira pessoa (`SpringArm3D` + `Camera3D`) (20 min)
+- Laboratório: cada estudante corrige o `Chao` e configura a própria câmera (20 min)
 - Desafio: Action adicional (correr, agachar ou pular) (10 min)
 - Feedback e fechamento (5 min)
 
@@ -495,6 +496,20 @@ Referência: Godot Documentation — Camera3D e SpringArm3D.
 
 ---
 
+## Corrigindo o `Chao` — MeshInstance3D × StaticBody3D
+
+- Desde a Semana 1, `Chao` é apenas um `MeshInstance3D` — puramente visual, sem volume físico
+- Nada no nível colide de verdade com ele: o Player só "parecia" parado por ter sido posicionado manualmente
+- Correção: `Chao` passa a ser um `StaticBody3D`, com `Malha` (MeshInstance3D) e `CollisionShape3D` como filhos
+- **StaticBody3D** — corpo físico sólido que nunca se move sozinho (cenário, paredes, chão)
+
+<!--
+Momento pedagógico: reforçar a diferença entre Node visual (MeshInstance3D) e Node físico (StaticBody3D) — o mesmo princípio já visto no Player (CollisionShape3D × Malha), agora aplicado ao cenário.
+Sem essa correção, a SpringArm3D configurada a seguir não tem contra o que colidir.
+-->
+
+---
+
 ## SpringArm3D + Camera3D no Godot
 
 - **CameraPivot** (`Node3D`) — filho do Player, gira no eixo Y (yaw) conforme o mouse
@@ -545,6 +560,7 @@ Não aprofundar Cinemachine aqui — apenas contrastar arquitetura.
 
 O que será construído:
 
+- Correção do `Chao`: de `MeshInstance3D` solto para `StaticBody3D` + `CollisionShape3D`
 - `CameraPivot` (Node3D) como filho do `Player`
 - `SpringArm3D` dentro do `CameraPivot`, com Spring Length e Collision Mask configurados
 - `Camera3D` dentro do `SpringArm3D`, definida como câmera ativa
@@ -610,13 +626,15 @@ Usar esta imagem como referência caso a demonstração ao vivo não seja possí
 
 Cada estudante configura, no próprio projeto:
 
-1. `CameraPivot` (Node3D) como filho do `Player`
-2. `SpringArm3D` dentro do `CameraPivot`, com Spring Length e Collision Mask ajustados
-3. `Camera3D` dentro do `SpringArm3D`, definida como câmera ativa
-4. Captura do mouse e rotação de yaw/pitch na Orchestration `player.torch`
-5. Teste com F6: girar a câmera com o mouse e encostar em uma parede do nível de teste
+1. Converter `Chao` de `MeshInstance3D` para `StaticBody3D`, com `Malha` (MeshInstance3D) e `CollisionShape3D` como filhos
+2. `CameraPivot` (Node3D) como filho do `Player`
+3. `SpringArm3D` dentro do `CameraPivot`, com Spring Length e Collision Mask ajustados
+4. `Camera3D` dentro do `SpringArm3D`, definida como câmera ativa
+5. Captura do mouse e rotação de yaw/pitch na Orchestration `player.torch`
+6. Teste com F6: girar a câmera com o mouse e encostar em uma parede do nível de teste
 
 <!--
+Erro comum: esquecer de converter o Chao — a câmera continua atravessando o chão mesmo com a Collision Mask certa, porque um MeshInstance3D sozinho nunca gera colisão.
 Erro comum: Collision Mask do SpringArm3D incluindo o próprio Player, fazendo a câmera colidir com a cápsula do personagem.
 Erro comum: esquecer o clamp do pitch, deixando a câmera girar 360° verticalmente.
 -->
@@ -625,6 +643,7 @@ Erro comum: esquecer o clamp do pitch, deixando a câmera girar 360° verticalme
 
 ## Boas Práticas — Câmera
 
+- Tratar todo cenário estático (chão, paredes, plataformas) como StaticBody3D + CollisionShape3D + MeshInstance3D, nunca como MeshInstance3D solto
 - Separar yaw (CameraPivot) e pitch (SpringArm3D) em Nodes distintos, nunca na mesma rotação
 - Sempre aplicar clamp ao pitch, evitando que a câmera vire de cabeça para baixo
 - Ajustar a Collision Mask do SpringArm3D para detectar apenas o cenário, nunca o próprio Player
@@ -749,6 +768,7 @@ Circular pela sala observando as escolhas. Sem instrumento formal de avaliação
 ## Resultado Esperado da Semana
 
 - Player (CharacterBody3D) montado, com `CollisionShape3D` e `Malha` alinhados
+- `Chao` convertido em `StaticBody3D`, com colisão física real
 - Input Map com quatro Actions de movimentação, mais uma Action do desafio
 - Câmera em terceira pessoa (`CameraPivot` + `SpringArm3D` + `Camera3D`) acompanhando o Player sem atravessar paredes
 - Orchestration `player.torch` movendo o Player via `move_and_slide` **relativo à direção da câmera**, não a eixos fixos do mundo
@@ -764,6 +784,7 @@ Sem instrumento formal de avaliação nesta semana. Observado no Checkpoint de e
 
 - [ ] `Player` (CharacterBody3D) com `CollisionShape3D` e `Malha` alinhados, salvo em `scenes/characters/Player.tscn`
 - [ ] Orchestration `player.torch` associada ao `Player`
+- [ ] `Chao` convertido em `StaticBody3D`, com `Malha` (MeshInstance3D) e `CollisionShape3D` como filhos
 - [ ] Input Map com `move_forward`, `move_back`, `move_left`, `move_right`
 - [ ] `velocity` atribuída antes de `move_and_slide`
 - [ ] Player se move nas quatro direções, sem erros
