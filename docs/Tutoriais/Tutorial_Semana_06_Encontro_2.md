@@ -201,7 +201,7 @@ Ao final da Semana 6, o projeto do Vertical Slice deve conter:
 - A classe `ItemData` (Resource customizado), com um Enum `Categoria` e campos `nome`, `icone`, `valor`, `descricao` e `categoria` (Encontro 1 e Parte 2 do Encontro 2).
 - Um conjunto próprio de três ou mais instâncias `.tres` de itens coletáveis por grupo, salvas em `resources/items/`, coerentes com o tema do próprio Vertical Slice (Parte 3).
 
-Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 2), este resultado corresponde à conclusão do item "ItemData (Resource + Enum)" do roadmap, pré-requisito direto de "Chest, Pickup" (aplicação do `ItemData` à coleta de itens) e de "SaveComponent / SaveData (Resource)" na Semana 7.
+Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 2), este resultado corresponde à conclusão do item "ItemData (Resource + Enum)" do roadmap, pré-requisito direto de "Pickup" e "Chest" (aplicação do `ItemData` à coleta de itens, via Signal `item_collected`) e de "SaveComponent / SaveData (Resource)", todos construídos na Semana 7.
 
 # Desafio
 

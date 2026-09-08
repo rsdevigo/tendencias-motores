@@ -25,7 +25,7 @@ footer: 'IFMS · Tecnologia em Jogos Digitais · Tendências de Motores de Jogos
 
 <!--
 A Semana 9 encerrou com um HUD funcional sobre CanvasLayer, exibindo vida (HealthComponent) e um segundo dado de gameplay, cada grupo com solução visual e de binding própria.
-Até aqui, os itens do jogo existem apenas como ItemData (Resource + Enum, desde a Semana 6) e são coletados via Chest/Pickup, mas não há lugar nenhum onde sejam armazenados, listados ou manipulados — eles simplesmente desaparecem da cena.
+Até aqui, os itens do jogo existem como ItemData (Resource + Enum, desde a Semana 6) e são coletados via Chest/Pickup (Semana 7), mas o handler de coleta só guarda o `nome` do item (String) em `SaveManager.itens_coletados` — não há estrutura que armazene os `ItemData` completos, os liste ou os manipule.
 Metodologia: Challenge Based Learning — professor apresenta problemas, grupos propõem soluções. Autonomia média.
 -->
 
@@ -80,7 +80,7 @@ Não há desafio de solução livre neste encontro — a estruturação do Inven
 
 # Os itens já existem como `ItemData`. Para onde vão quando o jogador os coleta?
 
-Pense no que acontece hoje, no projeto, quando um `Chest` ou `Pickup` é coletado.
+Pense no que acontece hoje, no projeto, quando um `Chest` ou `Pickup` emite `item_collected` — o handler só guarda o nome do item.
 
 <!--
 Discussão rápida, 2–3 minutos. Objetivo: levar a turma a perceber que os itens simplesmente desaparecem da cena — não há nenhum lugar que os armazene, liste ou manipule.
@@ -92,7 +92,7 @@ Erro comum: assumir que o ItemData por si só já resolve o problema de posse do
 ## O Problema: Onde Vive a Posse do Item?
 
 - `ItemData` (Resource + Enum, desde a Semana 6) define nome, ícone e tipo do item — mas não diz quem o possui
-- Itens coletados via `Chest`/`Pickup` hoje simplesmente desaparecem da cena
+- Hoje o handler de coleta só registra o `nome` do item em `SaveManager.itens_coletados` (String) — o `ItemData` completo não é guardado em lugar nenhum
 - Falta um lugar que armazene, liste e permita manipular os itens que o jogador possui agora
 
 <!--
@@ -190,13 +190,13 @@ Usar esta imagem logo após a demonstração, antes do laboratório.
 
 ## Arquitetura — Do Chest/Pickup ao Inventário
 
-- Coleta via `Chest`/`Pickup` passa a notificar o `InventoryComponent`, em vez de apenas remover o item da cena
+- O handler do Signal `item_collected` (Semana 7) passa a repassar o `ItemData` ao `InventoryComponent` — `Chest`/`Pickup` não são alterados
 - O item some do mundo e passa a existir como entrada no inventário — evento único, sem duplicação
 - Nenhum sistema de coleta é reescrito: o `InventoryComponent` se conecta ao que já existe
 
 <!--
-Diagrama sugerido: Chest/Pickup → (coleta) → InventoryComponent (adiciona ItemData) → remove objeto da cena.
-Erro comum: esquecer de remover o item da cena ao adicioná-lo ao inventário, resultando em coleta duplicada.
+Diagrama sugerido: Chest/Pickup → item_collected(item) → handler único → InventoryComponent.adicionar_item(item) + SaveManager.registrar_item(item.nome).
+Erro comum: alterar Chest/Pickup em vez de só redirecionar o handler. Pickup já faz queue_free() e Chest já fica aberto desde a Semana 7; a idempotência por nome evita coleta duplicada.
 -->
 
 ---

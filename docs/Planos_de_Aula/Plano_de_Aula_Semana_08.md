@@ -11,13 +11,14 @@ A Semana 7 encerrou a Unidade II com um Vertical Slice em que `GameManager`, `Sa
 ## Objetivos Gerais
 
 - Compreender o gerenciamento de estado de vida/dano como problema universal de qualquer engine, resolvido por composição (Component), não por herança.
-- Construir `HealthComponent` (vida atual/máxima, `apply_damage`, sinal `died`), reutilizando o padrão de Component das Semanas 5–7.
+- Construir `HealthComponent` (vida atual/máxima, `apply_damage`, `reiniciar()`, sinal `died`), reutilizando o padrão de Component das Semanas 5–7.
+- Implementar o fluxo de morte/respawn do Player: `died` → `GameManager.player_morreu()` → respawn no último `Checkpoint` (via `spawn_player()`, Semana 4/7) ou tela `GameOver` ao esgotar `LIMITE_TENTATIVAS`. Define a condição de derrota do Vertical Slice.
 - Fundamentar AnimationTree/AnimationNodeStateMachine como sistema de transição de estados de animação, e BlendSpace1D/2D + faixas do AnimationPlayer como sistema de combinação/sobreposição de animações.
 - Propor e implementar, com autonomia crescente, uma animação contextual própria conectada a um evento real de gameplay.
 
 ## Resultados Esperados
 
-Ao final da semana, cada grupo possui um `HealthComponent` funcional aplicado ao Player, uma State Machine básica de locomoção (idle, andar, correr) via AnimationTree, e uma animação contextual própria — escolhida entre BlendSpace ou animação pontual do AnimationPlayer — conectada a um evento real do projeto (dano, interação ou ataque).
+Ao final da semana, cada grupo possui um `HealthComponent` funcional aplicado ao Player, o fluxo de morte/respawn completo (respawn no `Checkpoint`, contador `mortes`, tela `GameOver`), uma State Machine básica de locomoção (idle, andar, correr) via AnimationTree, e uma animação contextual própria — escolhida entre BlendSpace ou animação pontual do AnimationPlayer — conectada a um evento real do projeto (dano, interação ou ataque).
 
 ---
 
@@ -26,7 +27,8 @@ Ao final da semana, cada grupo possui um `HealthComponent` funcional aplicado ao
 ## Objetivos de Aprendizagem
 
 - Explicar por que vida/dano é modelado como Component reutilizável, não como lógica exclusiva do Player.
-- Construir `HealthComponent` com vida atual/máxima, método `apply_damage` e sinal `died`.
+- Construir `HealthComponent` com vida atual/máxima, métodos `apply_damage`/`reiniciar()` e sinal `died`.
+- Ligar `died` do Player a `GameManager.player_morreu()` (wiring no Player, regra no `GameManager`), implementando respawn no `Checkpoint`, contador `SaveManager.mortes` e a Scene `GameOver`.
 - Fundamentar AnimationTree e AnimationNodeStateMachine como sistema de transição de estados de animação.
 - Construir uma State Machine básica de locomoção (idle, andar, correr) para o Player.
 
@@ -34,7 +36,8 @@ Ao final da semana, cada grupo possui um `HealthComponent` funcional aplicado ao
 
 - Substituição da `CapsuleMesh` de placeholder do Player (Semana 2) pelo modelo animado do Kenney Mini Characters, já importado em `assets/characters/` desde a Semana 1.
 - O problema de onde armazenar e expor o estado de vida/dano de um personagem sem duplicar lógica entre Player e Enemy.
-- `HealthComponent`: vida atual/máxima, `apply_damage(quantidade)`, sinal `died`, seguindo o mesmo padrão de Component (Node customizado) já usado por `InteractionComponent` e `SaveComponent`.
+- `HealthComponent`: vida atual/máxima, `apply_damage(quantidade)`, `reiniciar()`, sinal `died`, seguindo o mesmo padrão de Component (Node customizado) já usado por `InteractionComponent` e `SaveComponent`.
+- Fluxo de morte/respawn (DC-03): o Player conecta `died` a `GameManager.player_morreu()`; o `GameManager` incrementa `SaveManager.mortes` (persistido no `SaveData`), restaura a vida ao máximo e chama `spawn_player()`, ou — ao atingir `LIMITE_TENTATIVAS` (placeholder ajustável) — instancia a Scene `GameOver` (Control + CanvasLayer, botão "Reiniciar" que apaga o save e volta ao `PlayerStart`). A reação vive no `GameManager`, não no `HealthComponent`. A vida do Player não é persistida (o respawn sempre restaura o máximo).
 - AnimationTree como camada que decide qual animação toca e como a transição entre elas ocorre, separada da lógica de gameplay.
 - AnimationNodeStateMachine: estados, transições e condições de transição.
 - Construção de uma State Machine básica: idle, andar, correr.
@@ -45,16 +48,16 @@ Vida e dano são um exemplo canônico de estado que precisa ser compartilhado po
 
 ## Recursos do Godot
 
-Kenney Mini Characters (modelo animado do Player, importado desde a Semana 1), `HealthComponent` (Node customizado, implementado via Orchestrator ou GDScript), AnimationTree, AnimationNodeStateMachine.
+Kenney Mini Characters (modelo animado do Player, importado desde a Semana 1), `HealthComponent` (Node customizado, implementado via Orchestrator ou GDScript), Autoload (`GameManager`/`SaveManager`), grupos, Control + CanvasLayer (`GameOver`), `get_tree().paused`, AnimationTree, AnimationNodeStateMachine.
 
 ## Comparação com Unity
 
-A Unity resolve o mesmo problema de transição de animações com o Animator Controller, um asset visual próprio (`.controller`) com estados e transições configurados fora da hierarquia de GameObjects, geralmente vinculado a um Animator Component sobre o personagem. O Godot integra o AnimationTree como um Node dentro da própria Scene, seguindo o mesmo modelo de composição usado em todo o resto da disciplina, em vez de um asset externo referenciado por um Component. Para o `HealthComponent`, a Unity não tem um equivalente formal nativo — o padrão comum também é um MonoBehaviour próprio anexado ao GameObject, replicando a mesma ideia de composição via Component que o Godot já formaliza como convenção do projeto desde a Semana 5. O conceito universal — estado de vida isolado em um Component reutilizável, e animação organizada em uma máquina de estados separada da lógica de gameplay — é o mesmo nas duas engines.
+A Unity resolve o mesmo problema de transição de animações com o Animator Controller, um asset visual próprio (`.controller`) com estados e transições configurados fora da hierarquia de GameObjects, geralmente vinculado a um Animator Component sobre o personagem. O Godot integra o AnimationTree como um Node dentro da própria Scene, seguindo o mesmo modelo de composição usado em todo o resto da disciplina, em vez de um asset externo referenciado por um Component. Para o `HealthComponent`, a Unity não tem um equivalente formal nativo — o padrão comum também é um MonoBehaviour próprio anexado ao GameObject, replicando a mesma ideia de composição via Component que o Godot já formaliza como convenção do projeto desde a Semana 5. O conceito universal — estado de vida isolado em um Component reutilizável, e animação organizada em uma máquina de estados separada da lógica de gameplay — é o mesmo nas duas engines. Já a **reação à morte do jogador** (respawn, contagem de tentativas, game over) é, na Unreal, responsabilidade formal do `GameMode`; no Godot e na Unity não há equivalente nativo — aqui ela é uma responsabilidade explícita do `GameManager` (Autoload), reforçando o mesmo padrão "regra de partida vive no gerenciador central" já usado desde a Semana 4.
 
 ## Preparação do Professor
 
 - Projeto do Vertical Slice retomado da Semana 7, com `GameManager`, `SaveManager`, contrato `Interactable`, Signals, `ItemData`/Enum e `SaveData`/`Checkpoint` já integrados.
-- Script/Orchestration de referência de `HealthComponent` (vida atual/máxima, `apply_damage`, sinal `died`) já preparado para demonstração, sem distribuir antes da aula — o professor decide se demonstra via Orchestrator ou GDScript, mantendo a mesma opção já oferecida desde a Semana 5.
+- Script/Orchestration de referência de `HealthComponent` (vida atual/máxima, `apply_damage`, `reiniciar()`, sinal `died`) e do fluxo de morte (`GameManager.player_morreu()`, `GameOver.tscn`) já preparados para demonstração, sem distribuir antes da aula — o professor decide se demonstra via Orchestrator ou GDScript, mantendo a mesma opção já oferecida desde a Semana 5.
 - Modelo animado do Kenney Mini Characters já testado pelo professor, com as animações idle, walking e running visíveis na aba Import do Godot (o pacote foi importado em `assets/characters/` na Semana 1, mas ainda não usado em nenhuma Scene até aqui).
 - Slides com o comparativo AnimationTree/AnimationNodeStateMachine (Godot) × Animator Controller (Unity).
 - Projeto de teste com o AnimationPlayer do Player já configurado com ao menos as três animações de locomoção.
@@ -66,22 +69,23 @@ A Unity resolve o mesmo problema de transição de animações com o Animator Co
 | 15 min | Revisão do Encontro 2 da Semana 7 (integração final do Módulo 2, Code Review e Playtest) |
 | 15 min | Demonstração e laboratório: substituição da `CapsuleMesh` do Player pelo modelo do Kenney Mini Characters (`assets/characters/`, importado desde a Semana 1) |
 | 15 min | Introdução: mudança de metodologia para Challenge Based Learning; o problema do estado de vida/dano compartilhado |
-| 25 min | Demonstração: construção do `HealthComponent` (vida, `apply_damage`, sinal `died`) aplicado ao Player |
-| 30 min | Demonstração: fundamentação de AnimationTree/AnimationNodeStateMachine e construção guiada da State Machine (idle, andar, correr) |
-| 25 min | Laboratório: cada grupo aplica `HealthComponent` ao próprio Player e ajusta a State Machine ao seu conjunto de animações |
+| 20 min | Demonstração: construção do `HealthComponent` (vida, `apply_damage`, `reiniciar()`, sinal `died`) aplicado ao Player |
+| 15 min | Demonstração: fluxo de morte/respawn — `died` → `GameManager.player_morreu()` → `spawn_player()` / `GameOver` |
+| 25 min | Demonstração: fundamentação de AnimationTree/AnimationNodeStateMachine e construção guiada da State Machine (idle, andar, correr) |
+| 25 min | Laboratório: cada grupo aplica `HealthComponent`, o fluxo de morte e ajusta a State Machine ao seu conjunto de animações |
 | 10 min | Feedback e fechamento |
 
 ## Desenvolvimento
 
-O encontro abre com uma tarefa curta de pré-requisito: substituir o Node `Malha` (a `CapsuleMesh` de placeholder usada desde a Semana 2) pelo modelo do Kenney Mini Characters, já importado em `assets/characters/` desde a Semana 1 — o professor demonstra a troca no próprio `Player.tscn`, e cada grupo repete no seu projeto, conferindo que o novo modelo carrega com um `AnimationPlayer` já contendo as animações idle, walking e running. A partir daqui, o restante do projeto herdado da Semana 7 segue sem alteração, e o encontro adiciona duas camadas novas e independentes entre si: estado de vida (`HealthComponent`) e transição de animação (AnimationTree). O professor demonstra a construção do `HealthComponent` como Node filho do Player, via Orchestrator ou GDScript, seguindo exatamente o padrão de Component já estabelecido — vida atual/máxima como propriedades, `apply_damage` como método público, `died` como sinal emitido quando a vida chega a zero. Em seguida, demonstra a fundamentação do AnimationTree: como um AnimationNodeStateMachine organiza estados de animação e transições entre eles, referenciando as animações reais do modelo recém-importado, aplicando isso à construção guiada de uma State Machine básica de locomoção para o Player. Cada grupo replica ambas as construções sobre seu próprio projeto.
+O encontro abre com uma tarefa curta de pré-requisito: substituir o Node `Malha` (a `CapsuleMesh` de placeholder usada desde a Semana 2) pelo modelo do Kenney Mini Characters, já importado em `assets/characters/` desde a Semana 1 — o professor demonstra a troca no próprio `Player.tscn`, e cada grupo repete no seu projeto, conferindo que o novo modelo carrega com um `AnimationPlayer` já contendo as animações idle, walking e running. A partir daqui, o restante do projeto herdado da Semana 7 segue sem alteração, e o encontro adiciona: estado de vida (`HealthComponent`), o fluxo de morte/respawn, e transição de animação (AnimationTree). O professor demonstra a construção do `HealthComponent` como Node filho do Player, via Orchestrator ou GDScript, seguindo o padrão de Component já estabelecido — vida atual/máxima como propriedades, `apply_damage` e `reiniciar()` como métodos públicos, `died` como sinal emitido quando a vida chega a zero. Em seguida, demonstra o fluxo de morte/respawn: o Player conecta `died` a um handler que chama `GameManager.player_morreu()`; o `GameManager` incrementa `SaveManager.mortes`, restaura a vida e chama `spawn_player()` (reaproveitando o ponto de respawn já resolvido nas Semanas 4 e 7), ou — ao atingir `LIMITE_TENTATIVAS` — instancia a Scene `GameOver`. Reforça-se que a reação vive no `GameManager` (regra de partida) e o `HealthComponent` permanece enxuto. Em seguida, demonstra a fundamentação do AnimationTree: como um AnimationNodeStateMachine organiza estados de animação e transições entre eles, referenciando as animações reais do modelo recém-importado, aplicando isso à construção guiada de uma State Machine básica de locomoção para o Player. Cada grupo replica ambas as construções sobre seu próprio projeto.
 
 ## Desafio
 
-Não há desafio de solução livre neste encontro: a construção de `HealthComponent` e da State Machine básica é guiada, servindo de base direta ao desafio de animação contextual do Encontro 2.
+Não há desafio de solução livre neste encontro: a construção de `HealthComponent`, do fluxo de morte/respawn e da State Machine básica é guiada, servindo de base direta ao desafio de animação contextual do Encontro 2. O `LIMITE_TENTATIVAS` é um placeholder numérico que cada grupo pode ajustar.
 
 ## Critérios de Sucesso
 
-Cada grupo possui, ao final do encontro, um `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, sinal `died`) e uma State Machine básica via AnimationTree alternando corretamente entre idle, andar e correr conforme o movimento do personagem.
+Cada grupo possui, ao final do encontro, um `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, `reiniciar()`, sinal `died`); o Player, ao morrer, respawna no último `Checkpoint` com vida cheia (ou vê a tela `GameOver` ao esgotar as tentativas); e uma State Machine básica via AnimationTree alternando corretamente entre idle, andar e correr conforme o movimento do personagem.
 
 ## Evidências para Avaliação
 
@@ -92,6 +96,8 @@ Sem instrumento formal isolado neste encontro (Rubrica 1 — Desenvolvimento Sem
 - Remover a `CollisionShape3D` ao apagar o Node `Malha` antigo, em vez de apagar apenas a Mesh de placeholder — reforçar que a colisão e a malha visual são Nodes independentes desde a Semana 2.
 - Modelo do Kenney Mini Characters importado sem as animações visíveis na aba Import (arquivo de animação separado do arquivo de modelo, dependendo de como o pacote foi extraído) — voltar à Parte 4 do Tutorial da Semana 1 e reimportar incluindo os arquivos de animação.
 - Implementar vida/dano diretamente no script/Orchestration do Player em vez de isolar em um `HealthComponent` — reforçar o princípio de composição via Component, central desde a Semana 5.
+- Colocar a lógica de respawn/game over dentro do `HealthComponent` — ele continua enxuto; a reação a `died` vive no `GameManager` (regra de partida), com o Player apenas fazendo o wiring.
+- Reimplementar posicionamento no respawn em vez de chamar `GameManager.spawn_player()`, que já resolve o destino (Checkpoint ativo ou `PlayerStart`) desde as Semanas 4 e 7.
 - Confundir o papel do AnimationPlayer (guarda as animações) com o do AnimationTree (decide qual delas toca e quando) — reforçar que são camadas complementares, não concorrentes.
 - Configurar transições da State Machine sem condição clara (ex.: sempre transicionar, nunca transicionar) — reforçar que cada transição depende de uma variável real de gameplay (velocidade, input).
 
@@ -126,7 +132,7 @@ A Unity resolve o equivalente ao BlendSpace com Blend Trees dentro do próprio A
 
 ## Preparação do Professor
 
-- Projeto de cada grupo com `HealthComponent` e State Machine básica do Encontro 1 já funcionais.
+- Projeto de cada grupo com `HealthComponent`, o fluxo de morte/respawn e a State Machine básica do Encontro 1 já funcionais.
 - Animações adicionais de locomoção direcional (ou placeholder) disponíveis para a demonstração de BlendSpace.
 - Ao menos uma animação pontual (reação a dano, gesto de ataque ou interação) disponível no asset do Player para a demonstração de faixas do AnimationPlayer.
 - Roteiro do desafio preparado: cada grupo escolhe entre BlendSpace ou animação pontual conforme o problema que decidir resolver (reação a dano, interação, ataque).
@@ -169,11 +175,11 @@ Cada grupo possui, ao final da semana, uma animação contextual funcional e con
 
 # Resultado Esperado da Semana
 
-Ao final da Semana 8, cada grupo possui um `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, sinal `died`), uma State Machine básica de locomoção via AnimationTree (idle, andar, correr) e uma animação contextual própria — BlendSpace direcional ou animação pontual do AnimationPlayer — conectada a um evento real de gameplay. A turma domina o papel de AnimationTree, AnimationNodeStateMachine, BlendSpace1D/2D e faixas do AnimationPlayer como camadas complementares de um mesmo sistema de animação, relaciona esse conjunto ao Animator Controller/Blend Tree da Unity, e vivenciou o primeiro desafio da Unidade III sob Challenge Based Learning.
+Ao final da Semana 8, cada grupo possui um `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, `reiniciar()`, sinal `died`), o fluxo de morte/respawn completo (respawn no último `Checkpoint` com vida cheia, contador `SaveManager.mortes` persistido, tela `GameOver` ao esgotar `LIMITE_TENTATIVAS`), uma State Machine básica de locomoção via AnimationTree (idle, andar, correr) e uma animação contextual própria — BlendSpace direcional ou animação pontual do AnimationPlayer — conectada a um evento real de gameplay. A turma domina o papel de AnimationTree, AnimationNodeStateMachine, BlendSpace1D/2D e faixas do AnimationPlayer como camadas complementares de um mesmo sistema de animação, relaciona esse conjunto ao Animator Controller/Blend Tree da Unity, e vivenciou o primeiro desafio da Unidade III sob Challenge Based Learning.
 
 # Preparação para a Próxima Semana
 
-O `HealthComponent` construído nesta semana é consumido diretamente pelo HUD da Semana 9, que passa a exibir em tempo real dados de gameplay já existentes — vida, itens, progresso — via Control nodes e CanvasLayer. A State Machine e as animações contextuais não são retomadas diretamente na Semana 9, mas permanecem no projeto como parte do Vertical Slice, prontas para reaparecer na Semana 11, quando o `HealthComponent` é reutilizado pelo Enemy em um sistema de combate simples.
+O `HealthComponent` e o contador `SaveManager.mortes` construídos nesta semana são consumidos diretamente pelo HUD da Semana 9, que passa a exibir em tempo real dados de gameplay já existentes — vida, tentativas restantes, itens, progresso — via Control nodes e CanvasLayer; o `GameOver` também é refinado com o HUD na Semana 9. A State Machine e as animações contextuais não são retomadas diretamente na Semana 9, mas permanecem no projeto como parte do Vertical Slice, prontas para reaparecer na Semana 11, quando o `HealthComponent` é reutilizado pelo Enemy em um sistema de combate simples.
 
 # Referências
 

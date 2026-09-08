@@ -12,11 +12,11 @@ O Encontro 1 fechou o último sistema novo do Módulo 2: `SaveData`, `SaveCompon
 
 ## Resultado esperado ao final da semana
 
-Este tutorial cobre apenas o **Encontro 2**: ao final dele, cada grupo tem um fluxo jogável único — portas, alavancas, baús e `Checkpoint` conectados entre si — com progresso real persistido entre sessões, apresentado em Code Review e testado pelos colegas no Playtest coletivo. Isso encerra a Unidade II (Construir Sistemas).
+Este tutorial cobre apenas o **Encontro 2**: ao final dele, cada grupo tem um fluxo jogável único — portas, alavancas, `Pickup`, `Chest` e `Checkpoint` conectados entre si — com progresso real persistido entre sessões, apresentado em Code Review e testado pelos colegas no Playtest coletivo. Isso encerra a Unidade II (Construir Sistemas).
 
 ## Pré-requisitos
 
-- `SaveData`, `SaveComponent` e ao menos um `Checkpoint` funcionais, do Encontro 1 desta semana.
+- `SaveData`, `SaveComponent`, ao menos um `Pickup`, um `Chest` e um `Checkpoint` funcionais, e o ciclo de spawn fechado (`PlayerStart` + `GameManager.spawn_player()` escolhendo o checkpoint ativo), do Encontro 1 desta semana.
 - `GameManager`, `SaveManager`, contrato `Interactable`, Signals (Semanas 4 e 5) e `ItemData`/Enum com o conjunto de itens do grupo (Semana 6), todos sem alterações pendentes.
 
 ---
@@ -37,7 +37,7 @@ Este tutorial cobre apenas o **Encontro 2**: ao final dele, cada grupo tem um fl
 
 ## Projeto esperado
 
-- Projeto aberto no Godot 4.7, com portas, alavancas, baús e `Checkpoint` existindo no nível, ainda que dispersos ou não totalmente conectados entre si.
+- Projeto aberto no Godot 4.7, com portas, alavancas, `Pickup`, `Chest` e `Checkpoint` existindo no nível, ainda que dispersos ou não totalmente conectados entre si.
 
 > **Imagem sugerida**
 >
@@ -57,17 +57,17 @@ Conectar todos os objetos interativos do grupo (portas, alavancas, baús, `Check
 
 ## Conceito
 
-Um Vertical Slice não é a soma isolada de sistemas testados cada um em seu próprio canto — é a integração deles em uma experiência única. Até aqui, cada sistema do Módulo 2 foi construído e testado separadamente: uma porta na Semana 5, um baú na Semana 6, um `Checkpoint` no Encontro 1 desta semana. A pergunta deste encontro é diferente de "cada sistema funciona sozinho?" — é "o jogador consegue percorrer o nível do início ao fim, interagindo com todos eles em sequência, sem que nenhum sistema precise ser retrabalhado para se encaixar nos demais?". Se o contrato `Interactable` e os Signals foram bem desenhados desde a Semana 5, a resposta deve ser sim, sem exigir nenhuma alteração estrutural agora — apenas posicionamento e conexão.
+Um Vertical Slice não é a soma isolada de sistemas testados cada um em seu próprio canto — é a integração deles em uma experiência única. Até aqui, cada sistema do Módulo 2 foi construído e testado separadamente: uma porta na Semana 5, o `ItemData` na Semana 6, um `Pickup`, um `Chest` e um `Checkpoint` no Encontro 1 desta semana. A pergunta deste encontro é diferente de "cada sistema funciona sozinho?" — é "o jogador consegue percorrer o nível do início ao fim, interagindo com todos eles em sequência, sem que nenhum sistema precise ser retrabalhado para se encaixar nos demais?". Se o contrato `Interactable` e os Signals foram bem desenhados desde a Semana 5, a resposta deve ser sim, sem exigir nenhuma alteração estrutural agora — apenas posicionamento e conexão.
 
 ## Passo a passo
 
 1. Abra o nível de teste principal do grupo (zona externa ou estrutura interna, conforme o progresso do grupo).
-2. Posicione (ou reposicione) as instâncias de `Door`, `Lever`, `Chest` e `Checkpoint` já existentes, formando um caminho único que o jogador percorre do ponto inicial até um ponto final.
+2. Posicione (ou reposicione) as instâncias de `Door`, `Lever`, `Pickup`, `Chest` e `Checkpoint` já existentes, formando um caminho único que o jogador percorre do ponto inicial até um ponto final.
 3. Confirme que uma alavanca (`Lever`) efetivamente controla a abertura de uma porta (`Door`) próxima, reutilizando o Signal já conectado desde a Semana 5.
-4. Confirme que ao menos um baú (`Chest`) no caminho concede um item do conjunto `ItemData` do grupo (Semana 6), e que esse item é refletido no estado mantido pelo `GameManager`/`SaveManager`.
+4. Confirme que ao menos um `Pickup` e um `Chest` no caminho concedem um item do conjunto `ItemData` do grupo (Semana 6), que o Signal `item_collected` de cada um está conectado ao handler único, e que o `nome` do item aparece em `SaveManager.itens_coletados` sem duplicatas.
 5. Posicione o `Checkpoint` do Encontro 1 em um ponto lógico do caminho (por exemplo, após a primeira sala resolvida), de forma que alcançá-lo grave o progresso já obtido até ali.
 6. Percorra o caminho completo do início ao fim, interagindo com cada objeto na ordem esperada, sem editar código durante o percurso.
-7. Feche o jogo, reabra, e confirme que o progresso salvo no `Checkpoint` (itens coletados até ali) é recuperado corretamente ao carregar o `SaveData`.
+7. Feche o jogo, reabra, e confirme que (a) o progresso salvo no `Checkpoint` (itens coletados até ali) é recuperado ao carregar o `SaveData` e (b) o Player nasce na posição do último `Checkpoint` alcançado, e não no `PlayerStart` — o ciclo de spawn fechado na Parte 5 do Encontro 1.
 
 ## Resultado esperado
 
@@ -108,7 +108,7 @@ Até aqui, a disciplina cobrou principalmente que cada sistema funcionasse. A pa
 
 ## Passo a passo
 
-1. Em grupo, revisem juntos cada sistema construído no Módulo 2: `GameManager`, `SaveManager`, contrato `Interactable`, Signals, `ItemData`/Enum, `SaveData`/`SaveComponent`, `Checkpoint`.
+1. Em grupo, revisem juntos cada sistema construído no Módulo 2: `GameManager`, `SaveManager`, contrato `Interactable`, Signals, `ItemData`/Enum, `Pickup`/`Chest` + handler de coleta, `SaveData`/`SaveComponent`, `Checkpoint`.
 2. Para cada sistema, escrevam (em papel ou em um documento curto) uma frase respondendo "por que fizemos dessa forma, e não de outra forma possível?".
 3. Revisem a Rubrica 4 (Code Review) do Sistema de Avaliação com o professor ou material de apoio, focando em nomenclatura, modularidade e reutilização do contrato `Interactable` sem lógica duplicada.
 4. Escolham um integrante do grupo para conduzir a apresentação e outro para responder perguntas técnicas específicas, evitando que a apresentação toda recaia sobre uma única pessoa.
@@ -195,7 +195,7 @@ Não há desafio de solução livre neste encontro: a entrega da semana é a pr�
 
 # Checklist
 
-☐ Portas, alavancas, baús e `Checkpoint` conectados em um único fluxo jogável, do início ao fim
+☐ Portas, alavancas, `Pickup`, `Chest` e `Checkpoint` conectados em um único fluxo jogável, do início ao fim
 
 ☐ Progresso persistido pelo `Checkpoint` confirmado após fechar e reabrir o jogo
 

@@ -1,6 +1,10 @@
 # Implementation Cards — Milestone MS-2 (Semanas 4–7)
 
-Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_*.md`. Todas as cartas são **Tipo A**, salvo indicação contrária. Duas entradas desta lista (IC-VS06-03, IC-VS07-04) são **stubs bloqueados — Tipo C** e não contêm passo a passo, conforme a Regra Absoluta do plano (nunca inventar a implementação de uma decisão inexistente).
+Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_*.md`. Todas as cartas são **Tipo A**, salvo indicação contrária.
+
+> **Atualização (2026-09-02):** os **DC-01** e **DC-06** foram resolvidos e registrados em `PROJECT_ARCHITECTURE.md` §6/§7/§8.
+> - DC-01: `Pickup`/`Chest` construídos no **Tutorial da Semana 7, Encontro 1, Parte 3** (nova), `Checkpoint` movido para a Parte 4. Cartas IC-VS06-03 e IC-VS07-04 deixam de ser stubs.
+> - DC-06: `PlayerStart` (Marker3D) + `GameManager.spawn_player()` na **Semana 4, Encontro 1, Parte 3** (nova carta IC-VS04-04); escolha por `Checkpoint` + carregamento do save ao iniciar na **Semana 7, Encontro 1, Parte 5** (nova carta IC-VS07-05).
 
 ---
 
@@ -100,6 +104,40 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 **Definition of Done:** mecânica de persistência comprovada — serve de modelo direto para o desafio (IC-VS04-D).
 
 **Dependências:** Blocked By: IC-VS04-02. Blocks: IC-VS04-D.
+
+**Story Points:** 2
+
+---
+
+## IC-VS04-04 — PlayerStart e GameManager.spawn_player()
+
+**Objetivo:** dar ao `GameManager` sua primeira responsabilidade concreta — posicionar o Player ao carregar o nível, lendo um Node marcador da cena.
+
+**Contexto:** DC-06 resolvido. Semana 4, Encontro 1, Parte 3 (nova). Equivalente ao par `PlayerStart` + `GameMode.ChoosePlayerStart` da Unreal.
+
+**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §6, §7 (linhas PlayerStart/GameManager + parágrafo "Fluxo de spawn do Player"), §8; `Tutorial_Semana_04_Encontro_1.md` (Parte 3).
+
+**Tipo:** A
+
+**Arquivos Esperados:** `res://scenes/levels/exploration/level_exploration.tscn` (novo Marker3D + chamada no `_ready()`); modificação em `game_manager.gd`.
+
+**Implementação:**
+1. Em `level_exploration.tscn`: adicionar um `Marker3D` filho do nó raiz, renomear para `PlayerStart`, posicionar no ponto inicial, adicionar ao grupo `player_start`.
+2. Adicionar o Node do Player ao grupo `player`.
+3. Em `game_manager.gd`: `func spawn_player() -> void` que lê `get_tree().get_first_node_in_group("player")` e `..._first_node_in_group("player_start")` e faz `player.global_position = inicio.global_position` (com guardas de `null`).
+4. No script raiz de `level_exploration.tscn`, chamar `GameManager.spawn_player()` no `_ready()`.
+
+**Restrições:** nenhuma coordenada de spawn (`Vector3`/`Transform3D`) dentro de `game_manager.gd` — a posição é dado da cena. `spawn_player()` deve ser público (será reutilizado pelo respawn do Módulo 3).
+
+**Testes:** rodar o nível → Player no `PlayerStart`; mover o marcador no editor → Player segue; comentar a chamada no `_ready()` → Player volta a nascer onde a instância está salva.
+
+**Critérios de Aceite:**
+- [ ] `Marker3D` `PlayerStart` em `level_exploration.tscn`, grupo `player_start`; Player no grupo `player`.
+- [ ] `GameManager.spawn_player()` reposiciona o Player lendo os grupos, sem coordenada no script, chamado no `_ready()` do nível.
+
+**Definition of Done:** checklist do Tutorial (Semana 4, Encontro 1), itens de PlayerStart/spawn.
+
+**Dependências:** Blocked By: IC-VS04-01. Blocks: IC-VS07-05.
 
 **Story Points:** 2
 
@@ -363,17 +401,45 @@ res://resources/items/item_chave.tres
 
 ---
 
-## IC-VS06-03 — Aplicação do ItemData a um Objeto Coletável em Cena
+## IC-VS06-03 — Pickup, Chest e Handler de Coleta (ItemData → SaveManager)
 
-**STATUS: BLOQUEADO — Tipo C. Nenhum passo de implementação é definido aqui.**
+**Objetivo:** construir os primeiros objetos interativos que entregam um `ItemData` ao jogo e ligar o resultado da coleta ao `SaveManager` por um handler único.
 
-**Motivo:** não existe, em nenhum documento-fonte (`PROJECT_ARCHITECTURE.md`, Cronograma, ou qualquer Tutorial das Semanas 5–7), uma especificação de como uma Scene `Chest`/`Pickup` é construída, qual Signal ela emite, ou para onde o item coletado vai antes do `InventoryComponent` existir (Semana 10). Inventar essa implementação aqui violaria a Regra Absoluta do plano.
+**Contexto:** DC-01 resolvido (ver `Design_Backlog/Design_Cards.md` → DC-01). Apesar do número `VS06`, a construção acontece no **Tutorial da Semana 7, Encontro 1, Parte 3** — primeiro ponto do Cronograma em que `ItemData` (Semana 6) já existe e a coleta alimenta a persistência do `Checkpoint` na mesma aula.
 
-**Ver:** `Design_Backlog/Design_Cards.md` → **DC-01**.
+**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §6, §7 (linhas Pickup/Chest + parágrafo do fluxo do item coletado), §9; `Tutorial_Semana_07_Encontro_1.md` (Parte 3).
 
-**Dependências:** Blocked By: DC-01. Blocks: IC-VS07-04, IC-VS10-01.
+**Tipo:** A (para as Scenes e o handler; a única variação por grupo é qual `ItemData` cada instância concede — Tipo B apenas nesse recorte).
 
-**Story Points:** não estimado (carta não existe até DC-01 ser resolvido).
+**Arquivos Esperados:**
+```
+res://scenes/interactables/Pickup.tscn   + pickup.gd (ou pickup.torch)
+res://scenes/interactables/Chest.tscn    + chest.gd  (ou chest.torch)
+modificação em res://scripts/autoload/save_manager.gd
+handler no script raiz de level_exploration.tscn (ou em game_manager.gd)
+```
+
+**Implementação:**
+1. Em `save_manager.gd`: `var itens_coletados: Array[String] = []` (substituindo a variável `int` de demonstração da Semana 4, se ainda com esse nome) e `func registrar_item(nome: String) -> void` idempotente (`if nome in itens_coletados: return`).
+2. `Pickup.tscn`: `Area3D` + `CollisionShape3D` + malha (Mini Dungeon), mesma estrutura de `Door`. `pickup.gd`: `class_name Pickup`, `signal item_collected(item: ItemData)`, `@export var item: ItemData`. `interact()` → `item_collected.emit(item)` + `queue_free()` (guarda `if item == null: return`).
+3. `Chest.tscn`: mesma estrutura, malha de baú. `chest.gd`: `class_name Chest`, mesmo Signal e `@export`, mais `var aberto := false`. `interact()` → `if aberto or item == null: return`; `aberto = true`; `item_collected.emit(item)`.
+4. Handler único `_ao_coletar_item(item: ItemData)` → `SaveManager.registrar_item(item.nome)`; conectar o Signal `item_collected` de cada instância a ele.
+5. Posicionar ao menos um `Pickup` e um `Chest` no nível, cada um com um `.tres` do conjunto do grupo.
+
+**Restrições:** nenhuma lógica de "efeito do item" dentro de `pickup.gd`/`chest.gd`; a Scene coletável nunca chama `SaveManager` diretamente — só emite o Signal. Um único handler no projeto. `Door`/`Lever` permanecem com `interacted` (sem carga), inalterados.
+
+**Testes:** interagir com `Pickup` (some; nome entra em `itens_coletados`); interagir com `Chest` duas vezes (registra uma vez só); coletar item de mesmo nome de duas fontes (sem duplicata na lista).
+
+**Critérios de Aceite:**
+- [ ] `Pickup` e `Chest` implementam `interact()` e emitem `item_collected(item: ItemData)`.
+- [ ] `Chest` concede o item apenas na primeira interação (`aberto`).
+- [ ] Handler único registra `item.nome` em `SaveManager.itens_coletados`, sem duplicatas; nenhuma Scene coletável conhece o `SaveManager`.
+
+**Definition of Done:** checklist do Tutorial (Semana 7, Encontro 1), itens de Pickup/Chest/handler.
+
+**Dependências:** Blocked By: IC-VS06-02, IC-VS05-03. Blocks: IC-VS07-03, IC-VS07-04, IC-VS10-01.
+
+**Story Points:** 3
 
 ---
 
@@ -448,9 +514,9 @@ res://resources/items/item_chave.tres
 
 **Objetivo:** construir a Scene que aciona a gravação de progresso ao ser alcançada.
 
-**Contexto:** terceira etapa da Semana 7, Encontro 1 — fecha o conjunto de sistemas novos do Módulo 2.
+**Contexto:** quarta etapa da Semana 7, Encontro 1 — fecha o conjunto de sistemas novos do Módulo 2.
 
-**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §7, §8; `Tutorial_Semana_07_Encontro_1.md` (Parte 3).
+**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §7, §8; `Tutorial_Semana_07_Encontro_1.md` (Parte 4).
 
 **Tipo:** A
 
@@ -459,56 +525,93 @@ res://resources/items/item_chave.tres
 **Implementação:**
 1. Criar `Checkpoint.tscn` em `scenes/interactables/`: `Area3D` + `CollisionShape3D` + malha/marcador visual (asset do Mini Dungeon).
 2. Implementar `interact()` (mesmo contrato de `Door`/`Lever`, via `has_method`).
-3. Dentro de `interact()`, obter referência ao `SaveComponent` e chamar `salvar()`, passando itens coletados atuais e um `id_checkpoint` (campo `@export` próprio, único por instância).
-4. Posicionar ao menos uma instância no nível.
+3. Atribuir um `@export var id_checkpoint: String` único por instância; adicionar cada instância ao grupo `checkpoints`.
+4. Dentro de `interact()`: gravar `SaveManager.ultimo_checkpoint = id_checkpoint` (ponto de respawn corrente) e chamar `SaveComponent.salvar(SaveManager.itens_coletados, id_checkpoint)` — a lista vem do handler de coleta de IC-VS06-03.
+5. Posicionar ao menos uma instância no nível.
 
-**Restrições:** não reimplementar detecção de proximidade dentro do `Checkpoint` — reutilizar o `InteractionComponent` já existente no Player. Nunca chamar `ResourceSaver`/`FileAccess` diretamente — sempre via `SaveComponent`.
+**Restrições:** não reimplementar detecção de proximidade dentro do `Checkpoint` — reutilizar o `InteractionComponent` já existente no Player. Nunca chamar `ResourceSaver`/`FileAccess` diretamente — sempre via `SaveComponent`. O `Checkpoint` grava o id em `SaveManager`, mas não resolve id → posição (isso é do `GameManager`, IC-VS07-05).
 
 **Testes:** interagir com o Checkpoint; confirmar atualização do arquivo em `user://`; coletar um item, interagir, fechar/reabrir o jogo, confirmar persistência via `carregar()`.
 
 **Critérios de Aceite:**
-- [ ] `Checkpoint` implementa `Interactable`, aciona `SaveComponent.salvar()`, com `id_checkpoint` único.
+- [ ] `Checkpoint` implementa `Interactable`, aciona `SaveComponent.salvar()`, grava `SaveManager.ultimo_checkpoint`, com `id_checkpoint` único e no grupo `checkpoints`.
 
-**Definition of Done:** checklist do Tutorial (Semana 7, Encontro 1) 100%.
+**Definition of Done:** checklist do Tutorial (Semana 7, Encontro 1), itens do Checkpoint.
 
-**Dependências:** Blocked By: IC-VS07-02, IC-VS05-03. Blocks: IC-VS07-04.
+**Dependências:** Blocked By: IC-VS07-02, IC-VS05-03, IC-VS06-03. Blocks: IC-VS07-05, IC-VS07-04.
 
 **Story Points:** 3
 
 ---
 
+## IC-VS07-05 — Carregar Save ao Iniciar + spawn_player() por Checkpoint
+
+**Objetivo:** fechar o ciclo do save — ler o `SaveData` no carregamento do nível e fazer `GameManager.spawn_player()` escolher entre o `PlayerStart` e o último `Checkpoint` alcançado.
+
+**Contexto:** DC-06 resolvido. Semana 7, Encontro 1, Parte 5 (nova). Dá consumidor a `SaveData.ultimo_checkpoint`, que hoje é gravado sem ninguém ler.
+
+**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §6, §7 (parágrafo "Fluxo de spawn do Player"); `Tutorial_Semana_07_Encontro_1.md` (Parte 5).
+
+**Tipo:** A
+
+**Arquivos Esperados:** modificação em `game_manager.gd` e no script raiz de `level_exploration.tscn`.
+
+**Implementação:**
+1. Ampliar `GameManager.spawn_player()` (de IC-VS04-04): se `SaveManager.ultimo_checkpoint != ""`, varrer o grupo `checkpoints` procurando `cp.id_checkpoint == SaveManager.ultimo_checkpoint` e usar esse Node como destino; senão, cair no `PlayerStart`.
+2. No `_ready()` do nível, antes de `spawn_player()`: `var dados := <SaveComponent>.carregar()`; se `dados`, copiar `dados.itens_coletados` e `dados.ultimo_checkpoint` para o `SaveManager`.
+3. Ordem no `_ready()`: carregar → copiar para `SaveManager` → `GameManager.spawn_player()`.
+
+**Restrições:** o `id_checkpoint` é resolvido para posição **no `GameManager`**, nunca no `SaveManager` (que guarda só o id). Nenhuma coordenada nos Autoloads. O carregamento cobre apenas `itens_coletados`/`ultimo_checkpoint` (schema da Semana 7) — evolução em DC-05. Nenhum tratamento de morte do Player aqui — DC-03.
+
+**Testes:** sem save → Player no `PlayerStart`; após alcançar um `Checkpoint`, fechar/reabrir → Player nasce nesse checkpoint e `itens_coletados` volta preenchido.
+
+**Critérios de Aceite:**
+- [ ] `spawn_player()` escolhe entre `Checkpoint` ativo (por id) e `PlayerStart`.
+- [ ] `_ready()` do nível carrega o `SaveData` e popula o `SaveManager` antes do spawn.
+- [ ] Nenhuma coordenada em `game_manager.gd`/`save_manager.gd`.
+
+**Definition of Done:** checklist do Tutorial (Semana 7, Encontro 1), itens do ciclo de spawn.
+
+**Dependências:** Blocked By: IC-VS07-03, IC-VS04-04. Blocks: IC-VS07-04.
+
+**Story Points:** 2
+
+---
+
 ## IC-VS07-04 — Integração Final do Módulo 2 (Fluxo Único + Code Review + Playtest) 🔴
 
-**Objetivo:** conectar porta, alavanca, (baú — ver ressalva) e checkpoint em um único fluxo percorrível, e passar por Code Review/Playtest de encerramento da Unidade II.
+**Objetivo:** conectar porta, alavanca, `Pickup`, `Chest` e checkpoint em um único fluxo percorrível, e passar por Code Review/Playtest de encerramento da Unidade II.
 
-**Contexto:** Encontro 2 da Semana 7 — não introduz sistema novo, apenas integra o que já existe.
+**Contexto:** Encontro 2 da Semana 7 — não introduz sistema novo, apenas integra o que já existe. DC-01 resolvido: `Pickup`/`Chest` entram no fluxo normalmente.
 
 **Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §6 ("Produto do Módulo 2"); `Tutorial_Semana_07_Encontro_2.md`.
 
-**Tipo:** A para a integração de Door/Lever/Checkpoint; **a integração de um "baú" está BLOQUEADA — Tipo C, ver DC-01** (não incluir Chest no fluxo até DC-01 ser resolvido; registrar a ausência como pendência explícita).
+**Tipo:** A.
 
 **Arquivos Esperados:** reposicionamento de instâncias existentes em `level_exploration.tscn` (nenhum arquivo novo).
 
 **Implementação:**
-1. Posicionar/reposicionar `Door`, `Lever` (ou equivalente) e `Checkpoint` formando um caminho único, início a fim.
+1. Posicionar/reposicionar `Door`, `Lever` (ou equivalente), `Pickup`, `Chest` e `Checkpoint` formando um caminho único, início a fim.
 2. Confirmar que a alavanca controla a porta via o Signal já conectado (Semana 5).
-3. Posicionar o `Checkpoint` em um ponto lógico do caminho (ex.: após a primeira sala resolvida).
-4. Percorrer o caminho completo; fechar e reabrir o jogo; confirmar progresso recuperado.
-5. Preparar e apresentar a justificativa de arquitetura de cada sistema do módulo (Code Review, Rubrica 4).
-6. Realizar Playtest coletivo (ou, em contexto solo, testar com uma pessoa externa ao desenvolvimento).
+3. Confirmar que `Pickup`/`Chest` no caminho concedem um item via `item_collected`, registrado em `SaveManager.itens_coletados` sem duplicatas.
+4. Posicionar o `Checkpoint` em um ponto lógico do caminho (ex.: após a primeira sala resolvida), de forma que alcançá-lo grave os itens coletados até ali.
+5. Posicionar o `PlayerStart` no início do caminho; confirmar que, sem save, o Player nasce nele.
+6. Percorrer o caminho completo; fechar e reabrir o jogo; confirmar que o progresso é recuperado e que o Player nasce no último `Checkpoint` alcançado.
+7. Preparar e apresentar a justificativa de arquitetura de cada sistema do módulo (Code Review, Rubrica 4).
+8. Realizar Playtest coletivo (ou, em contexto solo, testar com uma pessoa externa ao desenvolvimento).
 
-**Restrições:** preferir conectar sistemas existentes a criar novos objetos nesta carta — o objetivo é integração, não expansão de escopo. Não incluir um "baú" funcional enquanto DC-01 estiver aberto — se incluído antes da resolução, deve ser documentado como protótipo temporário, não como sistema definitivo.
+**Restrições:** preferir conectar sistemas existentes a criar novos objetos nesta carta — o objetivo é integração, não expansão de escopo.
 
-**Testes:** percurso completo do fluxo, com fechamento/reabertura do jogo no meio do teste.
+**Testes:** percurso completo do fluxo, com fechamento/reabertura do jogo no meio do teste (verificando spawn no checkpoint).
 
 **Critérios de Aceite:**
-- [ ] Porta, alavanca e checkpoint conectados em um único fluxo, sem retrabalho estrutural.
-- [ ] Progresso persistido confirmado após reiniciar o jogo.
+- [ ] Porta, alavanca, `Pickup`, `Chest` e checkpoint conectados em um único fluxo, sem retrabalho estrutural.
+- [ ] Item coletado refletido em `SaveManager.itens_coletados` e persistido pelo `Checkpoint`.
+- [ ] Progresso persistido confirmado após reiniciar o jogo; Player nasce no último `Checkpoint` (ou no `PlayerStart` sem save).
 - [ ] Code Review e Playtest coletivo realizados.
-- [ ] Pendência de "baú" (DC-01) registrada explicitamente se ainda não resolvida.
 
 **Definition of Done:** encerramento da Unidade II conforme o Cronograma (Semana 7 🔴).
 
-**Dependências:** Blocked By: IC-VS07-03. Blocks: todo o Milestone MS-3 (VS-08 em diante).
+**Dependências:** Blocked By: IC-VS07-03, IC-VS07-05. Blocks: todo o Milestone MS-3 (VS-08 em diante).
 
 **Story Points:** 3

@@ -139,7 +139,7 @@ A pasta `resources/items/` contém a classe `ItemData` e pelo menos duas instân
 
 ## Problemas comuns
 
-- Colocar lógica de gameplay (por exemplo, um efeito ao coletar o item) dentro do próprio `ItemData`: reforçar que o Resource guarda apenas dado — a reação pertence à Scene que o consome (o Chest ou o Pickup, na Semana seguinte).
+- Colocar lógica de gameplay (por exemplo, um efeito ao coletar o item) dentro do próprio `ItemData`: reforçar que o Resource guarda apenas dado — a reação pertence à Scene que o consome (`Chest` ou `Pickup`, construídos na Semana 7, Encontro 1) ou ao handler de coleta.
 - Confundir a classe `ItemData` com uma instância `.tres`: reforçar que a classe define a estrutura e cada `.tres` é um dado concreto preenchido a partir dela.
 - Esquecer de exportar (`@export`) os campos, tornando-os invisíveis no Inspector ao criar a instância: orientar verificação no Inspector antes de seguir para o próximo item.
 - Estender `Node` em vez de `Resource` por hábito: um Resource não faz parte da árvore de Scene e não deve estender nenhum tipo de Node.

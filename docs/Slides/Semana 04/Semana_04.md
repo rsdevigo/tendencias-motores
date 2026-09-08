@@ -34,7 +34,7 @@ Metodologia: Studio Based Learning, autonomia baixa — professor demonstra, alu
 ## Objetivos da Semana
 
 - Compreender Autoload/Singleton como mecanismo nativo do Godot para estado global compartilhado entre cenas
-- Construir um `GameManager` que centraliza regras de partida e estado compartilhado
+- Construir um `GameManager` que centraliza regras de partida e estado compartilhado, e dar a ele sua primeira responsabilidade concreta: `spawn_player()` (posicionar o Player no `PlayerStart` do nível)
 - Construir um `SaveManager` que centraliza persistência de dados entre cenas
 
 <!--
@@ -62,8 +62,8 @@ Encontro guiado. Retoma o projeto da Semana 3 sem alterar nada do que já existe
 
 - Revisão do Encontro 2 da Semana 3 (build exportado, encerramento do Módulo 1) (15 min)
 - Introdução: onde vive o estado que não pertence a nenhuma cena específica (20 min)
-- Demonstração: criação do script `GameManager` e registro como Autoload (35 min)
-- Laboratório: cada estudante cria e registra seu próprio `GameManager` (45 min)
+- Demonstração: criação do script `GameManager`, registro como Autoload e `spawn_player()` com o `PlayerStart` (35 min)
+- Laboratório: cada estudante cria o `GameManager`, o `PlayerStart` no nível e `spawn_player()` (40 min)
 - Desafio: adicionar uma variável de estado de partida própria (15 min)
 - Feedback e fechamento (5 min)
 
@@ -160,6 +160,22 @@ Não ensinar Unity em profundidade — apenas contrastar arquitetura.
 
 ---
 
+## `PlayerStart` — o GameManager Decide Onde o Player Nasce
+
+- Toda engine precisa decidir a posição inicial do jogador ao carregar um nível
+- Unreal formaliza: actor `PlayerStart` (a coordenada) + `GameMode.ChoosePlayerStart` (a decisão)
+- Godot não formaliza: um `Marker3D` no nível guarda a coordenada; o `GameManager` a consulta
+- `GameManager.spawn_player()` lê o grupo `player_start` e reposiciona o Player — **nenhuma coordenada vive no `GameManager`**
+
+<!--
+A lição é a mesma do Autoload: a coordenada é dado da cena (muda quando o level designer arrasta o marcador); a política ("nascer no início") é do gerenciador.
+Erro comum: escrever `var pos_inicial := Vector3(...)` no GameManager em vez de ler o Marker3D.
+Nesta semana spawn_player() só conhece o PlayerStart; na Semana 7 passa a escolher entre PlayerStart e o último Checkpoint.
+Não detalhar passo a passo — papel do Tutorial (Semana 4, Encontro 1, Parte 3).
+-->
+
+---
+
 ## Demonstração — Criando o GameManager
 
 O que será construído:
@@ -199,7 +215,9 @@ Cada estudante replica, no próprio projeto:
 2. Script `game_manager.gd`, com `class_name GameManager`
 3. Registro em **Project Settings > Autoload**
 4. Teste de acesso ao `GameManager` a partir do script do Player
-5. Remoção do `print()` de teste ao final
+5. `Marker3D` `PlayerStart` no nível (grupo `player_start`); Player no grupo `player`
+6. `spawn_player()` no `GameManager` + chamada no `_ready()` do nível; mover o marcador muda o spawn
+7. Remoção do `print()` de teste ao final
 
 <!--
 Erro comum: registrar o Autoload com Node Name em minúsculo ou diferente de GameManager — sempre ajustar manualmente para PascalCase.
@@ -242,8 +260,9 @@ Circular pela sala pedindo justificativas curtas em voz alta. Sem instrumento fo
 ## Fechamento — Encontro 1
 
 - `GameManager` criado e registrado como Autoload, com acesso validado a partir do Player
+- `PlayerStart` (Marker3D) no nível; `spawn_player()` posiciona o Player nele ao carregar — sem coordenada no script
 - Variável de estado própria do desafio adicionada, com justificativa comentada
-- Nível, Player e build da Semana 3 permanecem intactos
+- Nível e build da Semana 3 intactos (apenas grupos + chamada de spawn no `_ready()`)
 - Próximo passo: input centralizado no Player e SaveManager, no Encontro 2
 
 <!--
@@ -501,7 +520,7 @@ Dificuldade esperada: sobrepor responsabilidades entre GameManager e SaveManager
 
 ## Resultado Esperado da Semana
 
-- `GameManager` (Autoload), com regras e estado de partida compartilhado
+- `GameManager` (Autoload), com regras e estado de partida compartilhado e `spawn_player()` (o "ChoosePlayerStart" do projeto)
 - `SaveManager` (Autoload), independente, com dado de progresso persistindo entre cenas
 - Turma relaciona Autoload/Singleton à ausência de equivalente formal na Unity
 - Turma compreende input centralizado no Player como escolha arquitetural válida
@@ -515,6 +534,7 @@ Esses dois sistemas abrem a Unidade II e sustentam toda a arquitetura de gamepla
 ## Checklist da Semana
 
 - [ ] Script `game_manager.gd` criado, com `class_name GameManager`, registrado como Autoload
+- [ ] `PlayerStart` (Marker3D, grupo `player_start`) no nível; `spawn_player()` posiciona o Player e é chamado no `_ready()` do nível
 - [ ] Variável de estado própria do desafio adicionada ao `GameManager`
 - [ ] Script `save_manager.gd` criado, com `class_name SaveManager`, registrado como Autoload
 - [ ] Variável persistente implementada e validada com troca real de cena

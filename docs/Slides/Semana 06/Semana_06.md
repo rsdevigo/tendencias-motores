@@ -436,7 +436,7 @@ Ao final da semana, cada grupo possui:
 - Conjunto de três ou mais instâncias `.tres` de itens coletáveis, coerentes entre si
 
 <!--
-Este resultado corresponde à conclusão do item "ItemData (Resource + Enum)" do roadmap (PROJECT_ARCHITECTURE.md, seção 6), pré-requisito direto de "Chest, Pickup" e de "SaveComponent / SaveData" na Semana 7.
+Este resultado corresponde à conclusão do item "ItemData (Resource + Enum)" do roadmap (PROJECT_ARCHITECTURE.md, seção 6), pré-requisito direto de "Pickup", "Chest" e "SaveComponent / SaveData", todos construídos na Semana 7.
 -->
 
 ---
@@ -484,7 +484,7 @@ Usar este checklist como roteiro de verificação rápida no início da Semana 7
 
 ## Próximos Passos — Semana 7
 
-O par `ItemData` + Enum construído nesta semana é pré-requisito direto da Semana 7, que introduz `SaveData` (Resource) + FileAccess para serializar e recuperar o estado de progresso do jogador, incluindo os itens coletados. A Semana 7 também integra, em um único fluxo jogável, todos os desafios do Módulo 2, encerrando a Unidade II com Code Review e Playtest coletivo.
+O par `ItemData` + Enum construído nesta semana é pré-requisito direto da Semana 7, que constrói as Scenes `Pickup` e `Chest` (os primeiros objetos que entregam um `ItemData` ao jogo, via Signal `item_collected`) e introduz `SaveData` (Resource) + FileAccess para serializar e recuperar o progresso do jogador, incluindo os itens coletados. A Semana 7 também integra, em um único fluxo jogável, todos os desafios do Módulo 2, encerrando a Unidade II com Code Review e Playtest coletivo.
 
 Leitura recomendada: Godot Docs — Resources, GDScript (Enums); Unity Manual (consulta comparativa) — ScriptableObjects.
 

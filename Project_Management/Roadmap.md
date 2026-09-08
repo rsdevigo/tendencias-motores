@@ -71,17 +71,18 @@ Implementation Cards (tarefas de código, Tipo A ou B, ≤ 8 pontos cada)
 
 ---
 
-## Design Cards abertos (gaps Tipo C identificados nesta leitura — ver detalhe em `Design_Backlog/Design_Cards.md`)
+## Design Cards (gaps Tipo C — ver detalhe em `Design_Backlog/Design_Cards.md`)
 
-| ID | Título | Bloqueia |
-|---|---|---|
-| DC-01 | Construção de `Chest`/`Pickup` nunca especificada | IC-VS06-03, IC-VS07-04 |
-| DC-02 | Definição mecânica do "objetivo final único" | IC-VS14-03 (ou onde o objetivo for implementado) |
-| DC-03 | Fluxo de morte/respawn do Player | IC-VS08-02 (parcial), IC-VS11-04 |
-| DC-04 | Consequência da morte do Enemy | IC-VS11-04 |
-| DC-05 | Evolução do schema de `SaveData` para os Módulos 3–4 (inventário, vida, estado de inimigos) | IC-VS10-04, IC-VS14-02 |
+| ID | Título | Bloqueia | Status |
+|---|---|---|---|
+| DC-01 | Construção de `Chest`/`Pickup` nunca especificada | IC-VS06-03, IC-VS07-04 | ✅ resolvido 2026-09-02 |
+| DC-02 | Definição mecânica do "objetivo final único" | IC-VS14-03 (ou onde o objetivo for implementado) | aberto |
+| DC-03 | Fluxo de morte/respawn do Player | IC-VS08-05 | ✅ resolvido 2026-09-02 |
+| DC-04 | Consequência da morte do Enemy | IC-VS11-04 | aberto |
+| DC-05 | Evolução do schema de `SaveData` para os Módulos 3–4 (inventário, estado de inimigos) | IC-VS10-04, IC-VS14-02 | aberto (vida do Player já decidida por DC-03: não persiste; `mortes: int` já adicionado) |
+| DC-06 | Ponto de spawn do Player e escolha de spawn (`PlayerStart`/`ChoosePlayerStart`) | IC-VS04-04, IC-VS07-05 | ✅ resolvido 2026-09-02 |
 
-Nenhum destes cinco itens tem Implementation Card — apenas Design Card, até que `PROJECT_ARCHITECTURE.md` seja atualizado com a decisão.
+Ordem de resolução recomendada: DC-01 → DC-06 → DC-03 → DC-05 → DC-04 → DC-02. (DC-01, DC-06 e DC-03 resolvidos em 2026-09-02.) Um Design Card aberto não tem Implementation Card até que `PROJECT_ARCHITECTURE.md` registre a decisão; resolvidos geram cartas Tipo A.
 
 ---
 

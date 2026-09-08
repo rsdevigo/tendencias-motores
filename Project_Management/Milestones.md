@@ -33,19 +33,21 @@ Cada Milestone corresponde a um Módulo/Unidade do [Cronograma](../docs/Cronogra
 **Objetivo:** construir a espinha dorsal de gameplay — estado global, comunicação desacoplada entre sistemas, dados de design separados de lógica, e persistência real em disco.
 
 **Escopo:**
-- `GameManager` e `SaveManager` (Autoload).
+- `GameManager` e `SaveManager` (Autoload); `GameManager.spawn_player()` + `PlayerStart` (Marker3D).
 - Contrato `Interactable` (duck typing/`has_method`) + Signals, aplicado a `Door` e a um segundo interativo (`Lever` ou equivalente).
 - `ItemData` (Resource) + Enum de categoria, com conjunto próprio de itens.
+- `Pickup`/`Chest` (aplicam `ItemData`, emitem `item_collected`) + handler único de coleta.
 - `SaveData` (Resource) + `SaveComponent` (FileAccess/ResourceSaver), persistindo em `user://`.
-- `Checkpoint` (reaproveita o contrato `Interactable`).
+- `Checkpoint` (reaproveita o contrato `Interactable`, grava `ultimo_checkpoint`).
+- Carregar save ao iniciar + `spawn_player()` escolhendo entre `PlayerStart` e `Checkpoint` ativo.
 - Integração de todos os sistemas do módulo em um único fluxo jogável.
 
-**Produto jogável ao final:** o jogador percorre um caminho com porta, alavanca, baú(s) e checkpoint, com progresso salvo em disco e recuperado entre sessões.
+**Produto jogável ao final:** o jogador percorre um caminho com porta, alavanca, `Pickup`/`Chest` e checkpoint, com progresso salvo em disco e recuperado entre sessões, renascendo no último checkpoint.
 
 **Definition of Done do Milestone:**
 - [ ] Todos os Critérios de Aceite de VS-04 a VS-07 cumpridos.
 - [ ] Code Review (Rubrica 4) e Playtest coletivo de encerramento (🔴 Semana 7) satisfeitos.
-- [ ] DC-01 (construção de `Chest`/`Pickup`) resolvido **ou** contornado com o placeholder documentado no próprio Design Card antes de a VS-06/VS-07 serem dadas como concluídas.
+- [x] DC-01 (construção de `Chest`/`Pickup`) e DC-06 (ponto de spawn do Player) resolvidos e refletidos nos tutoriais/slides (2026-09-02).
 
 ---
 
@@ -57,17 +59,18 @@ Cada Milestone corresponde a um Módulo/Unidade do [Cronograma](../docs/Cronogra
 
 **Escopo:**
 - Troca da `CapsuleMesh` de placeholder pelo modelo animado do Kenney Mini Characters.
-- `HealthComponent` (vida/dano/morte) + AnimationTree (State Machine) + BlendSpace/AnimationPlayer.
-- HUD (Control nodes + CanvasLayer) e PauseMenu.
+- `HealthComponent` (vida/dano/morte/`reiniciar()`) + fluxo de morte/respawn do Player (`GameManager.player_morreu()` → respawn no `Checkpoint` / `GameOver`) + AnimationTree (State Machine) + BlendSpace/AnimationPlayer.
+- HUD (Control nodes + CanvasLayer), PauseMenu e GameOver.
 - `InventoryComponent` + `InventoryUI`, ampliação do sistema de interação.
 - `NavigationRegion3D`/`NavigationAgent3D`, `Enemy` com Behavior Tree/Blackboard (LimboAI) e combate simples (`Area3D`/`RayCast3D` → `apply_damage`).
 
-**Produto jogável ao final:** Vertical Slice completo — Player animado, vida, HUD, inventário funcional, um inimigo autônomo que persegue e troca dano com o Player.
+**Produto jogável ao final:** Vertical Slice completo — Player animado, vida, respawn no checkpoint e game over ao esgotar tentativas, HUD, inventário funcional, um inimigo autônomo que persegue e troca dano com o Player.
 
 **Definition of Done do Milestone:**
 - [ ] Todos os Critérios de Aceite de VS-08 a VS-11 cumpridos.
 - [ ] Playtest coletivo + Showcase de encerramento (🔴 Semana 11) satisfeitos.
-- [ ] DC-03 (morte/respawn do Player) e DC-04 (consequência da morte do Enemy) resolvidos antes de a VS-11 ser dada como concluída — sem eles, o combate simples não tem estado final definido.
+- [x] DC-03 (morte/respawn do Player) resolvido — 2026-09-02 (IC-VS08-05, Semana 8).
+- [ ] DC-04 (consequência da morte do Enemy) resolvido antes de a VS-11 ser dada como concluída — sem ele, a derrota do Enemy no combate simples não tem estado final definido.
 
 ---
 

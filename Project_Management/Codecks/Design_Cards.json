@@ -13,7 +13,9 @@
     ],
     "completion_criteria": "PROJECT_ARCHITECTURE.md §6 e §7 ganham uma linha própria para Chest/Pickup no mesmo nível de detalhe de Door/Lever/Checkpoint.",
     "blocks": ["IC-VS06-03", "IC-VS07-04-partial", "IC-VS10-01-population"],
-    "status": "open"
+    "status": "resolved",
+    "resolved_on": "2026-09-02",
+    "resolution": "Registrado em PROJECT_ARCHITECTURE.md §6 e §7. Pickup (Node3D): item do mundo de uso único, implementa interact(), @export item: ItemData, emite item_collected(item) e queue_free(). Chest (Node3D): contêiner de uso único com estado aberto:bool, um único @export item: ItemData, emite item_collected(item) uma vez na primeira interação e fica vazio. Contrato interact() segue genérico; Door/Lever usam o Signal genérico interacted e não dão itens, Pickup/Chest usam Signal próprio item_collected(item: ItemData). Item coletado: handler único (nível ou GameManager) adiciona item.nome à lista itens_coletados do SaveManager até a Semana 9; a partir da Semana 10 repassa o ItemData ao InventoryComponent. Sem persistência do estado do baú no Módulo 2 (idempotência por nome no reload; persistência real cruzada com DC-05). Pickup.tscn/Chest.tscn passam a ser construídos no Tutorial da Semana 7, Encontro 1 (nova Parte 3, antes do Checkpoint)."
   },
   {
     "id": "DC-02",
@@ -44,7 +46,10 @@
     ],
     "completion_criteria": "PROJECT_ARCHITECTURE.md §7 (linha HealthComponent) descreve o fluxo de morte do Player e integração com Checkpoint/SaveComponent.",
     "blocks": ["IC-VS08-02-partial", "IC-VS11-04"],
-    "status": "open"
+    "status": "resolved",
+    "resolved_on": "2026-09-02",
+    "resolution": "Registrado em PROJECT_ARCHITECTURE.md §6, §7, §8, §12. Player conecta HealthComponent.died -> GameManager.player_morreu() (reacao no GameManager, wiring no Player). player_morreu(): incrementa SaveManager.mortes; se ha tentativas, HealthComponent.reiniciar() (vida ao maximo) + spawn_player() (respawn no ultimo Checkpoint ou PlayerStart); se mortes >= LIMITE_TENTATIVAS (constante do GameManager, placeholder ajustavel), instancia a Scene GameOver (Control+CanvasLayer). Vida NAO e persistida (respawn sempre restaura o maximo -> resolve decisao 2 do DC-05). SaveData ganha mortes: int, exposto ao HUD (Semana 9). GameOver 'Reiniciar' apaga o save, zera SaveManager, recarrega o nivel. Define a condicao de derrota do VS (vitoria -> DC-02). Construcao: Semana 8 (sem tutorial). Cartas: IC-VS08-02 (parte do Player) + nova IC-VS08-05 (fluxo de morte + GameOver).",
+    "related": ["DC-06", "DC-05", "DC-02"]
   },
   {
     "id": "DC-04",
@@ -69,11 +74,31 @@
     "summary": "SaveData (Semana 7) só define itens_coletados: Array[String] e ultimo_checkpoint: String — insuficiente para o InventoryComponent (ItemData completo) e para vida/estado de inimigo introduzidos nos Módulos 3–4.",
     "decisions_needed": [
       "itens_coletados passa a guardar caminhos de .tres recarregáveis, ou uma estrutura própria (Array[ItemData])?",
-      "Vida atual do Player é persistida, ou todo Checkpoint restaura vida máxima (cruza com DC-03)?",
+      "RESOLVIDO por DC-03: vida do Player NÃO é persistida (respawn sempre restaura o máximo). SaveData já ganhou mortes: int.",
       "Estado do Enemy (vivo/morto/posição) precisa persistir (cruza com DC-04)?"
     ],
     "completion_criteria": "PROJECT_ARCHITECTURE.md §7 (linha SaveData) descreve o schema final cobrindo inventário, vida e, se DC-04 exigir, estado de inimigos.",
     "blocks": ["IC-VS10-04", "IC-VS14-02"],
     "status": "open"
+  },
+  {
+    "id": "DC-06",
+    "title": "Ponto de spawn do Player e escolha de spawn (equivalente a PlayerStart/ChoosePlayerStart da UE5)",
+    "body_ref": "../Design_Backlog/Design_Cards.md#dc-06--ponto-de-spawn-do-player-e-escolha-de-spawn-equivalente-a-playerstartchooseplayerstart-da-ue5",
+    "rulebook_doc": "PROJECT_ARCHITECTURE.md §7, §8",
+    "summary": "§7 define a Scene Checkpoint e SaveData.ultimo_checkpoint, mas não existe nenhum ponto de início de nível (equivalente ao actor PlayerStart da UE5) nem definição de quem escolhe o ponto de spawn ao carregar o nível (equivalente a GameMode.ChoosePlayerStart). O respawn do DC-03 fica sem alvo de posição.",
+    "decisions_needed": [
+      "Ponto inicial do nível é um Marker3D em level_exploration.tscn (análogo ao PlayerStart) ou uma propriedade no GameManager/nível?",
+      "Onde fica o checkpoint ativo atual (SaveManager em memória, SaveData em disco, ou ambos)? Como o id ultimo_checkpoint é resolvido para uma posição em cena?",
+      "Quem executa a política de spawn ao carregar o nível (GameManager escolhendo entre Checkpoint ativo e Marker3D inicial)? Vira responsabilidade explícita na linha GameManager do §7?",
+      "Coordenadas ficam sempre nos Nodes da cena (marcador + Scenes Checkpoint), nunca no GameManager/SaveManager — registrar como regra (Rubrica 4)?",
+      "Em qual semana é construído (Marker3D na Semana 3–4; lógica de escolha depende de Checkpoint da Semana 7 e cruza com DC-03)?"
+    ],
+    "completion_criteria": "PROJECT_ARCHITECTURE.md §7 ganha uma linha para o ponto de spawn inicial do Player (Marker3D no nível), a linha GameManager cita a responsabilidade de escolher o ponto de spawn ao carregar o nível, e §8 registra o marcador na estrutura de level_exploration.tscn. Regra 'coordenadas nos Nodes da cena, id do ponto ativo no SaveManager/SaveData' registrada.",
+    "blocks": ["IC-VS07-partial", "IC-VS08-02-partial", "IC-VS11-04-partial"],
+    "status": "resolved",
+    "resolved_on": "2026-09-02",
+    "resolution": "Registrado em PROJECT_ARCHITECTURE.md §6, §7, §8. PlayerStart = Marker3D (grupo player_start) em level_exploration.tscn, guarda so a coordenada. Checkpoint ativo = SaveManager.ultimo_checkpoint (id, memoria) espelhando SaveData; cada Checkpoint no grupo checkpoints com @export id_checkpoint unico. GameManager.spawn_player() publico e reutilizavel: se ha ultimo_checkpoint e Checkpoint com esse id, posiciona ali; senao no PlayerStart. Coordenadas sempre em Nodes da cena, nunca no GameManager/SaveManager. Construcao: Semana 4 E1 nova Parte 3 (PlayerStart + spawn_player sem checkpoint, primeira responsabilidade do GameManager); Semana 7 E1 nova Parte 5 (Checkpoint grava SaveManager.ultimo_checkpoint; nivel carrega SaveData no _ready via SaveComponent.carregar(); spawn_player ganha escolha por checkpoint). DC-03 apenas chamara spawn_player() no fluxo de morte; schema do SaveData segue no DC-05.",
+    "related": ["DC-03", "DC-05"]
   }
 ]

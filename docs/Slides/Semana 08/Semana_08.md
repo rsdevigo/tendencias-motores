@@ -34,7 +34,7 @@ Metodologia: Challenge Based Learning — professor apresenta o problema, os gru
 ## Objetivos da Semana
 
 - Compreender vida/dano como problema universal resolvido por composição (Component), não por herança
-- Construir `HealthComponent` (vida atual/máxima, `apply_damage`, sinal `died`), reutilizando o padrão de Component das Semanas 5–7
+- Construir `HealthComponent` (vida atual/máxima, `apply_damage`, `reiniciar()`, sinal `died`) e o fluxo de morte/respawn do Player (`GameManager.player_morreu()` → respawn no `Checkpoint` ou `GameOver`)
 - Fundamentar AnimationTree/AnimationNodeStateMachine (transição) e BlendSpace1D/2D + faixas do AnimationPlayer (combinação/sobreposição)
 - Propor e implementar, com autonomia crescente, uma animação contextual conectada a um evento real de gameplay
 
@@ -65,9 +65,10 @@ Encontro guiado. Retoma o projeto da Semana 7 sem alterar GameManager, SaveManag
 - Revisão do Encontro 2 da Semana 7 (integração final do Módulo 2, Code Review e Playtest) (15 min)
 - Demonstração e laboratório: substituição da `CapsuleMesh` do Player pelo modelo do Kenney Mini Characters (15 min)
 - Introdução: mudança de metodologia para Challenge Based Learning; o problema do estado de vida/dano compartilhado (15 min)
-- Demonstração: construção do `HealthComponent` aplicado ao Player (25 min)
-- Demonstração: AnimationTree/AnimationNodeStateMachine e construção guiada da State Machine (30 min)
-- Laboratório: cada grupo aplica `HealthComponent` e ajusta a State Machine ao próprio conjunto de animações (25 min)
+- Demonstração: construção do `HealthComponent` aplicado ao Player (20 min)
+- Demonstração: fluxo de morte/respawn — `died` → `GameManager.player_morreu()` → `spawn_player()` / `GameOver` (15 min)
+- Demonstração: AnimationTree/AnimationNodeStateMachine e construção guiada da State Machine (25 min)
+- Laboratório: cada grupo aplica `HealthComponent`, o fluxo de morte e ajusta a State Machine (25 min)
 - Feedback e fechamento (10 min)
 
 <!--
@@ -121,11 +122,27 @@ Referência: PROJECT_ARCHITECTURE.md, seção de Componentes — HealthComponent
 - Node customizado, seguindo o mesmo padrão de `InteractionComponent` (Semana 5) e `SaveComponent` (Semana 7)
 - Implementado via Orchestrator ou GDScript, à escolha do professor/grupo
 - Propriedades: vida atual e vida máxima
-- Método público `apply_damage(quantidade)`; sinal `died` emitido quando a vida chega a zero
+- Métodos públicos: `apply_damage(quantidade)`, `reiniciar()` (restaura o máximo); sinal `died` emitido quando a vida chega a zero
 
 <!--
-Reforçar: HealthComponent não conhece quem é seu dono (Player ou Enemy) — apenas expõe vida, dano e o sinal died.
+Reforçar: HealthComponent não conhece quem é seu dono (Player ou Enemy) — apenas expõe vida, dano, died e reiniciar(). A REAÇÃO a died vive fora do Component.
 Erro comum: implementar vida/dano diretamente no script/Orchestration do Player em vez de isolar em um HealthComponent.
+-->
+
+---
+
+## Fluxo de Morte/Respawn do Player
+
+- O Player conecta `HealthComponent.died` a um handler que chama `GameManager.player_morreu()` — wiring no Player, **regra no `GameManager`** (mesmo padrão do handler de coleta)
+- `player_morreu()`: `SaveManager.mortes += 1`; se ainda há tentativas → `HealthComponent.reiniciar()` + `spawn_player()` (respawn no último `Checkpoint`, DC-06); senão → Scene `GameOver`
+- Vida sempre volta ao máximo no respawn → **vida do Player não é persistida**; só `mortes: int` entra no `SaveData`
+- `GameOver` (Control + CanvasLayer): pausa o jogo; "Reiniciar" apaga o save e volta ao `PlayerStart`
+- `LIMITE_TENTATIVAS` é um placeholder no `GameManager`, ajustável por grupo
+
+<!--
+Este é o consumidor que faltava para o ultimo_checkpoint gravado desde a Semana 7. spawn_player() já existe (DC-06) — nada de posicionamento novo aqui.
+Define a condição de DERROTA do Vertical Slice; a vitória (objetivo final) é decisão separada (DC-02).
+Erro comum: colocar a lógica de respawn/game over dentro do HealthComponent — ele continua enxuto.
 -->
 
 ---
@@ -259,10 +276,10 @@ Reforçar: por ora, as duas camadas são independentes — a integração é o o
 
 Cada grupo replica, no próprio projeto:
 
-1. `HealthComponent` (Node) com vida atual/máxima, `apply_damage` e sinal `died`
-2. Aplicação do `HealthComponent` como filho do Player
-3. AnimationTree com AnimationNodeStateMachine para idle, andar e correr
-4. Transições condicionadas a uma variável real de movimento (velocidade ou input)
+1. `HealthComponent` (Node) com vida atual/máxima, `apply_damage`, `reiniciar()` e sinal `died`, como filho do Player
+2. Wiring `died` → `GameManager.player_morreu()`; `player_morreu()` incrementa `SaveManager.mortes`, respawna via `spawn_player()` ou exibe `GameOver` ao atingir `LIMITE_TENTATIVAS`
+3. `GameOver.tscn` (Control + CanvasLayer) com "Reiniciar" (apaga save, volta ao `PlayerStart`)
+4. AnimationTree com AnimationNodeStateMachine para idle, andar e correr, transições condicionadas a uma variável real de movimento
 
 <!--
 Erro comum: transições da State Machine sem condição real, resultando em animações travadas ou trocando aleatoriamente.
@@ -272,7 +289,7 @@ Erro comum: transições da State Machine sem condição real, resultando em ani
 
 ## Boas Práticas — Component e State Machine
 
-- `HealthComponent` enxuto: apenas vida, dano e o sinal `died`, sem lógica de game over ou respawn
+- `HealthComponent` enxuto: apenas vida, dano, `reiniciar()` e o sinal `died` — a lógica de game over/respawn vive no `GameManager`, não no Component
 - Nomear estados da State Machine de forma clara e consistente com as animações do AnimationPlayer
 - Um único `HealthComponent` ativo por personagem, assim como um único `SaveComponent` por projeto
 - Testar cada transição isoladamente antes de avançar para a próxima
@@ -285,9 +302,10 @@ Esses hábitos evitam retrabalho na integração do desafio do Encontro 2 e sust
 
 ## Fechamento — Encontro 1
 
-- `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, sinal `died`)
+- `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, `reiniciar()`, sinal `died`)
+- Fluxo de morte/respawn: Player morre → respawn no último `Checkpoint` com vida cheia; ao esgotar `LIMITE_TENTATIVAS` → `GameOver`
 - State Machine básica de locomoção via AnimationTree, alternando corretamente entre idle, andar e correr
-- GameManager, SaveManager, contrato Interactable, Signals e ItemData/Enum sem nenhuma alteração
+- `SaveData` ganha `mortes: int`; `GameManager` ganha `player_morreu()` — demais sistemas do Módulo 2 sem alteração
 - Próximo passo: BlendSpace, faixas do AnimationPlayer e o desafio de animação contextual, no Encontro 2
 
 <!--
@@ -494,7 +512,8 @@ Dificuldade esperada: escolher o mecanismo errado (BlendSpace para um evento pon
 ## Resultado Esperado da Semana
 
 - Modelo do Kenney Mini Characters substituindo a `CapsuleMesh` de placeholder no Player
-- `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, sinal `died`)
+- `HealthComponent` funcional aplicado ao Player (vida, `apply_damage`, `reiniciar()`, sinal `died`)
+- Fluxo de morte/respawn completo: respawn no `Checkpoint`, contador `mortes`, tela `GameOver` ao esgotar as tentativas
 - State Machine básica de locomoção via AnimationTree (idle, andar, correr)
 - Animação contextual própria — BlendSpace direcional ou animação pontual — conectada a um evento real de gameplay
 - Turma domina AnimationTree, AnimationNodeStateMachine, BlendSpace1D/2D e faixas do AnimationPlayer como camadas complementares, relacionando-as ao Animator Controller/Blend Tree da Unity
@@ -508,7 +527,9 @@ Este resultado corresponde às linhas HealthComponent, AnimationTree e BlendSpac
 ## Checklist da Semana
 
 - [ ] `CapsuleMesh` de placeholder substituída pelo modelo do Kenney Mini Characters, com `AnimationPlayer` funcional
-- [ ] `HealthComponent` (Node) com vida atual/máxima, `apply_damage` e sinal `died`
+- [ ] `HealthComponent` (Node) com vida atual/máxima, `apply_damage`, `reiniciar()` e sinal `died`
+- [ ] `died` do Player → `GameManager.player_morreu()` → respawn no `Checkpoint` (vida cheia, `mortes++`) ou `GameOver` ao atingir `LIMITE_TENTATIVAS`
+- [ ] `GameOver.tscn` pausa o jogo; "Reiniciar" apaga o save e volta ao `PlayerStart`
 - [ ] State Machine via AnimationTree alternando corretamente entre idle, andar e correr
 - [ ] BlendSpace1D/2D ou faixa do AnimationPlayer configurados na demonstração
 - [ ] Animação contextual própria conectada a um evento real (`HealthComponent` ou `Interactable`)

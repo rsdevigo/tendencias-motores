@@ -12,12 +12,12 @@ A Semana 6 encerrou com `ItemData` + Enum sustentando um conjunto próprio de it
 
 - Compreender serialização e recuperação de estado de jogo entre sessões como problema universal de qualquer engine.
 - Construir `SaveData` (Resource) + FileAccess como mecanismo de persistência real (não apenas entre cenas, como o `SaveManager` da Semana 4).
-- Construir `Checkpoint`, reutilizando o contrato `Interactable` e um `SaveComponent`.
+- Construir as Scenes `Pickup` e `Chest` (aplicação do `ItemData` à coleta, via Signal `item_collected` e handler único) e `Checkpoint`, reutilizando o contrato `Interactable` e um `SaveComponent`.
 - Integrar todos os sistemas do Módulo 2 (GameManager, SaveManager, Interactable, Signals, Resources, save/load) em um único fluxo jogável coerente.
 
 ## Resultados Esperados
 
-Ao final da semana, cada grupo possui um Vertical Slice com progresso persistente real entre sessões de jogo — não apenas entre cenas —, com `Checkpoint`s funcionais integrados a portas, alavancas, baús e demais desafios do módulo em um único fluxo. A semana encerra com Code Review dos sistemas implementados e Playtest coletivo, fechando a Unidade II.
+Ao final da semana, cada grupo possui um Vertical Slice com progresso persistente real entre sessões de jogo — não apenas entre cenas —, com `Pickup`/`Chest` concedendo itens e `Checkpoint`s funcionais integrados a portas, alavancas e demais desafios do módulo em um único fluxo. A semana encerra com Code Review dos sistemas implementados e Playtest coletivo, fechando a Unidade II.
 
 ---
 
@@ -27,7 +27,7 @@ Ao final da semana, cada grupo possui um Vertical Slice com progresso persistent
 
 - Explicar serialização e recuperação de estado de jogo como problema universal de persistência.
 - Diferenciar persistência entre cenas (SaveManager, Semana 4) de persistência entre sessões (SaveData + FileAccess).
-- Construir `SaveData` (Resource) e um `SaveComponent`, e aplicá-los a um `Checkpoint` que reutiliza o contrato `Interactable`.
+- Construir `SaveData` (Resource) e um `SaveComponent`; construir `Pickup`/`Chest` que concedem um `ItemData` via `item_collected`; aplicar tudo a um `Checkpoint` que reutiliza o contrato `Interactable`; fechar o ciclo carregando o `SaveData` ao iniciar o nível e fazendo `GameManager.spawn_player()` escolher entre `PlayerStart` e o último `Checkpoint`.
 
 ## Conteúdos
 
@@ -35,7 +35,9 @@ Ao final da semana, cada grupo possui um Vertical Slice com progresso persistent
 - `SaveData` como Resource customizado que agrega o estado a persistir (itens coletados, checkpoint ativo).
 - FileAccess e `ResourceSaver`/`ResourceLoader` como mecanismo nativo de escrita/leitura em disco.
 - `SaveComponent` como ponto único de leitura/escrita do `SaveData`, evitando lógica de serialização duplicada entre Scenes.
-- `Checkpoint`: Scene que implementa o contrato `Interactable` e aciona o `SaveComponent` ao ser alcançada.
+- `Pickup`/`Chest`: Scenes que implementam `interact()` e emitem `item_collected(item: ItemData)`; um handler único registra `item.nome` em `SaveManager.itens_coletados` (idempotente), sem que a Scene coletável conheça o save. `Pickup` é de uso único; `Chest` tem estado `aberto` e concede o item uma vez.
+- `Checkpoint`: Scene que implementa o contrato `Interactable`, aciona o `SaveComponent` ao ser alcançada (gravando a lista de itens coletados) e grava seu `id_checkpoint` em `SaveManager.ultimo_checkpoint`. Grupo `checkpoints`, `id_checkpoint` único.
+- Fechamento do ciclo: o `_ready()` do nível carrega o `SaveData` via `SaveComponent.carregar()`, copia os campos para o `SaveManager` e chama `GameManager.spawn_player()`, que agora escolhe entre o `PlayerStart` (Semana 4) e o `Checkpoint` cujo `id_checkpoint` corresponde a `ultimo_checkpoint`. Coordenadas seguem nos Nodes da cena.
 
 ## Conceitos Fundamentais
 
@@ -63,32 +65,34 @@ A Unity não tem um equivalente formal único: o padrão mais comum é `PlayerPr
 |---|---|
 | 15 min | Revisão do Encontro 2 da Semana 6 (`ItemData` + Enum, Checkpoint de progresso do Módulo 2) |
 | 20 min | Introdução: persistência entre cenas (SaveManager) versus persistência entre sessões (SaveData + FileAccess) |
-| 40 min | Demonstração: construção de `SaveData`, `SaveComponent` e gravação/leitura em `user://` |
-| 40 min | Laboratório: cada grupo implementa seu próprio `SaveData`/`SaveComponent` salvando ao menos um dado real de progresso (itens coletados) |
-| 15 min | Construção guiada da Scene `Checkpoint`, reutilizando o contrato `Interactable` |
+| 35 min | Demonstração: construção de `SaveData`, `SaveComponent` e gravação/leitura em `user://` |
+| 35 min | Laboratório: cada grupo implementa seu próprio `SaveData`/`SaveComponent` salvando ao menos um dado real de progresso (itens coletados) |
+| 25 min | Construção guiada de `Pickup`/`Chest` + handler, `Checkpoint`, e do fechamento do ciclo (carregar save no `_ready()` + `spawn_player()` por checkpoint) |
 | 5 min | Feedback e fechamento |
 
 ## Desenvolvimento
 
-O encontro parte do projeto herdado da Semana 6 sem alterar `ItemData`, Enum, `GameManager` ou `SaveManager`, adicionando uma camada de persistência real acima do que já existe. O professor demonstra a criação do `SaveData` como Resource, a gravação em disco via `ResourceSaver` (ou FileAccess, conforme a escolha do professor) e a leitura na abertura do projeto. Em seguida, cada grupo implementa seu próprio `SaveComponent` salvando ao menos um dado de progresso já existente (itens coletados na Semana 6). O encontro fecha com a construção guiada do `Checkpoint`, uma Scene que implementa o mesmo contrato `Interactable` da Semana 5 e aciona o `SaveComponent` ao ser alcançada — preparando a integração completa do Encontro 2.
+O encontro parte do projeto herdado da Semana 6 sem alterar `ItemData`, Enum, `GameManager` ou `SaveManager`, adicionando uma camada de persistência real acima do que já existe. O professor demonstra a criação do `SaveData` como Resource, a gravação em disco via `ResourceSaver` (ou FileAccess, conforme a escolha do professor) e a leitura na abertura do projeto. Em seguida, cada grupo implementa seu próprio `SaveComponent` salvando ao menos um dado de progresso já existente. O encontro fecha com a construção guiada de `Pickup`/`Chest` (que emitem `item_collected(item: ItemData)`, ligado por um handler único a `SaveManager.itens_coletados`), do `Checkpoint` (que grava `SaveManager.ultimo_checkpoint` além de acionar o `SaveComponent`) e do fechamento do ciclo: o `_ready()` do nível carrega o `SaveData`, popula o `SaveManager` e chama `GameManager.spawn_player()`, que passa a escolher entre o `PlayerStart` (Semana 4) e o último `Checkpoint` alcançado. Ao reabrir o jogo, o Player nasce no ponto certo — preparando a integração completa do Encontro 2.
 
 ## Desafio
 
-Não há desafio de solução livre neste encontro: a construção de `SaveData`/`SaveComponent`/`Checkpoint` é guiada, pois serve de base direta à integração avaliada do Encontro 2.
+Não há desafio de solução livre neste encontro: a construção de `SaveData`/`SaveComponent`/`Pickup`/`Chest`/`Checkpoint` é guiada, pois serve de base direta à integração avaliada do Encontro 2. A única variação por grupo é qual `ItemData` cada `Pickup`/`Chest` concede.
 
 ## Critérios de Sucesso
 
-Cada grupo possui, ao final do encontro, um `SaveData` funcional salvando e recuperando ao menos um dado real de progresso entre sessões (não apenas entre cenas), e uma Scene `Checkpoint` que aciona essa gravação via o contrato `Interactable`.
+Cada grupo possui, ao final do encontro, um `SaveData` funcional salvando e recuperando progresso entre sessões, `Pickup`/`Chest` concedendo itens via `item_collected` com handler único ligado ao `SaveManager`, uma Scene `Checkpoint` que aciona a gravação via o contrato `Interactable` e grava `SaveManager.ultimo_checkpoint`, e o ciclo fechado — ao reabrir o jogo, o Player nasce no último `Checkpoint` alcançado (ou no `PlayerStart` sem save).
 
 ## Evidências para Avaliação
 
-Sem instrumento formal isolado neste encontro. O `SaveData`/`Checkpoint` construídos aqui são pré-requisito direto da integração final avaliada no Encontro 2 (Code Review e Playtest de encerramento do Módulo 2).
+Sem instrumento formal isolado neste encontro. `SaveData`/`Pickup`/`Chest`/`Checkpoint` construídos aqui são pré-requisito direto da integração final avaliada no Encontro 2 (Code Review e Playtest de encerramento do Módulo 2).
 
 ## Dificuldades Esperadas
 
 - Confundir o `SaveManager` (Autoload, estado entre cenas) com o `SaveData` (Resource, estado persistido em disco) — reforçar que um mantém estado vivo durante a execução e o outro sobrevive ao fechamento do jogo.
 - Gravar em um caminho arbitrário do projeto em vez de `user://` — reforçar que `res://` é o projeto (somente leitura em builds exportados) e `user://` é a pasta de dados do usuário.
 - Tentar fazer o `Checkpoint` reimplementar sua própria lógica de interação em vez de reutilizar o contrato `Interactable` já existente — reforçar o princípio de reutilização central da disciplina.
+- Resolver o `id_checkpoint` para uma posição dentro do `SaveManager` em vez do `GameManager` — o `SaveManager` guarda apenas o id; quem conhece a cena e faz a busca no grupo `checkpoints` é o `GameManager`.
+- Inverter a ordem no `_ready()` do nível (chamar `spawn_player()` antes de popular o `SaveManager` com o save carregado) — a sequência é carregar → copiar → spawnar.
 
 ---
 
@@ -102,8 +106,8 @@ Sem instrumento formal isolado neste encontro. O `SaveData`/`Checkpoint` constru
 
 ## Conteúdos
 
-- Revisão integrada de todos os sistemas do Módulo 2: `GameManager`/`SaveManager` (Autoload), contrato `Interactable`, Signals, `ItemData`/Enum, `SaveData`/`SaveComponent`, `Checkpoint`.
-- Integração final dos desafios do módulo (portas, baús, alavancas, `Checkpoint`) em um único fluxo jogável.
+- Revisão integrada de todos os sistemas do Módulo 2: `GameManager`/`SaveManager` (Autoload), contrato `Interactable`, Signals, `ItemData`/Enum, `Pickup`/`Chest` + handler de coleta, `SaveData`/`SaveComponent`, `Checkpoint`.
+- Integração final dos desafios do módulo (portas, alavancas, `Pickup`, `Chest`, `Checkpoint`) em um único fluxo jogável.
 - Code Review dos sistemas implementados.
 - Playtest coletivo entre grupos.
 
@@ -113,7 +117,7 @@ Um Vertical Slice não é a soma isolada de sistemas funcionando cada um em seu 
 
 ## Recursos do Godot
 
-Revisão de todos os recursos do módulo: Autoload/Singleton, contrato `Interactable`, Signals, Resource customizado, Enum, `SaveData`, FileAccess, `Checkpoint`.
+Revisão de todos os recursos do módulo: Autoload/Singleton, `spawn_player()` + `PlayerStart` (grupos), contrato `Interactable`, Signals, Resource customizado, Enum, `Pickup`/`Chest` + handler de coleta, `SaveData`, FileAccess, `Checkpoint` + carregamento do save ao iniciar.
 
 ## Comparação com Unity
 
@@ -121,7 +125,7 @@ Nenhuma comparação nova é introduzida neste encontro — é o momento de cons
 
 ## Preparação do Professor
 
-- Projeto de cada grupo com `SaveData`, `SaveComponent` e `Checkpoint` do Encontro 1 já funcionais.
+- Projeto de cada grupo com `SaveData`, `SaveComponent`, `Pickup`, `Chest`, `Checkpoint` e o ciclo de spawn (`PlayerStart` + `spawn_player()` por checkpoint) do Encontro 1 já funcionais.
 - Roteiro de Code Review preparado a partir da Rubrica 4 (Code Review) do Sistema de Avaliação — nomenclatura, modularidade, reutilização de contrato `Interactable`, ausência de lógica duplicada entre `Player` e os interativos.
 - Roteiro de Playtest coletivo preparado a partir da Rubrica correspondente do Sistema de Avaliação — funcionamento, usabilidade e clareza do fluxo integrado.
 - Slides de síntese comparativa Godot × Unity do Módulo 2 (não introduzem comparação nova, apenas consolidam).
@@ -132,7 +136,7 @@ Nenhuma comparação nova é introduzida neste encontro — é o momento de cons
 | Duração | Atividade |
 |---|---|
 | 15 min | Revisão integrada de GameManager, SaveManager, Interactable, Signals, Resources e save/load |
-| 60 min | Laboratório: integração final dos desafios do módulo (portas, baús, alavancas, Checkpoint) em um único fluxo jogável |
+| 60 min | Laboratório: integração final dos desafios do módulo (portas, alavancas, Pickup, Chest, Checkpoint) em um único fluxo jogável |
 | 15 min | Preparação de cada grupo para apresentar e justificar sua integração |
 | 30 min | Code Review — cada grupo apresenta sua integração completa, justificando as escolhas de arquitetura adotadas |
 | 15 min | Playtest coletivo entre grupos e fechamento da Unidade II |
@@ -147,7 +151,7 @@ Cada grupo apresenta sua integração completa do Módulo 2, justificando as esc
 
 ## Critérios de Sucesso
 
-Cada grupo possui, ao final da semana, um fluxo jogável único e coerente — sem sistemas isolados — em que `GameManager`, `SaveManager`, contrato `Interactable`, Signals, `ItemData`/Enum e `SaveData`/`Checkpoint` operam juntos, com progresso real persistido entre sessões.
+Cada grupo possui, ao final da semana, um fluxo jogável único e coerente — sem sistemas isolados — em que `GameManager`, `SaveManager`, contrato `Interactable`, Signals, `ItemData`/Enum, `Pickup`/`Chest` e `SaveData`/`Checkpoint` operam juntos, com progresso real persistido entre sessões.
 
 ## Evidências para Avaliação
 
@@ -159,7 +163,7 @@ Este entregável fecha a Unidade II e compõe, junto ao Checkpoint da Semana 6, 
 
 - Apresentar cada sistema isoladamente no Code Review em vez de demonstrar o fluxo integrado — reforçar que o objetivo da semana é a integração, não a soma de partes.
 - Não conseguir justificar por que uma escolha de arquitetura foi feita (ex.: por que aquele Enum, por que aquele ponto de Checkpoint) — usar a pergunta "por que esse caminho e não outro possível?" para calibrar a avaliação, como já indicado na Rubrica 2.
-- Retrabalhar sistemas já concluídos (portas ou baús da Semana 5/6) em vez de apenas conectá-los ao fluxo — reforçar que retrabalho desnecessário indica falha de planejamento da integração, não refinamento.
+- Retrabalhar sistemas já concluídos (portas da Semana 5, `Pickup`/`Chest` do Encontro 1) em vez de apenas conectá-los ao fluxo — reforçar que retrabalho desnecessário indica falha de planejamento da integração, não refinamento.
 
 ---
 

@@ -34,11 +34,12 @@ Metodologia: Studio Based Learning, autonomia baixa — professor demonstra, alu
 ## Objetivos da Semana
 
 - Compreender serialização e recuperação de estado de jogo entre sessões como problema universal de qualquer engine
-- Construir `SaveData` (Resource) + FileAccess como mecanismo de persistência real, e um `Checkpoint` que reutiliza o contrato `Interactable`
+- Construir `SaveData` (Resource) + FileAccess como mecanismo de persistência real, as Scenes `Pickup`/`Chest` que aplicam o `ItemData` à coleta, e um `Checkpoint` que reutiliza o contrato `Interactable`
+- Fechar o ciclo do save: carregar o `SaveData` ao iniciar e fazer `GameManager.spawn_player()` escolher entre `PlayerStart` e o último `Checkpoint`
 - Integrar todos os sistemas do Módulo 2 em um único fluxo jogável coerente, com Code Review e Playtest coletivo
 
 <!--
-Encontro 1 cobre SaveData, SaveComponent e Checkpoint. Encontro 2 não introduz nada novo — integra tudo em um fluxo único e avalia via Code Review e Playtest.
+Encontro 1 cobre SaveData, SaveComponent, Pickup/Chest, Checkpoint e o fechamento do ciclo de spawn. Encontro 2 não introduz nada novo — integra tudo em um fluxo único e avalia via Code Review e Playtest.
 Resultado esperado ao final: Vertical Slice com progresso persistente real entre sessões, encerrando a Unidade II.
 Referência: Godot Docs — Saving Games, Resources, FileSystem; Unity Manual — PlayerPrefs.
 -->
@@ -49,7 +50,7 @@ Referência: Godot Docs — Saving Games, Resources, FileSystem; Unity Manual �
 
 ## Encontro 1
 
-# SaveData, SaveComponent e Checkpoint
+# SaveData, SaveComponent, Pickup/Chest e Checkpoint
 
 <span class="chapter-number">01</span>
 
@@ -62,15 +63,15 @@ Encontro guiado. Retoma o projeto da Semana 6 sem alterar GameManager, SaveManag
 ## Agenda do Encontro 1
 
 - Revisão do Encontro 2 da Semana 6 (`ItemData` + Enum, Checkpoint de progresso do Módulo 2) (15 min)
-- Introdução: persistência entre cenas (`SaveManager`) versus persistência entre sessões (`SaveData` + FileAccess) (20 min)
-- Demonstração: construção de `SaveData`, `SaveComponent` e gravação/leitura em `user://` (40 min)
-- Laboratório: cada grupo implementa seu `SaveData`/`SaveComponent` salvando um dado real de progresso (40 min)
-- Construção guiada da Scene `Checkpoint`, reutilizando o contrato `Interactable` (15 min)
+- Introdução: persistência entre cenas (`SaveManager`) versus persistência entre sessões (`SaveData` + FileAccess) (15 min)
+- Demonstração: construção de `SaveData`, `SaveComponent` e gravação/leitura em `user://` (35 min)
+- Laboratório: cada grupo implementa seu `SaveData`/`SaveComponent` salvando um dado real de progresso (35 min)
+- Construção guiada de `Pickup`/`Chest` + handler, `Checkpoint`, e do fechamento do ciclo (carregar save + `spawn_player()` por checkpoint) (30 min)
 - Feedback e fechamento (5 min)
 
 <!--
 Ciclo pedagógico da disciplina: Conceito → Demonstração → Construção → Desafio → Revisão. Nunca inverter.
-Não há desafio de solução livre neste encontro — SaveData/SaveComponent/Checkpoint são construção guiada, base direta da integração avaliada do Encontro 2.
+Não há desafio de solução livre neste encontro — SaveData/SaveComponent/Pickup/Chest/Checkpoint são construção guiada, base direta da integração avaliada do Encontro 2. A única variação por grupo é qual ItemData cada Pickup/Chest concede.
 -->
 
 ---
@@ -188,6 +189,22 @@ Erro comum: instanciar mais de um SaveComponent ativo na mesma árvore de cena, 
 
 ---
 
+## `Pickup` e `Chest`: o `ItemData` Aplicado à Coleta
+
+- Primeiros objetos interativos que **entregam um dado ao jogo** — um `ItemData` (Semana 6) — em vez de só mudar o próprio estado como `Door`/`Lever`
+- Reutilizam `interact()`, mas declaram um Signal próprio com carga: `item_collected(item: ItemData)`
+- `Pickup` some ao ser coletado; `Chest` tem estado `aberto` e concede o item uma única vez
+- Um **handler único** (nível ou `GameManager`) recebe o Signal e registra `item.nome` em `SaveManager.itens_coletados` — nenhuma Scene coletável conhece o save
+
+<!--
+Erro comum: chamar SaveManager direto de dentro do Pickup/Chest, reacoplando a Scene ao save — a ligação passa pelo Signal e pelo handler.
+Erro comum: Chest concedendo o item toda vez, por não checar `aberto`.
+O handler ignora item cujo nome já está na lista (idempotência no reload). Na Semana 10 o mesmo handler passa a alimentar o InventoryComponent, sem tocar em Pickup/Chest.
+Não detalhar passo a passo aqui — papel do Tutorial (Semana 7, Encontro 1, Parte 3).
+-->
+
+---
+
 ## `Checkpoint`: o Contrato `Interactable` Aplicado à Persistência
 
 - Scene que implementa o mesmo contrato `Interactable` já usado por `Door` e `Lever` desde a Semana 5
@@ -201,18 +218,37 @@ Referência: PROJECT_ARCHITECTURE.md, seção 8 (scenes/interactables/).
 
 ---
 
-## Laboratório — `SaveData`, `SaveComponent` e `Checkpoint`
+## Fechando o Ciclo — Carregar o Save e Escolher o Spawn
+
+- Até aqui o save é **gravado** mas nunca **lido de volta** ao iniciar o jogo
+- No `_ready()` do nível: `SaveComponent.carregar()` → copiar `itens_coletados`/`ultimo_checkpoint` para o `SaveManager` → `GameManager.spawn_player()`
+- `spawn_player()` (Semana 4) ganha a escolha: se há `ultimo_checkpoint`, resolve o id no grupo `checkpoints` e posiciona ali; senão, no `PlayerStart`
+- Mesmo método, mesmo chamador — só dois destinos possíveis agora; coordenadas seguem nos Nodes da cena
+
+<!--
+Este é o momento em que o ciclo do save fecha: gravar no checkpoint, ler ao abrir, nascer no lugar certo.
+O carregamento aqui cobre só itens_coletados e ultimo_checkpoint (schema da Semana 7); ampliar o SaveData é assunto de semanas seguintes.
+O gatilho de respawn na morte NÃO é tratado aqui — é Módulo 3.
+Erro comum: resolver o id do checkpoint dentro do SaveManager em vez do GameManager (quem conhece a cena é o GameManager).
+-->
+
+---
+
+## Laboratório — `SaveData`, `SaveComponent`, `Pickup`/`Chest` e `Checkpoint`
 
 Cada grupo replica, no próprio projeto:
 
 1. `SaveData` (Resource) em `scripts/resources/save_data.gd`, com `itens_coletados` e `ultimo_checkpoint`
 2. `SaveComponent` em `scripts/components/save_component.gd`, com `salvar()` e `carregar()`
-3. Teste de gravação/leitura, confirmando o arquivo em `user://`
-4. Scene `Checkpoint`, reutilizando o contrato `Interactable`, acionando `salvar()`
+3. `SaveManager.itens_coletados: Array[String]` + `registrar_item()` idempotente
+4. Scenes `Pickup` e `Chest` (`@export item: ItemData`, Signal `item_collected`) + handler único conectado
+5. Scene `Checkpoint` (grupo `checkpoints`, `id_checkpoint` único), acionando `salvar(...)` e gravando `SaveManager.ultimo_checkpoint`
+6. `_ready()` do nível: carregar `SaveData` → popular `SaveManager` → `GameManager.spawn_player()` (com escolha por checkpoint)
 
 <!--
 Erro comum: gravar em res:// em vez de user://.
 Erro comum: esquecer FileAccess.file_exists() antes de ResourceLoader.load(), causando erro na primeira execução.
+Erro comum: esquecer de conectar o Signal item_collected de alguma instância de Pickup/Chest.
 -->
 
 ---
@@ -233,13 +269,14 @@ Esses hábitos evitam retrabalho na integração do Encontro 2 e sustentam a Rub
 ## Fechamento — Encontro 1
 
 - `SaveData` (Resource) e `SaveComponent` funcionais, salvando e recuperando progresso real entre sessões
-- Ao menos uma Scene `Checkpoint`, implementando o contrato `Interactable` e acionando o `SaveComponent`
-- GameManager, SaveManager, contrato Interactable, Signals e ItemData/Enum das Semanas 4 a 6 sem nenhuma alteração
+- `Pickup` e `Chest` concedendo itens do conjunto do grupo via `item_collected`, com handler único ligado ao `SaveManager`
+- Ao menos uma Scene `Checkpoint` gravando `SaveManager.ultimo_checkpoint` e acionando o `SaveComponent`
+- Ciclo fechado: ao reabrir o jogo, o Player nasce no último `Checkpoint` alcançado (ou no `PlayerStart` sem save)
 - Próximo passo: integração completa do Módulo 2, no Encontro 2
 
 <!--
 Dificuldade esperada: confundir SaveManager (entre cenas) com SaveData (entre sessões) — reforçar a diferença.
-Este resultado corresponde à conclusão dos itens "SaveComponent / SaveData (Resource)" e "Checkpoint" do roadmap (PROJECT_ARCHITECTURE.md, seção 6).
+Este resultado corresponde à conclusão dos itens "Pickup", "Chest", "SaveComponent / SaveData (Resource)", "Checkpoint" e "Carregar save ao iniciar + spawn_player() por checkpoint" do roadmap (PROJECT_ARCHITECTURE.md, seção 6).
 -->
 
 ---
@@ -307,7 +344,7 @@ Erro comum: preferir criar novos objetos interativos a conectar os existentes �
 - Nenhum sistema exige alteração estrutural para se conectar aos demais
 
 <!--
-Diagrama sugerido: Player → InteractionComponent → (Door | Lever | Chest | Checkpoint) via contrato Interactable → Signals → GameManager/SaveManager → SaveComponent → SaveData (user://).
+Diagrama sugerido: Player → InteractionComponent → (Door | Lever | Pickup | Chest | Checkpoint) via contrato Interactable → Signals (interacted / item_collected) → handler de coleta → SaveManager.itens_coletados → SaveComponent → SaveData (user://).
 Reforçar: se algum sistema exige retrabalho para integrar, é sinal de desacoplamento malfeito, não de imprevisto normal.
 -->
 
@@ -359,9 +396,9 @@ Pedir a cada grupo que articule essas comparações com as próprias palavras du
 
 Cada grupo:
 
-1. Posiciona/reposiciona `Door`, `Lever`, `Chest` e `Checkpoint`, formando um caminho único
+1. Posiciona/reposiciona `Door`, `Lever`, `Pickup`, `Chest` e `Checkpoint`, formando um caminho único
 2. Confirma que a alavanca controla a porta via Signal já conectado (Semana 5)
-3. Confirma que o baú concede um item refletido no `GameManager`/`SaveManager`
+3. Confirma que `Pickup`/`Chest` concedem um item via `item_collected`, registrado em `SaveManager.itens_coletados` sem duplicatas
 4. Posiciona o `Checkpoint` em ponto lógico do caminho
 5. Percorre o fluxo do início ao fim; fecha e reabre o jogo para confirmar persistência
 
@@ -446,9 +483,12 @@ Este resultado corresponde ao "Produto do Módulo 2" do roadmap (PROJECT_ARCHITE
 
 - [ ] Classe `SaveData` (Resource) com `itens_coletados` e `ultimo_checkpoint`
 - [ ] `SaveComponent` gravando e lendo corretamente em `user://`
+- [ ] `SaveManager.itens_coletados` + `registrar_item()` idempotente; `Pickup`/`Chest` com `item_collected` e handler único
+- [ ] `Checkpoint` grava `SaveManager.ultimo_checkpoint`; `_ready()` do nível carrega o save e chama `spawn_player()`
+- [ ] Ao reabrir o jogo, o Player nasce no último `Checkpoint` (ou no `PlayerStart` sem save); sem coordenada no `GameManager`/`SaveManager`
 - [ ] Progresso confirmado como persistente entre execuções (fechar e reabrir o jogo)
 - [ ] `Checkpoint` implementando o contrato `Interactable`, sem lógica duplicada
-- [ ] Portas, alavancas, baús e `Checkpoint` conectados em um único fluxo, do início ao fim
+- [ ] Portas, alavancas, `Pickup`, `Chest` e `Checkpoint` conectados em um único fluxo, do início ao fim
 - [ ] Code Review (Rubrica 4) e Playtest coletivo realizados
 
 <!--

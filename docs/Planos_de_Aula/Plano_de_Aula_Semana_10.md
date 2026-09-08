@@ -86,7 +86,7 @@ Sem instrumento formal isolado neste encontro (Rubrica 1 — Desenvolvimento Sem
 
 - Duplicar os dados do `ItemData` dentro do próprio `InventoryComponent` (ex.: recriar nome/ícone do item como variáveis novas) em vez de armazenar a referência ao `ItemData` existente — reforçar que o inventário armazena instâncias, não recria dados.
 - Colocar a lógica de inventário diretamente no script do Player, em vez de isolá-la em um Component — reforçar o mesmo padrão de composição já usado por `InteractionComponent`/`HealthComponent`/`SaveComponent`.
-- Esquecer de remover o item da cena (`Chest`/`Pickup`) ao adicioná-lo ao inventário, resultando em coleta duplicada — reforçar que a coleta é um evento único que atualiza o inventário e remove o objeto do mundo.
+- Alterar `Chest`/`Pickup` para popular o inventário diretamente, em vez de apenas redirecionar o handler de coleta (Semana 7) — reforçar que a coleta continua sendo `item_collected` → handler; só o handler muda de destino (de `SaveManager` para o `InventoryComponent`). `Pickup` já se remove (`queue_free()`) e `Chest` já fica `aberto` desde a Semana 7 — a idempotência por nome evita coleta duplicada.
 
 ---
 

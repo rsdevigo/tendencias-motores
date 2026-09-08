@@ -107,6 +107,7 @@ Sem instrumento formal isolado neste encontro (Rubrica 1 — Desenvolvimento Sem
 - Behavior Tree como estrutura de decisão hierárquica (sequências, seletores, folhas de ação/condição) e Blackboard como memória compartilhada entre os nós da árvore, via addon LimboAI — nenhum dos dois é nativo do Godot.
 - Implementação guiada de uma Behavior Tree simples de patrulha (deslocamento entre pontos via `NavigationAgent3D`) e perseguição (mudança de alvo ao detectar o `Player`).
 - Combate simples: detecção de acerto via `Area3D`/`RayCast3D` do `Player`, chamando `apply_damage` no `HealthComponent` do `Enemy` — reutilizando o mesmo Component fundamentado na Semana 8, sem duplicação de lógica.
+- Consequência de derrota do **Player** já pronta desde a Semana 8 (DC-03: `died` → respawn no `Checkpoint` / `GameOver`) — o combate apenas se apoia nela. A consequência da morte do **Enemy** (`queue_free()`, estado terminal, drop) permanece em aberto (DC-04); nesta semana só se confirma que o `Enemy` emite `died` corretamente.
 - Desafio: cada grupo propõe um comportamento autônomo próprio para o `Enemy` (patrulha, alerta, fuga, interação com o jogador), com liberdade de solução.
 - Playtest coletivo e Showcase — encerramento da Unidade III (Rubricas 5 e 6).
 

@@ -318,12 +318,16 @@ O que será construído:
 
 - Behavior Tree simples de patrulha (deslocamento entre pontos via `NavigationAgent3D`) e perseguição (mudança de alvo ao detectar o `Player`) — tasks em GDScript, exigência do LimboAI
 - Combate simples: `Area3D`/`RayCast3D` do `Player` chamando `apply_damage` no `HealthComponent` do `Enemy`, via Orchestrator ou GDScript
+- Consequência de derrota do **Player** já está pronta (Semana 8: `died` → respawn no `Checkpoint` / `GameOver`) — nada a refazer aqui
+- Consequência da morte do **Enemy** (`queue_free()`, estado terminal, drop) segue em aberto — **DC-04**
 
 Por quê: fixar o padrão guiado antes de abrir o desafio do comportamento autônomo adicional.
 
 <!--
 O HealthComponent é o mesmo Component fundamentado na Semana 8 — nenhuma lógica de vida/dano é duplicada, apenas aplicada a uma nova origem (Enemy) e a uma nova origem de dano (Area3D/RayCast3D do Player).
+O Enemy emite died corretamente; o que fazer com esse sinal depende do DC-04.
 -->
+
 
 ---
 

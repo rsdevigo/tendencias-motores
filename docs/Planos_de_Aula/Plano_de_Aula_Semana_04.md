@@ -11,12 +11,12 @@ A Semana 3 encerrou o Módulo 1 com o primeiro build executável do Vertical Sli
 ## Objetivos Gerais
 
 - Compreender Autoload/Singleton como mecanismo nativo do Godot para estado global compartilhado entre cenas.
-- Construir um `GameManager` que centraliza regras de partida e estado compartilhado.
+- Construir um `GameManager` que centraliza regras de partida e estado compartilhado, com `spawn_player()` posicionando o Player no `PlayerStart` do nível — o equivalente ao `ChoosePlayerStart` da Unreal.
 - Construir um `SaveManager` que centraliza persistência de dados entre cenas.
 
 ## Resultados Esperados
 
-Ao final da semana, cada estudante possui, além do projeto herdado das Semanas 1–3, um `GameManager` e um `SaveManager` configurados como Autoload, com pelo menos um dado de progresso próprio persistindo corretamente entre cenas.
+Ao final da semana, cada estudante possui, além do projeto herdado das Semanas 1–3, um `GameManager` (com `spawn_player()` e o `PlayerStart` no nível) e um `SaveManager` configurados como Autoload, com pelo menos um dado de progresso próprio persistindo corretamente entre cenas.
 
 ---
 
@@ -27,12 +27,14 @@ Ao final da semana, cada estudante possui, além do projeto herdado das Semanas 
 - Explicar Autoload/Singleton como mecanismo nativo de estado global no Godot.
 - Diferenciar o papel do `GameManager` (regras de partida e estado compartilhado) de um Node comum de cena.
 - Criar um `GameManager` customizado como Autoload no projeto do Vertical Slice.
+- Dar ao `GameManager` sua primeira responsabilidade concreta: `spawn_player()`, que lê um `Marker3D` (`PlayerStart`) do nível e reposiciona o Player ao carregar — sem coordenada no script.
 
 ## Conteúdos
 
 - Autoload/Singleton no Godot: registro, ciclo de vida e escopo global.
 - Papel do `GameManager` como ponto único de regras de partida e estado compartilhado.
 - Criação guiada do script e registro do `GameManager` como Autoload.
+- `PlayerStart` (`Marker3D` no nível, grupo `player_start`) como dado de cena; `spawn_player()` como política de spawn no `GameManager`; grupos como forma de localizar Nodes sem referência direta. Comparação: actor `PlayerStart` + `GameMode.ChoosePlayerStart` da Unreal; "SpawnPoint" por tag na Unity.
 
 ## Conceitos Fundamentais
 
@@ -59,14 +61,14 @@ A Unity não possui um mecanismo formal equivalente ao Autoload — o mesmo prob
 |---|---|
 | 15 min | Revisão do Encontro 2 da Semana 3 (build exportado, encerramento do Módulo 1) |
 | 20 min | Introdução: onde vive o estado que não pertence a nenhuma cena específica |
-| 35 min | Demonstração: criação do script `GameManager` e registro como Autoload em Project Settings |
-| 45 min | Laboratório: cada estudante cria e registra seu próprio `GameManager` no projeto do Vertical Slice |
+| 35 min | Demonstração: criação do script `GameManager`, registro como Autoload e `spawn_player()` lendo o `PlayerStart` |
+| 40 min | Laboratório: cada estudante cria o `GameManager`, adiciona o `PlayerStart` ao nível e implementa `spawn_player()` |
 | 15 min | Desafio: adicionar uma variável de estado de partida própria ao `GameManager` |
 | 5 min | Feedback e fechamento |
 
 ## Desenvolvimento
 
-O encontro abre o Módulo 2 retomando o projeto herdado da Semana 3 sem alterar nada do que já existe — nível, Player e build permanecem intactos. O professor demonstra a criação de um script `GameManager` simples e seu registro na aba Autoload de Project Settings, explicando por que esse registro transforma o script em um Singleton acessível globalmente a partir de qualquer outra cena ou script do projeto. A turma replica a criação e o registro no próprio projeto, preparando o `GameManager` para receber, no Encontro 2, o `SaveManager` e a lógica de persistência entre cenas.
+O encontro abre o Módulo 2 retomando o projeto herdado da Semana 3 sem alterar nada do que já existe — nível, Player e build permanecem intactos. O professor demonstra a criação de um script `GameManager` simples e seu registro na aba Autoload de Project Settings, explicando por que esse registro transforma o script em um Singleton acessível globalmente. Em seguida, dá ao `GameManager` sua primeira responsabilidade concreta: um `Marker3D` chamado `PlayerStart` é adicionado ao nível (grupo `player_start`), e `spawn_player()` lê esse marcador para reposicionar o Player ao carregar — reforçando que a coordenada é dado da cena e a decisão de usá-la é do gerenciador (o "ChoosePlayerStart" do projeto). A turma replica tudo no próprio projeto, preparando o `GameManager` para receber, no Encontro 2, o `SaveManager` e a lógica de persistência entre cenas.
 
 ## Desafio
 
@@ -74,7 +76,7 @@ Cada estudante adiciona ao `GameManager` uma variável de estado de partida pró
 
 ## Critérios de Sucesso
 
-Cada estudante possui, ao final do encontro, um `GameManager` registrado como Autoload no projeto, acessível a partir de qualquer cena, contendo ao menos uma variável de estado além da demonstrada em aula.
+Cada estudante possui, ao final do encontro, um `GameManager` registrado como Autoload no projeto, acessível a partir de qualquer cena, com `spawn_player()` reposicionando o Player no `PlayerStart` do nível (sem coordenada no script) e ao menos uma variável de estado além da demonstrada em aula.
 
 ## Evidências para Avaliação
 
@@ -85,6 +87,8 @@ Sem instrumento formal isolado neste encontro. O `GameManager` construído aqui 
 - Registrar o script como Autoload sem defini-lo corretamente como `class_name` ou sem testar o acesso a partir de outra cena — orientar um teste rápido de acesso ao `GameManager` a partir do Player antes de encerrar a etapa.
 - Confundir Autoload com um Node comum adicionado manualmente à Scene do nível — reforçar que o Autoload vive fora da árvore de cenas do nível e é configurado exclusivamente em Project Settings.
 - Duplicar responsabilidades já cobertas por variáveis locais do Player (por exemplo, vida ou inventário) dentro do `GameManager` — reforçar que o `GameManager` guarda apenas estado de partida compartilhado, não estado interno de um Node específico.
+- Escrever a posição de spawn como variável no `GameManager` (`var pos_inicial := Vector3(...)`) em vez de ler o `Marker3D` — a coordenada é dado da cena; o `GameManager` só decide *usar* o `PlayerStart`.
+- Chamar `spawn_player()` de dentro de um Autoload (`_ready()` do próprio `GameManager`), antes de o Player existir na árvore — a chamada pertence ao `_ready()` do nó raiz do nível.
 
 ---
 

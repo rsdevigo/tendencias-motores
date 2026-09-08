@@ -26,6 +26,17 @@ Importante: isto **não** inclui lacunas numéricas simples (velocidade de movim
 
 **Impacto na implementação:** bloqueia IC-VS06-03 (aplicação prática do `ItemData`) e IC-VS07-04 (integração de "baú" ao fluxo do Módulo 2). Sem resolução, VS-07 e VS-10 devem ser entregues com essa pendência registrada explicitamente (ver Definition of Done de ambas em `Vertical_Slices.md`).
 
+**STATUS: RESOLVIDO (2026-09-02).** Registrado em `PROJECT_ARCHITECTURE.md` §6 (Módulo 2) e §7 (Scenes principais + parágrafo de fluxo do item coletado).
+
+**Decisões tomadas:**
+1. **`Pickup`** (`Node3D`, Semana 7, Encontro 1): item visível no mundo, de uso único. Implementa `interact()` (mesmo contrato de Door/Lever/Chest — um único modelo de interação no Módulo 2). Expõe `@export var item: ItemData`. Ao ser interagido, emite `item_collected(item)` e faz `queue_free()`.
+2. **`Chest`** (`Node3D`, Semana 7, Encontro 1): contêiner de uso único com estado `aberto: bool`. Implementa `interact()`. Expõe **um único** `@export var item: ItemData`. Na primeira interação passa a `aberto`, emite `item_collected(item)` uma vez e permanece aberto/vazio; interações seguintes não têm efeito. `Array[ItemData]` fica como extensão opcional, fora do escopo do Módulo 2.
+3. **Signal:** o contrato `interact()` permanece genérico e sem retorno. `Door`/`Lever` reagem ao Signal genérico `interacted` e **não** concedem itens; `Pickup`/`Chest` declaram Signal próprio `item_collected(item: ItemData)` (nome alinhado a §9).
+4. **Destino do item (Semanas 6–10):** `Chest`/`Pickup` não conhecem inventário nem save. Um handler único (nó do nível ou `GameManager`) recebe `item_collected` e, até a Semana 9, adiciona `item.nome` (`String`) à lista `itens_coletados` do `SaveManager`, gravada no `SaveData` pelo `SaveComponent` ao alcançar um `Checkpoint` (Semana 7). A partir da Semana 10, o mesmo handler repassa o `ItemData` ao `InventoryComponent`.
+5. **Persistência do estado do baú:** não no Módulo 2. `Chest`/`Pickup` são de uso único em runtime; ao recarregar um save, o handler ignora item cujo `nome` já esteja em `itens_coletados` (idempotência), evitando duplicata. Persistência real do estado de objetos do mundo fica como item cruzado no **DC-05**.
+
+**Local de construção:** `Pickup.tscn` e `Chest.tscn` passam a ser construídos no **Tutorial da Semana 7, Encontro 1** (nova Parte 3, antes do `Checkpoint`) — é o primeiro ponto do Cronograma em que `ItemData` (Semana 6) já existe e o resultado da coleta alimenta a persistência do `Checkpoint` na mesma aula.
+
 ---
 
 ## DC-02 — Definição mecânica do "objetivo final único"
@@ -39,8 +50,10 @@ Importante: isto **não** inclui lacunas numéricas simples (velocidade de movim
 **Decisões necessárias:**
 1. Qual é o gatilho do objetivo final (localização, item, derrota do Enemy, ou combinação)?
 2. Onde essa lógica vive — um novo Component, uma responsabilidade adicional do `GameManager`, ou uma Scene dedicada (`Objective.tscn`, análoga a `Checkpoint.tscn`)?
-3. O que o jogador vê ao concluir (tela, HUD, apenas volta ao menu)? Isso implica uma nova Scene de UI não listada em §7?
+3. O que o jogador vê ao concluir (tela, HUD, apenas volta ao menu)? Pode espelhar a Scene `GameOver` do DC-03 (uma Scene `Victory` análoga, mesmo padrão Control + CanvasLayer).
 4. O objetivo final depende do combate (DC-04) estar resolvido, ou é independente dele?
+
+*Contexto do DC-03:* a condição de **derrota** já está definida (esgotar as tentativas → `GameOver`). O DC-02 é a condição de **vitória** simétrica — o `GameManager` já é o dono das "condições de vitória/derrota" no §7.
 
 **Referências do GDD:** `PROJECT_ARCHITECTURE.md` §2, §4, §6 (nenhuma linha do roadmap trata disso explicitamente), §11 (a evolução do Vertical Slice não menciona onde o objetivo final é implementado).
 
@@ -70,6 +83,18 @@ Importante: isto **não** inclui lacunas numéricas simples (velocidade de movim
 **Critério de Conclusão:** `PROJECT_ARCHITECTURE.md` §7 (linha HealthComponent) descreve o fluxo de morte do Player e sua integração com `Checkpoint`/`SaveComponent`.
 
 **Impacto na implementação:** bloqueia parte de IC-VS08-02 (o sinal `died` pode ser implementado, mas nenhuma reação a ele pode ser codificada) e IC-VS11-04 (o combate fica sem consequência de derrota).
+
+**STATUS: RESOLVIDO (2026-09-02).** Registrado em `PROJECT_ARCHITECTURE.md` §6 (Módulo 3: novas linhas "Fluxo de morte/respawn" e "GameOver"), §7 (linhas HealthComponent, GameManager, SaveManager, GameOver, SaveData + parágrafo "Fluxo de morte/respawn do Player"), §8 e §12.
+
+**Decisões tomadas:**
+1. **Reação ao `died` do Player:** respawn no último `Checkpoint` (ou `PlayerStart` se nenhum foi alcançado), reutilizando `GameManager.spawn_player()` (DC-06) — nenhum código novo de posicionamento. **Somada a um limite fixo de tentativas:** ao atingir `LIMITE_TENTATIVAS` mortes, o `GameManager` exibe a Scene `GameOver` (Control) em vez de respawnar.
+2. **Vida no respawn:** restaurada ao máximo (`HealthComponent.reiniciar()`). Consequência: **a vida do Player não é persistida no `SaveData`** — resolve a decisão 2 do DC-05.
+3. **Contador de tentativas:** `SaveManager.mortes: int`, incrementado a cada morte, persistido no `SaveData` (junto com `itens_coletados`/`ultimo_checkpoint`) e exposto ao HUD (Semana 9). `LIMITE_TENTATIVAS` é uma constante do `GameManager`, placeholder ajustável por grupo (ex.: 3).
+4. **Wiring:** o Player conecta `HealthComponent.died` a um handler próprio que chama `GameManager.player_morreu()` — reação no `GameManager` (regra de partida), wiring no Player. Mesmo padrão do handler de coleta.
+5. **`GameOver` (Control + CanvasLayer):** pausa a árvore; botão "Reiniciar" apaga `user://save_data.tres`, zera o `SaveManager` e recarrega o nível (Player volta ao `PlayerStart`). Base na Semana 8, refinada com o HUD na Semana 9.
+6. **Construção:** Semana 8 (sem tutorial — Módulo 3+). Cartas IC-VS08-02 (parte do Player) e nova IC-VS08-05 (fluxo de morte + GameOver).
+
+**Notas cruzadas:** define a condição de **derrota** do Vertical Slice; a **vitória** (objetivo final) fica no **DC-02**. O `mortes: int` no `SaveData` é o único acréscimo de schema aqui — a evolução maior (inventário real) segue no **DC-05**.
 
 ---
 
@@ -104,7 +129,7 @@ Importante: isto **não** inclui lacunas numéricas simples (velocidade de movim
 
 **Decisões necessárias:**
 1. `itens_coletados` passa a guardar caminhos de `.tres` (`Array[String]` com `res://resources/items/item_x.tres`) recarregáveis via `ResourceLoader`, ou uma estrutura própria (`Array[ItemData]` diretamente serializado)?
-2. A vida atual do Player é persistida no `SaveData`, ou todo `Checkpoint` restaura vida máxima (o que tornaria essa persistência desnecessária — decisão cruzada com DC-03)?
+2. ~~A vida atual do Player é persistida no `SaveData`?~~ **Decidido pelo DC-03:** não. O respawn sempre restaura `vida_maxima`, então a vida do Player não entra no `SaveData`. O `SaveData` ganha apenas `mortes: int` (contador de tentativas).
 3. O estado do `Enemy` (vivo/morto, posição) precisa persistir entre sessões, ou o Enemy sempre reinicia no estado padrão ao carregar um save (decisão cruzada com DC-04)?
 
 **Referências do GDD:** `PROJECT_ARCHITECTURE.md` §7 (SaveData, InventoryComponent, HealthComponent); `Tutorial_Semana_07_Encontro_1.md` (schema original).
@@ -112,3 +137,39 @@ Importante: isto **não** inclui lacunas numéricas simples (velocidade de movim
 **Critério de Conclusão:** `PROJECT_ARCHITECTURE.md` §7 (linha SaveData) descreve o schema final, cobrindo inventário, vida e (se DC-04 exigir) estado de inimigos.
 
 **Impacto na implementação:** bloqueia IC-VS10-04 (persistência do inventário) e IC-VS14-02 (validação do save no build final).
+
+---
+
+## DC-06 — Ponto de spawn do Player e escolha de spawn (equivalente a `PlayerStart`/`ChoosePlayerStart` da UE5)
+
+**Objetivo:** definir onde vive a informação de "onde o Player nasce" — tanto o ponto inicial do nível (sem save) quanto o ponto de respawn após alcançar um `Checkpoint` — e qual Scene/Autoload decide entre os dois ao carregar o nível.
+
+**Problema de Design:** `PROJECT_ARCHITECTURE.md` §7 define a Scene `Checkpoint` ("dispara a gravação de progresso via `SaveComponent` ao ser alcançada/interagida") e o `SaveData` com `ultimo_checkpoint: String`, mas **não existe nenhuma menção a um ponto de início do nível** — o equivalente ao actor `PlayerStart` da Unreal. Nada diz de onde o Player parte quando o nível é carregado pela primeira vez, sem save. Também não há definição de **quem** decide o ponto de spawn na carga do nível (o equivalente a `GameMode.ChoosePlayerStart`): o `GameManager` "define as regras da partida (condições de início...)", mas nenhum documento afirma que a política de posicionamento inicial do Player é responsabilidade dele. Sem essa decisão, o fluxo de respawn do DC-03 não tem um alvo de posição definido, e o Player ou nasce numa posição fixa hard-coded na cena, ou na origem `(0,0,0)`.
+
+Este card não redefine o que acontece na morte (isso é DC-03) — apenas onde a informação de posição de spawn é armazenada e lida.
+
+**Documento do Rulebook afetado:** `PROJECT_ARCHITECTURE.md` §7 (Scenes principais — nova linha para o ponto de spawn; linha `GameManager`; linha `SaveManager`; linha `SaveData`) e §8 (estrutura de `level_exploration.tscn`).
+
+**Decisões necessárias:**
+1. O ponto inicial do nível é um Node marcador (`Marker3D`, ex.: `PlayerStart`) posicionado dentro de `level_exploration.tscn`, análogo ao actor `PlayerStart` da UE5? Ou uma propriedade de posição no `GameManager`/no nível?
+2. Onde fica o **checkpoint ativo atual** (o ponto de respawn corrente): apenas no `SaveManager` em memória, apenas no `SaveData` em disco, ou nos dois (memória espelhando o que foi persistido)? Como o `ultimo_checkpoint: String` (um id) é resolvido para uma posição em cena — o `GameManager` procura o Node `Checkpoint` com aquele id?
+3. Quem executa a política de spawn ao carregar o nível (equivalente a `ChoosePlayerStart`): o `GameManager` pergunta ao `SaveManager` se há `ultimo_checkpoint` e escolhe entre a posição do `Checkpoint` correspondente e o `Marker3D` inicial? Isso vira uma responsabilidade explícita listada na linha `GameManager` do §7?
+4. As coordenadas ficam **sempre** nos Nodes da cena (marcador inicial + Scenes `Checkpoint`), nunca no `GameManager`/`SaveManager` (que guardam só *qual* ponto, não onde ele está)? Registrar isso explicitamente como regra, alinhado ao princípio de "local arquitetural único" (Rubrica 4).
+5. Em qual semana isso é construído? O `Marker3D` inicial cabe na Semana 3–4 (junto ao Player/nível); a lógica de escolha de spawn depende de `Checkpoint` (Semana 7) e cruza com o respawn do DC-03 (Módulo 3).
+
+**Referências do GDD:** `PROJECT_ARCHITECTURE.md` §7 (Checkpoint, GameManager, SaveManager, SaveData, SaveComponent), §8 (níveis); `Tutorial_Semana_04_Encontro_2.md` (SaveManager e `ultimo_checkpoint` conceitual); `Tutorial_Semana_07_Encontro_1.md`/`_2.md` (Checkpoint e schema do SaveData); dependência cruzada com DC-03 (fluxo de respawn) e DC-05 (schema do SaveData).
+
+**Critério de Conclusão:** `PROJECT_ARCHITECTURE.md` §7 ganha uma linha para o ponto de spawn inicial do Player (`Marker3D` no nível), a linha `GameManager` passa a citar explicitamente a responsabilidade de escolher o ponto de spawn ao carregar o nível (o "ChoosePlayerStart" daqui), e §8 registra o marcador na estrutura de `level_exploration.tscn`. A regra "coordenadas nos Nodes da cena, id do ponto ativo no SaveManager/SaveData" fica registrada.
+
+**Impacto na implementação:** desbloqueia a parte de posicionamento do respawn de DC-03 (IC-VS08-02 / IC-VS11-04) e a construção do `Checkpoint` (IC-VS07 — Semana 7), que hoje grava `ultimo_checkpoint` sem um consumidor definido para essa informação.
+
+**STATUS: RESOLVIDO (2026-09-02).** Registrado em `PROJECT_ARCHITECTURE.md` §6, §7 (Scenes principais + parágrafo "Fluxo de spawn do Player") e §8.
+
+**Decisões tomadas:**
+1. **Ponto inicial:** `Marker3D` chamado `PlayerStart`, filho do nó raiz de `level_exploration.tscn`, no grupo `player_start`. Guarda apenas a coordenada. Nenhuma posição de spawn vive no `GameManager`/`SaveManager`.
+2. **Checkpoint ativo:** `SaveManager.ultimo_checkpoint: String` (id) em memória, espelhando `SaveData.ultimo_checkpoint` em disco. Cada `Checkpoint` está no grupo `checkpoints` e tem `@export var id_checkpoint: String` único. O `GameManager` resolve o id → Node varrendo o grupo `checkpoints`.
+3. **Política de spawn:** `GameManager.spawn_player()` — método **público e reutilizável**. Se `SaveManager.ultimo_checkpoint != ""` e existe um `Checkpoint` com esse id → posiciona o Player nele; senão → no `PlayerStart`. É a responsabilidade explícita nova na linha `GameManager` do §7 (o "ChoosePlayerStart" daqui). O DC-03 apenas chamará `spawn_player()` de novo no fluxo de morte — sem reimplementar posicionamento.
+4. **Regra registrada:** coordenadas sempre em Nodes da cena (`PlayerStart` + instâncias de `Checkpoint`); `GameManager`/`SaveManager` guardam só *qual* ponto e a política. (Rubrica 4 — local arquitetural único.)
+5. **Construção:** Semana 4, Encontro 1 (nova Parte 3): `PlayerStart` + `spawn_player()` sem checkpoint, como primeira responsabilidade concreta do `GameManager`. Semana 7, Encontro 1 (nova Parte 5): `Checkpoint` grava `SaveManager.ultimo_checkpoint`; o nível carrega o `SaveData` no `_ready()` (via `SaveComponent.carregar()`) e `spawn_player()` ganha a escolha por checkpoint — fechando o ciclo do save.
+
+**Nota cruzada:** o carregamento do `SaveData` ao iniciar cobre aqui apenas `itens_coletados`/`ultimo_checkpoint` (schema da Semana 7). A evolução do schema (inventário real, vida) segue no **DC-05**. O gatilho do respawn na morte segue no **DC-03**.

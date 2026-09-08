@@ -18,7 +18,7 @@ Ao final da Semana 4 (Encontros 1 e 2), cada estudante terá um `GameManager` e 
 
 ## Pré-requisitos
 
-- `GameManager` criado e registrado como Autoload, com a variável de estado do desafio do Encontro 1 (ver Tutorial - Semana 4, Encontro 1).
+- `GameManager` criado e registrado como Autoload, com `spawn_player()` e a variável de estado do desafio do Encontro 1 (ver Tutorial - Semana 4, Encontro 1).
 
 ---
 
@@ -202,7 +202,7 @@ Assim como discutido na Parte 2, a Unity resolveria esse mesmo teste com um sing
 Ao final da Semana 4 (Encontros 1 e 2), o projeto do Vertical Slice deve conter:
 
 - O Player, o nível de teste e o build da Semana 3, sem nenhuma alteração.
-- Um `GameManager` (Autoload), com pelo menos uma variável de estado de partida própria (desafio do Encontro 1).
+- Um `GameManager` (Autoload), com `spawn_player()` posicionando o Player no `PlayerStart` e pelo menos uma variável de estado de partida própria (desafio do Encontro 1).
 - Um `SaveManager` (Autoload), independente do `GameManager`, com pelo menos uma variável persistindo corretamente entre cenas (Encontro 2).
 - A discussão conceitual sobre centralização de input no Player, sem alteração de código associada.
 

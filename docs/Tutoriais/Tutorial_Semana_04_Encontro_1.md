@@ -9,10 +9,11 @@ A Semana 3 encerrou o Módulo 1 com o primeiro build executável do Vertical Sli
 - Explicar Autoload/Singleton como mecanismo nativo do Godot para estado global compartilhado entre cenas.
 - Diferenciar o papel do `GameManager` (regras de partida e estado compartilhado) de um Node comum de cena.
 - Criar e registrar um `GameManager` customizado como Autoload no projeto do Vertical Slice.
+- Dar ao `GameManager` sua primeira responsabilidade concreta: `spawn_player()`, que posiciona o Player no `PlayerStart` (Marker3D no nível) ao carregar — o equivalente ao `ChoosePlayerStart` da Unreal.
 
 ## Resultado esperado ao final da semana
 
-Ao final da Semana 4 (Encontros 1 e 2), cada estudante terá, além do projeto herdado das Semanas 1–3, um `GameManager` e um `SaveManager` configurados como Autoload, com pelo menos um dado de progresso persistindo entre cenas. Este tutorial cobre apenas o **Encontro 1**: a criação do script `GameManager` e seu registro como Autoload.
+Ao final da Semana 4 (Encontros 1 e 2), cada estudante terá, além do projeto herdado das Semanas 1–3, um `GameManager` e um `SaveManager` configurados como Autoload, com pelo menos um dado de progresso persistindo entre cenas. Este tutorial cobre apenas o **Encontro 1**: a criação do script `GameManager`, seu registro como Autoload e a implementação de `spawn_player()`, que posiciona o Player no `PlayerStart` do nível.
 
 ## Pré-requisitos
 
@@ -33,7 +34,7 @@ Ao final da Semana 4 (Encontros 1 e 2), cada estudante terá, além do projeto h
 
 ## Assets utilizados
 
-- Nenhum asset novo. Este encontro é inteiramente de arquitetura de código/Orchestrator, sem alteração visual do nível.
+- Nenhum asset novo. O encontro é de arquitetura de código/Orchestrator; a única alteração de cena é um `Marker3D` (`PlayerStart`) adicionado ao nível na Parte 3.
 
 ## Projeto esperado
 
@@ -149,15 +150,77 @@ Na Unity, o equivalente a esse registro seria implementar manualmente o padrão 
 
 ---
 
+# Parte 3 — PlayerStart: o GameManager decide onde o Player nasce
+
+## Objetivo
+
+Dar ao `GameManager` sua primeira responsabilidade concreta: posicionar o Player, ao carregar o nível, na posição de um Node marcador da cena — sem que a coordenada de spawn viva no próprio `GameManager`.
+
+## Conceito
+
+Toda engine precisa de um ponto que decida onde o jogador aparece ao entrar em um nível. A Unreal formaliza isso em dois pedaços: um actor `PlayerStart` colocado no mapa (a coordenada) e `GameMode.ChoosePlayerStart` (a decisão de qual usar). O Godot não formaliza nenhum dos dois — cabe ao projeto montar o padrão: um `Marker3D` no nível guarda a coordenada, e o `GameManager` consulta esse marcador ao carregar. A separação é a mesma lição do Autoload: a **coordenada** é dado da cena (muda quando o level designer arrasta o marcador); a **política** ("nascer no início do nível") é responsabilidade de um gerenciador. Nunca o contrário — uma posição fixa escrita dentro do `GameManager` obrigaria a editar código para mover o ponto de partida.
+
+Neste encontro, `spawn_player()` só conhece o `PlayerStart`. Na Semana 7, quando o `Checkpoint` existir, o mesmo método passará a escolher entre o `PlayerStart` e o último checkpoint alcançado.
+
+## Passo a passo
+
+1. Abra `level_exploration.tscn`. Adicione um Node `Marker3D` como filho direto do nó raiz e renomeie-o para `PlayerStart`.
+2. Posicione o `PlayerStart` no ponto onde o Player deve começar a explorar o nível.
+3. Com o `PlayerStart` selecionado, abra a subaba **Node > Groups** e adicione-o ao grupo `player_start`.
+4. Selecione o Node do Player na cena (ou a raiz da Scene `Player`, conforme a organização do grupo) e adicione-o ao grupo `player`.
+5. Abra `game_manager.gd` e adicione o método de spawn:
+   ```
+   func spawn_player() -> void:
+       var player := get_tree().get_first_node_in_group("player")
+       var inicio := get_tree().get_first_node_in_group("player_start")
+       if player and inicio:
+           player.global_position = inicio.global_position
+   ```
+6. Crie (ou abra) o script do nó raiz de `level_exploration.tscn` e, em `_ready()`, chame:
+   ```
+   func _ready() -> void:
+       GameManager.spawn_player()
+   ```
+7. Rode `level_exploration.tscn` (F6) e confirme que o Player aparece na posição do `PlayerStart`.
+8. Pare a execução, arraste o `PlayerStart` para outro lugar do nível, rode de novo e confirme que o Player agora nasce na nova posição — sem nenhuma alteração de código.
+
+## Resultado esperado
+
+Ao carregar o nível, o Player é sempre reposicionado na coordenada do `PlayerStart` pelo `GameManager`. Mover o marcador no editor muda o ponto de partida; o `game_manager.gd` não contém nenhuma coordenada.
+
+## Verificando
+
+1. Mova o `PlayerStart` e confirme que o Player segue a nova posição ao rodar.
+2. Comente a chamada `GameManager.spawn_player()` no `_ready()` do nível e confirme que o Player volta a nascer onde a instância dele está salva na cena — provando que é o `GameManager` que decide o spawn.
+3. Confirme que `game_manager.gd` não tem nenhuma variável de posição (`Vector3`, `Transform3D`) — apenas a leitura do grupo `player_start`.
+
+## Problemas comuns
+
+- Guardar a posição inicial como variável no `GameManager` (`var pos_inicial := Vector3(...)`) em vez de ler o `Marker3D`: a coordenada é dado da cena — o `GameManager` só decide *usar* o `PlayerStart`, não *onde ele fica*.
+- Esquecer de adicionar o Player ao grupo `player` ou o marcador ao grupo `player_start`: `get_first_node_in_group()` retorna `null` e o Player não é movido.
+- Chamar `spawn_player()` antes de o Player existir na árvore (por exemplo, no `_ready()` de um Autoload): usar o `_ready()` do nó raiz do nível, que roda depois de a cena inteira ser instanciada.
+
+## Boas práticas
+
+- Um único `PlayerStart` por nível nesta fase — múltiplos pontos de entrada só fazem sentido com transições entre níveis, fora do escopo do Vertical Slice.
+- Nomear o método `spawn_player()` de forma que a intenção fique clara — ele será reutilizado pelo respawn após morte no Módulo 3.
+
+## Comparação com Unity
+
+A Unity não tem um actor `PlayerStart` nativo nem um `ChoosePlayerStart`: o padrão comum é um `GameObject` vazio marcado como "SpawnPoint", encontrado por tag ou referência serializada, e um script gerenciador que move o Player para lá em `Start()`/`OnSceneLoaded`. A estrutura — coordenada no objeto de cena, decisão no gerenciador — é a mesma; muda apenas que Godot e Unity deixam o time montar o padrão, enquanto a Unreal o entrega pronto.
+
+---
+
 # Ao final do encontro
 
 Ao final deste encontro, o projeto do Vertical Slice deve conter:
 
-- O Player, o nível de teste e o build da Semana 3, sem nenhuma alteração.
-- Um script `scripts/autoload/game_manager.gd`, com `class_name GameManager`.
+- O Player, o nível de teste e o build da Semana 3, sem alterações além dos grupos `player`/`player_start` e da chamada de spawn no `_ready()` do nível.
+- Um script `scripts/autoload/game_manager.gd`, com `class_name GameManager` e o método `spawn_player()`.
 - O `GameManager` registrado e habilitado na aba Autoload de Project Settings, com acesso validado a partir do script do Player.
+- Um `Marker3D` `PlayerStart` em `level_exploration.tscn` (grupo `player_start`), consultado pelo `GameManager` ao carregar o nível.
 
-Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 2), este resultado corresponde ao início do item "GameManager (Autoload)" do roadmap. O Encontro 2 desta semana completa a variável de estado própria (desafio) e introduz o `SaveManager`.
+Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 2), este resultado corresponde ao início do item "GameManager (Autoload)" do roadmap, já com sua primeira responsabilidade concreta (`spawn_player()`). O Encontro 2 desta semana completa a variável de estado própria (desafio) e introduz o `SaveManager`.
 
 # Desafio
 
@@ -173,6 +236,12 @@ Cada estudante adiciona ao `GameManager` uma variável de estado de partida pró
 
 ☐ Acesso ao `GameManager` testado com sucesso a partir do script do Player
 
+☐ `Marker3D` `PlayerStart` adicionado a `level_exploration.tscn` e ao grupo `player_start`; Player no grupo `player`
+
+☐ `GameManager.spawn_player()` implementado (lendo os grupos, sem coordenada no script) e chamado no `_ready()` do nível
+
+☐ Player confirmadamente reposicionado no `PlayerStart` ao rodar; mover o marcador muda o spawn
+
 ☐ Variável de estado própria do desafio adicionada ao `GameManager`, com justificativa comentada no script
 
 # Glossário
@@ -181,6 +250,9 @@ Cada estudante adiciona ao `GameManager` uma variável de estado de partida pró
 - **GameManager:** Autoload responsável por centralizar regras de partida e estado compartilhado do Vertical Slice, reunindo o que a Unreal separa em GameMode e GameState.
 - **Singleton:** padrão de projeto que garante que uma classe possua uma única instância acessível globalmente; no Godot, implementado nativamente via Autoload.
 - **class_name:** palavra-chave do GDScript que registra um script como um tipo nomeado, permitindo referenciá-lo por esse nome em qualquer outro script do projeto.
+- **PlayerStart:** `Marker3D` colocado no nível (grupo `player_start`) que guarda a coordenada onde o Player nasce ao carregar o nível — equivalente ao actor `PlayerStart` da Unreal.
+- **`spawn_player()`:** método do `GameManager` que reposiciona o Player no ponto de spawn ao carregar o nível (e, no Módulo 3, no respawn após morte) — o equivalente a `GameMode.ChoosePlayerStart`.
+- **Grupo (Group):** rótulo atribuído a Nodes no Godot que permite localizá-los por nome (`get_tree().get_first_node_in_group(...)`) sem referência direta nem caminho fixo.
 
 # Referências
 

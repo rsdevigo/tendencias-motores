@@ -116,15 +116,19 @@ O roadmap segue estritamente a ordem dos módulos definida no Plano de Ensino e 
 
 | Sistema | Objetivo pedagógico | Recursos do Godot | Dependências |
 |---|---|---|---|
-| GameManager (Autoload) | Separar regras da partida de estado compartilhado | Autoload / Singleton | Módulo 1 |
+| GameManager (Autoload) | Separar regras da partida de estado compartilhado; primeira responsabilidade concreta: `spawn_player()` posiciona o Player no `PlayerStart` (Marker3D no nível) ao carregar — o "ChoosePlayerStart" do Godot | Autoload / Singleton, Marker3D, grupos | Módulo 1 |
 | Player input de alto nível + SaveManager (Autoload) | Compreender a centralização de input não relacionado a locomoção e persistência entre cenas | Autoload, sinais globais | GameManager |
 | Contrato Interactable (interface via duck typing) | Comunicação desacoplada entre Player e objetos do mundo | GDScript (class_name + has_method) ou nós de interface do Orchestrator | Player |
 | Signals de interação | Padrão observer para reação a eventos de interação | Signals | Contrato Interactable |
 | Door, Lever | Aplicar interação a um caso concreto de progressão | Contrato Interactable, Signals | Signals de interação |
 | ItemData (Resource + Enum) | Separar dados de design da lógica de gameplay | Resource customizado, Enum | — |
-| Chest, Pickup | Aplicar ItemData a coleta de itens | Resource customizado | ItemData, Interação |
+| Pickup (coletável de uso único) — Semana 7 | Aplicar ItemData a um item do mundo coletado via contrato Interactable | Contrato Interactable, Signals | ItemData, Signals de interação |
+| Chest (contêiner de uso único) — Semana 7 | Aplicar ItemData a um contêiner com estado aberto/fechado | Contrato Interactable, Signals | ItemData, Signals de interação |
 | SaveComponent / SaveData (Resource) | Serializar e recuperar estado de progresso (coleta de itens) — Semana 7 | FileAccess, ResourceSaver/ResourceLoader | ItemData |
-| Checkpoint | Aplicar contrato Interactable + persistência a um ponto concreto de progresso — Semana 7 | Contrato Interactable, SaveComponent | Contrato Interactable, SaveComponent |
+| Checkpoint | Aplicar contrato Interactable + persistência a um ponto concreto de progresso; grava `id_checkpoint` em `SaveManager.ultimo_checkpoint` — Semana 7 | Contrato Interactable, SaveComponent | Contrato Interactable, SaveComponent |
+| Carregar save ao iniciar + `spawn_player()` por checkpoint | Fechar o ciclo do save: ler `SaveData` no carregamento do nível e escolher o ponto de spawn (Checkpoint ativo ou PlayerStart) — Semana 7 | Autoload, grupos, SaveComponent | Checkpoint, PlayerStart |
+
+Nem todo objeto do contrato `Interactable` produz o mesmo evento: `Door`/`Lever` reagem ao próprio Signal genérico `interacted`, sem conceder itens; `Pickup`/`Chest` emitem um Signal próprio `item_collected(item: ItemData)`. Até a Semana 9 esse Signal é conectado a um handler (no nó do nível ou no `GameManager`) que registra `item.nome` (String) na lista `itens_coletados` mantida pelo `SaveManager` e persistida pelo `SaveComponent` ao alcançar um `Checkpoint`. A partir da Semana 10 o mesmo Signal passa a alimentar o `InventoryComponent` do Player com o `ItemData` completo; a evolução do schema de `SaveData` correspondente é tratada no DC-05.
 
 **Produto do módulo:** gameplay funcional, com portas, baús, alavancas, checkpoints e progresso persistente integrados em um único fluxo.
 
@@ -133,6 +137,8 @@ O roadmap segue estritamente a ordem dos módulos definida no Plano de Ensino e 
 | Sistema | Objetivo pedagógico | Recursos do Godot | Dependências |
 |---|---|---|---|
 | HealthComponent | Suporte mínimo a vida/dano, reutilizável por Player e Enemy — Semana 8 | Node customizado (Component) | Player |
+| Fluxo de morte/respawn do Player | Reagir ao `died` do Player: `GameManager` restaura a vida ao máximo, incrementa `mortes` e chama `spawn_player()` (respawn no último `Checkpoint`); ao atingir `LIMITE_TENTATIVAS`, exibe `GameOver` — Semana 8 | GameManager, HealthComponent, Checkpoint, Control | HealthComponent, Checkpoint |
+| GameOver (Control) | Tela de derrota exibida ao esgotar as tentativas; botão "Reiniciar" faz um reset completo (apaga o save, zera `mortes`, volta ao `PlayerStart`) — Semana 8 (base), refinada com o HUD na Semana 9 | Control nodes, CanvasLayer | Fluxo de morte/respawn |
 | AnimationTree (State Machine) | Transição de animações do Player — Semana 8 | AnimationTree, AnimationNodeStateMachine | Player |
 | BlendSpace1D/2D + AnimationPlayer | Interpolação direcional e animações pontuais — Semana 8 | BlendSpace1D/2D, AnimationPlayer | AnimationTree |
 | HUD (Control) | Comunicar estado de jogo em tempo real — Semana 9 | Control nodes, CanvasLayer | GameManager, SaveComponent, HealthComponent |
@@ -141,7 +147,7 @@ O roadmap segue estritamente a ordem dos módulos definida no Plano de Ensino e 
 | Ampliação da Interação | Suportar múltiplos tipos de interação conectados ao inventário — Semana 10 | Contrato Interactable, Signals | InventoryComponent |
 | NavigationRegion3D | Base de deslocamento autônomo de agentes — Semana 11 | NavigationRegion3D, NavigationServer | Nível do Módulo 2 |
 | Enemy + Behavior Tree + Blackboard (LimboAI) | Decisão e deslocamento autônomo de um agente não-jogador — Semana 11 | LimboAI (BTPlayer, Blackboard), NavigationAgent3D | NavigationRegion3D, HealthComponent |
-| Combate simples | Detecção de acerto (Area3D/raycast) do Player chamando apply_damage no HealthComponent do Enemy — Semana 11 | Area3D, RayCast3D | HealthComponent, Enemy |
+| Combate simples | Detecção de acerto (Area3D/raycast) do Player chamando apply_damage no HealthComponent do Enemy — Semana 11; a consequência de derrota do Player já está definida pelo fluxo de morte/respawn (Semana 8) | Area3D, RayCast3D | HealthComponent, Enemy, Fluxo de morte/respawn |
 
 **Produto do módulo:** Vertical Slice jogável, com animação, interface, inventário, interação ampliada, IA e combate simples integrados.
 
@@ -171,16 +177,26 @@ Apenas as Scenes (com seus scripts/Orchestrations) e Components principais são 
 
 | Scene | Responsabilidade |
 |---|---|
-| **Player** (CharacterBody3D) | Personagem controlado pelo jogador; concentra locomoção, câmera, input e referências aos Components de gameplay (Interaction, Inventory, Health). |
+| **Player** (CharacterBody3D) | Personagem controlado pelo jogador; concentra locomoção, câmera, input e referências aos Components de gameplay (Interaction, Inventory, Health). Pertence ao grupo `player`. |
+| **PlayerStart** (Marker3D) | Node marcador dentro de `level_exploration.tscn` (grupo `player_start`) que define a posição inicial do Player quando o nível é carregado sem um checkpoint ativo — equivalente ao actor `PlayerStart` da Unreal. Guarda apenas a coordenada; a decisão de usá-lo é do `GameManager`. Introduzido na Semana 4 (Encontro 1). |
 | **Enemy** (CharacterBody3D) | Agente não-jogador com Behavior Tree/Blackboard próprios (LimboAI) e HealthComponent; não compartilha lógica com Player além do HealthComponent. |
 | **Interactable (contrato)** | Contrato implementado por qualquer Node que responda a interação — via `has_method("interact")` (GDScript) ou nó de interface do Orchestrator; não é uma cena instanciável. |
-| **Door, Lever, Chest, Pickup** | Cenas concretas que implementam o contrato Interactable, cada uma com sua própria reação ao sinal de interação. |
-| **Checkpoint** | Cena que implementa o contrato Interactable e dispara a gravação de progresso (via SaveComponent) ao ser alcançada/interagida pelo jogador — construída na Semana 7. |
-| **GameManager** (Autoload) | Define as regras da partida (condições de início, vitória, derrota) e mantém estado de partida compartilhado para o nível atual — reúne o que a Unreal separa em GameMode/GameState. |
-| **SaveManager** (Autoload) | Mantém dados persistentes entre cenas e centraliza o slot de save ativo. |
-| **HUD** (CanvasLayer + Control) | Interface principal exibida durante o gameplay, consumindo dados de GameManager, HealthComponent e InventoryComponent. |
+| **Door, Lever** | Cenas concretas que implementam o contrato Interactable e reagem ao próprio Signal genérico `interacted`, cada uma com sua própria reação; não concedem itens. |
+| **Pickup** (Node3D) | Item visível no mundo, construído na Semana 7 (Encontro 1). Implementa `interact()` e expõe `@export var item: ItemData`. Ao ser interagido, emite `item_collected(item)` e se remove da cena (`queue_free()`) — coletável de uso único. |
+| **Chest** (Node3D) | Contêiner de uso único, construído na Semana 7 (Encontro 1). Implementa `interact()` e expõe `@export var item: ItemData` mais um estado `aberto: bool`. Na primeira interação passa a `aberto`, emite `item_collected(item)` uma única vez e permanece aberto/vazio; interações seguintes não têm efeito. Não persiste o próprio estado no Módulo 2 (ver DC-05). |
+| **Checkpoint** | Cena que implementa o contrato Interactable (grupo `checkpoints`), com uma `String` exportada `id_checkpoint` única. Ao ser alcançada, dispara a gravação de progresso via SaveComponent e grava seu `id_checkpoint` em `SaveManager.ultimo_checkpoint` — construída na Semana 7. |
+| **GameManager** (Autoload) | Define as regras da partida (condições de início, vitória, derrota) e mantém estado de partida compartilhado para o nível atual — reúne o que a Unreal separa em GameMode/GameState. Expõe `spawn_player()`, que posiciona o Player no início do nível: no `Checkpoint` cujo `id_checkpoint` corresponde a `SaveManager.ultimo_checkpoint`, ou, na ausência dele, no `PlayerStart` — é o equivalente a `GameMode.ChoosePlayerStart` da Unreal. Expõe também `player_morreu()`, chamado pelo Player ao receber `HealthComponent.died`: restaura a vida ao máximo, incrementa `SaveManager.mortes` e chama `spawn_player()`; se `mortes >= LIMITE_TENTATIVAS` (constante do `GameManager`, placeholder ajustável), instancia a Scene `GameOver` em vez de respawnar. |
+| **SaveManager** (Autoload) | Mantém dados persistentes entre cenas e centraliza o slot de save ativo. Guarda, em memória, `itens_coletados: Array[String]`, `ultimo_checkpoint: String` (o id do ponto de respawn corrente) e `mortes: int`, espelhando o que o `SaveData` persiste em disco. Não guarda coordenadas — apenas ids e contadores. |
+| **HUD** (CanvasLayer + Control) | Interface principal exibida durante o gameplay, consumindo dados de GameManager (incluindo `mortes`/tentativas restantes), HealthComponent e InventoryComponent. |
 | **PauseMenu** (Control) | Interface de pausa, acionada via input de alto nível do Player. |
-| **SaveData** (Resource) | Objeto de Resource responsável por serializar o progresso do jogador (checkpoints, itens coletados). |
+| **GameOver** (CanvasLayer + Control) | Tela de derrota exibida pelo `GameManager` quando as tentativas se esgotam. Pausa a árvore (`get_tree().paused = true`); o botão "Reiniciar" apaga o save (`user://save_data.tres`), zera `SaveManager` e recarrega o nível — o Player volta ao `PlayerStart`. Base na Semana 8, refinada com o HUD na Semana 9. |
+| **SaveData** (Resource) | Objeto de Resource responsável por serializar o progresso do jogador: `itens_coletados`, `ultimo_checkpoint` e `mortes` (Semana 7 + fluxo de morte da Semana 8). A evolução para inventário real/vida segue no DC-05. |
+
+`Chest` e `Pickup` não conhecem inventário nem save: apenas emitem `item_collected(item: ItemData)`. Um handler único — no nó do nível ou no `GameManager` — recebe o Signal e, até a Semana 9, adiciona `item.nome` à lista `itens_coletados` do `SaveManager` (gravada no `SaveData` pelo `SaveComponent` ao alcançar um `Checkpoint`); a partir da Semana 10 o handler passa a repassar o `ItemData` ao `InventoryComponent`. O handler ignora item cujo `nome` já esteja em `itens_coletados`, garantindo idempotência quando o nível é recarregado a partir de um save. As coordenadas e o estado de cada `Chest`/`Pickup` vivem apenas no Node em cena.
+
+**Fluxo de spawn do Player (equivalente a `PlayerStart`/`ChoosePlayerStart` da Unreal).** A posição inicial do Player é sempre uma coordenada de um Node em cena — o `PlayerStart` (`Marker3D`) ou uma instância de `Checkpoint` —, nunca um valor no `GameManager`/`SaveManager`, que guardam apenas *qual* ponto está ativo (`SaveManager.ultimo_checkpoint`, um id). Ao carregar o nível, o script raiz de `level_exploration.tscn` lê o save via `SaveComponent.carregar()`, copia `itens_coletados`/`ultimo_checkpoint` para o `SaveManager` e chama `GameManager.spawn_player()`, que resolve o id para o Node correspondente (ou cai no `PlayerStart`) e reposiciona o Player. `spawn_player()` é público e reutilizável: o fluxo de morte/respawn apenas o chama de novo, sem reimplementar posicionamento. A base (`PlayerStart` + `spawn_player()` sem checkpoint) é construída na Semana 4; a escolha por checkpoint e o carregamento do save ao iniciar, na Semana 7.
+
+**Fluxo de morte/respawn do Player (Semana 8).** O Player conecta `HealthComponent.died` a um handler próprio que chama `GameManager.player_morreu()` — a reação vive no `GameManager` (regra de partida), o wiring vive no Player, mesmo padrão do handler de coleta. `player_morreu()`: incrementa `SaveManager.mortes`; se ainda houver tentativas, restaura a vida ao máximo (`HealthComponent.reiniciar()`) e chama `spawn_player()` (respawn no último `Checkpoint`, ou no `PlayerStart` se nenhum foi alcançado); se `mortes >= LIMITE_TENTATIVAS`, instancia a Scene `GameOver`. Como a vida é sempre restaurada ao máximo no respawn, **a vida do Player não é persistida no `SaveData`** (isso resolve a decisão 2 do DC-05). O `LIMITE_TENTATIVAS` é um placeholder ajustável por grupo. Este fluxo define a condição de **derrota** do Vertical Slice; a condição de **vitória** (objetivo final) é tratada no DC-02.
 
 ### Components principais
 
@@ -188,7 +204,7 @@ Apenas as Scenes (com seus scripts/Orchestrations) e Components principais são 
 |---|---|
 | **InteractionComponent** | Detecta objetos interativos próximos (via Area3D) e dispara a chamada ao contrato Interactable, mantendo Player desacoplado da lógica específica de cada objeto interativo. |
 | **InventoryComponent** | Armazena e gerencia os itens coletados pelo jogador, expondo dados para o HUD sem conhecer detalhes de UI. |
-| **HealthComponent** | Gerencia vida, dano e morte, construído na Semana 8 sobre Player e reutilizado por Enemy na Semana 11 sem duplicação de lógica. |
+| **HealthComponent** | Gerencia vida, dano e morte, construído na Semana 8 sobre Player e reutilizado por Enemy na Semana 11 sem duplicação de lógica. Expõe `apply_damage()`, o Signal `died` e `reiniciar()` (restaura `vida_atual = vida_maxima`, chamado no respawn do Player). Não conhece o dono nem reage ao próprio `died` — a reação é de quem escuta o Signal. |
 | **SaveComponent** | Centraliza a leitura/escrita do SaveData, evitando que múltiplas cenas implementem lógica de serialização própria. |
 
 Esta separação existe para que cada sistema ensinado no Cronograma tenha um local arquitetural único e óbvio, evitando lógica duplicada entre Scenes — princípio central da Rubrica 4 (Code Review) do Sistema de Avaliação.
@@ -204,9 +220,9 @@ res://
 ├── scenes/
 │   ├── characters/       (Player.tscn, Enemy.tscn)
 │   ├── interactables/    (Door.tscn, Lever.tscn, Chest.tscn, Pickup.tscn, Checkpoint.tscn)
-│   ├── ui/               (HUD.tscn, PauseMenu.tscn, InventoryUI.tscn)
+│   ├── ui/               (HUD.tscn, PauseMenu.tscn, GameOver.tscn, InventoryUI.tscn)
 │   └── levels/
-│       ├── exploration/  (zona externa)
+│       ├── exploration/  (zona externa — level_exploration.tscn contém o Marker3D PlayerStart)
 │       └── dungeon/      (estrutura interna)
 ├── scripts/
 │   ├── autoload/         (game_manager.gd, save_manager.gd)
@@ -311,6 +327,7 @@ Cada seta representa acréscimo, nunca substituição: o produto de um módulo �
 | Save/Load via Resource + FileAccess | PlayerPrefs / serialização própria em JSON | Necessidade de persistir estado entre sessões | Godot serializa Resources nativamente (`ResourceSaver`/`ResourceLoader`) ou via JSON com FileAccess; Unity exige decisão própria de formato de serialização. |
 | AnimationTree (State Machine, BlendSpace) | Animator Controller (State Machine, Blend Tree) | Máquina de estados para transições de animação | BlendSpace1D/2D do Godot é configurado por eixos explícitos; Blend Tree da Unity exige configuração equivalente manual. |
 | Control nodes | UI Toolkit / uGUI | Sistema de UI em árvore para interface em tempo real | Control nodes do Godot fazem parte da mesma Scene Tree de todo o resto; Unity historicamente dividiu-se entre uGUI (baseado em GameObject) e UI Toolkit (baseado em UXML/USS). |
+| Respawn no `Checkpoint` via `GameManager.player_morreu()` + `spawn_player()` | Lógica de respawn no gerenciador do time / `GameMode` na Unreal | Um ponto central decide o que fazer quando o jogador morre (reposicionar, contar tentativas, encerrar) | Godot não tem `GameMode` — a regra de derrota é uma responsabilidade explícita do `GameManager` (Autoload); Unreal a formaliza no `GameMode`, Unity depende de convenção do time. |
 | Behavior Tree + Blackboard (addon LimboAI) | Behavior Designer / NodeCanvas (assets de terceiros) | Estrutura de decisão + memória compartilhada do agente | Nem Godot nem Unity oferecem Behavior Tree nativo — ambos dependem de addons/packages de terceiros com filosofia semelhante. |
 
 Esta tabela deve ser expandida (não substituída) por cada plano de aula que introduzir um dos sistemas acima, conforme já exigido pela filosofia da disciplina.

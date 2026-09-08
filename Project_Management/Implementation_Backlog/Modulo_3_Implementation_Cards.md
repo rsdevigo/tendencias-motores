@@ -2,6 +2,8 @@
 
 **Nota de fonte:** a partir do Módulo 3 não existem Tutoriais passo a passo (regra pedagógica — Challenge Based Learning, ver `PEDAGOGICAL_RULES.md`). As cartas abaixo são derivadas de `PROJECT_ARCHITECTURE.md` §6/§7 e do Cronograma (Semanas 8–11), que descrevem o sistema e o conceito, mas deliberadamente não descrevem clique-a-clique. Por isso, a maioria das cartas aqui é **Tipo B** mesmo quando a arquitetura está clara — o valor de "quanto" (vida, dano, raio de detecção) fica em aberto por design da disciplina, não por omissão deste plano.
 
+> **Atualização (2026-09-02):** **DC-03** (fluxo de morte/respawn do Player) resolvido — nova carta **IC-VS08-05** (respawn no Checkpoint + contador de tentativas + `GameOver`), Semana 8. A antiga IC-VS11-04 foi reduzida ao lado do Enemy (ainda bloqueada por **DC-04**). O `HealthComponent` (IC-VS08-02) ganhou `reiniciar()`; o `SaveData` ganhou `mortes: int`; a vida do Player **não** é persistida (resolve a decisão 2 do DC-05).
+
 ---
 
 ## IC-VS08-01 — Substituição da CapsuleMesh pelo Modelo Animado (Kenney Mini Characters)
@@ -54,18 +56,19 @@
 2. Propriedades: `vida_atual`, `vida_maxima` (**PLACEHOLDER**: definir um valor de exemplo, ex. 100, comentado como "aguardando definição em PROJECT_ARCHITECTURE.md").
 3. Método público `apply_damage(quantidade: int) -> void`, reduzindo `vida_atual` e clampando em zero.
 4. Sinal `died`, emitido quando `vida_atual` chega a zero.
-5. Adicionar como Node filho de `Player`.
+5. Método público `reiniciar() -> void`, restaurando `vida_atual = vida_maxima` (usado pelo respawn — ver IC-VS08-05).
+6. Adicionar como Node filho de `Player`.
 
-**Restrições:** `HealthComponent` não deve conhecer quem é seu dono (Player ou Enemy) — apenas expor vida, dano e o sinal `died`. Nenhuma reação a `died` é implementada nesta carta do lado do Player (ver DC-03 — bloqueado).
+**Restrições:** `HealthComponent` não deve conhecer quem é seu dono (Player ou Enemy) — apenas expor vida, dano, `died` e `reiniciar()`. A reação a `died` do Player é implementada em IC-VS08-05 (DC-03 resolvido), não aqui.
 
-**Testes:** chamar `apply_damage` via debug; confirmar redução de vida e emissão de `died` ao chegar a zero.
+**Testes:** chamar `apply_damage` via debug; confirmar redução de vida e emissão de `died` ao chegar a zero; `reiniciar()` restaura o máximo.
 
 **Critérios de Aceite:**
-- [ ] `HealthComponent` funcional, testável isoladamente, com placeholder de vida documentado no código.
+- [ ] `HealthComponent` funcional, testável isoladamente, com placeholder de vida documentado no código, expondo `apply_damage()`, `died` e `reiniciar()`.
 
-**Definition of Done:** Component genérico o suficiente para ser reaproveitado pelo Enemy (IC-VS11-01) sem alteração. **A reação ao `died` do Player permanece não implementada — Blocked By: DC-03.**
+**Definition of Done:** Component genérico o suficiente para ser reaproveitado pelo Enemy (IC-VS11-01) sem alteração.
 
-**Dependências:** Blocked By: IC-VS08-01. Blocks: IC-VS08-03, IC-VS09-01, IC-VS11-01 (reuso).
+**Dependências:** Blocked By: IC-VS08-01. Blocks: IC-VS08-03, IC-VS08-05, IC-VS09-01, IC-VS11-01 (reuso).
 
 **Story Points:** 3
 
@@ -157,6 +160,49 @@
 
 ---
 
+## IC-VS08-05 — Fluxo de Morte/Respawn do Player + GameOver
+
+**Objetivo:** implementar a reação ao `HealthComponent.died` do Player — respawn no último `Checkpoint`, contador de tentativas e tela de `GameOver` ao esgotá-las.
+
+**Contexto:** DC-03 resolvido. Semana 8 (sem tutorial — Módulo 3+). Fecha a consequência de derrota que faltava desde a Semana 7. Reutiliza `spawn_player()` (DC-06) sem novo código de posicionamento.
+
+**Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §6 (linhas "Fluxo de morte/respawn" e "GameOver"), §7 (GameManager, GameOver, SaveManager, SaveData + parágrafo "Fluxo de morte/respawn do Player"), §8; `Design_Backlog/Design_Cards.md` → DC-03.
+
+**Tipo:** A para o fluxo; `LIMITE_TENTATIVAS` é um placeholder numérico ajustável (Tipo B nesse recorte).
+
+**Arquivos Esperados:**
+```
+res://scenes/ui/GameOver.tscn + game_over.gd
+modificação em game_manager.gd (player_morreu(), LIMITE_TENTATIVAS)
+modificação em save_manager.gd (mortes: int) e save_data.gd (mortes: int)
+modificação em player.gd (conectar HealthComponent.died -> handler -> GameManager.player_morreu())
+```
+
+**Implementação:**
+1. `save_data.gd`: `@export var mortes: int = 0`. `save_manager.gd`: `var mortes: int = 0` (copiado do/para o `SaveData` no mesmo fluxo de IC-VS07-05); `SaveComponent.salvar()` passa a incluir `mortes`.
+2. `health_component.gd`: garantir `reiniciar()` (de IC-VS08-02).
+3. `game_manager.gd`: `const LIMITE_TENTATIVAS := 3` (**PLACEHOLDER**, comentado). `func player_morreu() -> void`: `SaveManager.mortes += 1`; se `SaveManager.mortes >= LIMITE_TENTATIVAS` → instanciar/adicionar `GameOver.tscn`; senão → `<HealthComponent>.reiniciar()` + `spawn_player()`.
+4. `player.gd`: no `_ready()`, conectar `$HealthComponent.died` a um handler local que chama `GameManager.player_morreu()`.
+5. `GameOver.tscn`: `CanvasLayer` + `Control` + `Label` + `Button` "Reiniciar". `game_over.gd`: no `_ready()` `get_tree().paused = true` (e `process_mode` do próprio GameOver = ALWAYS); o botão apaga `user://save_data.tres`, zera `SaveManager` (`mortes`, `itens_coletados`, `ultimo_checkpoint`), `get_tree().paused = false` e `get_tree().reload_current_scene()`.
+
+**Restrições:** a reação vive no `GameManager` (regra de partida); o Player só faz o wiring. Nenhuma coordenada nos Autoloads. `HealthComponent` não sabe que morreu "de novo" — quem conta é o `GameManager`. Não implementar aqui a condição de vitória (DC-02).
+
+**Testes:** matar o Player via `apply_damage` de debug → respawn no último `Checkpoint` com vida cheia e `mortes` incrementado; repetir até `LIMITE_TENTATIVAS` → `GameOver` aparece, jogo pausado; "Reiniciar" → save apagado, Player no `PlayerStart`, `mortes = 0`.
+
+**Critérios de Aceite:**
+- [ ] `died` do Player → `GameManager.player_morreu()` (wiring no Player, lógica no GameManager).
+- [ ] Respawn no último `Checkpoint` (ou `PlayerStart`) com vida restaurada ao máximo; `SaveManager.mortes` incrementado e persistido.
+- [ ] `GameOver.tscn` exibida ao atingir `LIMITE_TENTATIVAS`, com jogo pausado e "Reiniciar" fazendo reset completo.
+- [ ] `SaveData` inclui `mortes: int`; vida do Player não é persistida.
+
+**Definition of Done:** condição de derrota do Vertical Slice funcional de ponta a ponta; nenhuma regressão no ciclo de save/spawn da Semana 7.
+
+**Dependências:** Blocked By: IC-VS08-02, IC-VS07-05. Blocks: IC-VS09-01 (HUD mostra tentativas), IC-VS11-04.
+
+**Story Points:** 3
+
+---
+
 ## IC-VS09-01 — Control Simples Vinculado ao HealthComponent
 
 **Objetivo:** exibir a vida do Player em tempo real na tela.
@@ -201,7 +247,7 @@
 **Arquivos Esperados:** `res://scenes/ui/HUD.tscn`
 
 **Implementação:**
-1. Criar `HUD.tscn`: `CanvasLayer` raiz, contendo o Control de vida (IC-VS09-01) e ao menos um segundo dado (**PLACEHOLDER**: `SaveManager.itens_coletados`, até o `InventoryComponent` da VS-10 fornecer um dado mais completo).
+1. Criar `HUD.tscn`: `CanvasLayer` raiz, contendo o Control de vida (IC-VS09-01) e ao menos um segundo dado (**PLACEHOLDER**: `SaveManager.itens_coletados` ou as tentativas restantes — `GameManager.LIMITE_TENTATIVAS - SaveManager.mortes`, disponível desde IC-VS08-05 —, até o `InventoryComponent` da VS-10 fornecer um dado mais completo).
 2. Instanciar `HUD.tscn` em `level_exploration.tscn`.
 
 **Restrições:** nenhum dado exibido pode ser exclusivo da UI — todo elemento do HUD espelha um sistema que já existe (`HealthComponent`, `SaveManager`).
@@ -289,18 +335,20 @@
 1. Criar `InventoryComponent` (Node customizado), com uma coleção (`Array[ItemData]`) e métodos `adicionar_item(item: ItemData)`, `remover_item(item: ItemData)`.
 2. **PLACEHOLDER**: nenhum limite de capacidade nesta carta (comentar explicitamente que é ilimitado até decisão em contrário).
 3. Adicionar como Node filho de `Player`.
-4. Testar via chamada manual de `adicionar_item()` com uma instância `.tres` existente (Semana 6) — **a população via gameplay real (coletar de um `Chest`) depende de DC-01/IC-VS06-03 e não é parte desta carta.**
+4. Testar via chamada manual de `adicionar_item()` com uma instância `.tres` existente (Semana 6).
+5. Redirecionar o handler de coleta (`_ao_coletar_item`, criado em IC-VS06-03): além de `SaveManager.registrar_item(item.nome)`, passar a chamar `Player.inventory.adicionar_item(item)` com o `ItemData` completo. `Pickup`/`Chest` não são alterados — só o handler. A evolução do schema de `SaveData` para guardar `ItemData` real fica em **DC-05**.
 
-**Restrições:** o `InventoryComponent` não deve conhecer detalhes de UI — apenas expor os dados para a `InventoryUI` (IC-VS10-02) consultar.
+**Restrições:** o `InventoryComponent` não deve conhecer detalhes de UI — apenas expor os dados para a `InventoryUI` (IC-VS10-02) consultar. `Pickup`/`Chest` continuam intocados — a troca de destino do item é responsabilidade exclusiva do handler.
 
-**Testes:** chamada manual de `adicionar_item`/`remover_item` via debug; confirmar estado interno correto.
+**Testes:** chamada manual de `adicionar_item`/`remover_item` via debug; coletar um `Pickup`/`Chest` no nível e confirmar que o item aparece tanto no `InventoryComponent` quanto em `SaveManager.itens_coletados`.
 
 **Critérios de Aceite:**
 - [ ] `InventoryComponent` funcional isoladamente (testável sem depender de `Chest`/`Pickup`).
+- [ ] Handler de coleta redirecionado para popular o `InventoryComponent`, sem alterar `Pickup`/`Chest`.
 
-**Definition of Done:** pronto para ser consumido pela `InventoryUI`; população real via gameplay marcada como pendente (DC-01).
+**Definition of Done:** pronto para ser consumido pela `InventoryUI`; coleta via gameplay populando o inventário; persistência do `ItemData` real pendente de DC-05.
 
-**Dependências:** Blocked By: IC-VS09-03. Blocks: IC-VS10-02.
+**Dependências:** Blocked By: IC-VS09-03, IC-VS06-03. Blocks: IC-VS10-02.
 
 **Story Points:** 3
 
@@ -530,16 +578,18 @@ res://scenes/characters/Enemy.tscn
 
 ---
 
-## IC-VS11-04 — Reação à Morte do Player e do Enemy 🔴
+## IC-VS11-04 — Reação à Morte do Enemy 🔴
 
-**STATUS: PARCIALMENTE BLOQUEADO — Tipo C.**
+**STATUS: PARCIALMENTE BLOQUEADO — Tipo C (apenas o lado do Enemy).**
 
-**O que PODE ser implementado (Tipo A, não bloqueado):** os sinais `died` de ambos os `HealthComponent` (Player e Enemy) já existem desde IC-VS08-02/IC-VS11-01 e podem ser emitidos corretamente quando a vida chega a zero — isso não depende de nenhuma decisão pendente.
+**Lado do Player: RESOLVIDO (DC-03).** A reação ao `died` do Player — respawn no `Checkpoint`, contador de tentativas, `GameOver` — está na carta **IC-VS08-05** (Semana 8). Nada dela é refeito aqui; o combate da Semana 11 apenas se apoia nela como consequência de derrota já pronta.
 
-**O que NÃO pode ser implementado nesta carta:** qualquer reação a esses sinais — respawn do Player, tela de game over, remoção/drop do Enemy — porque nenhuma dessas decisões existe em `PROJECT_ARCHITECTURE.md`. Implementá-las aqui seria inventar uma regra.
+**Lado do Enemy: ainda bloqueado (DC-04).** Qualquer reação ao `died` do Enemy — `queue_free()`, estado terminal na Behavior Tree, drop de item — depende do DC-04, que continua aberto. Implementá-la aqui seria inventar uma regra.
 
-**Ver:** `Design_Backlog/Design_Cards.md` → **DC-03** (morte do Player) e **DC-04** (morte do Enemy).
+**O que PODE ser implementado agora (Tipo A):** confirmar que o `died` do Enemy é emitido corretamente pelo `HealthComponent` reutilizado (IC-VS11-01) quando a vida chega a zero.
 
-**Dependências:** Blocked By: DC-03, DC-04. Blocks: fechamento formal da Definition of Done de VS-11 (o Milestone MS-3 pode ser considerado tecnicamente jogável sem isso, mas não "completo" quanto a consequência de derrota/vitória).
+**Ver:** `Design_Backlog/Design_Cards.md` → **DC-04** (morte do Enemy — aberto); **DC-03** e **DC-06** (resolvidos).
 
-**Story Points:** não estimado (a parte não bloqueada — apenas confirmar emissão do sinal — já está coberta por IC-VS08-02/IC-VS11-03; nenhum ponto adicional é atribuído a uma implementação que não existe).
+**Dependências:** Blocked By: DC-04. Blocks: fechamento formal da Definition of Done de VS-11 quanto à consequência de derrota do Enemy.
+
+**Story Points:** não estimado (a parte do Enemy não existe até DC-04; a emissão do sinal já está coberta por IC-VS11-01).
