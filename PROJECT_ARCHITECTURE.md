@@ -194,7 +194,7 @@ Apenas as Scenes (com seus scripts/Orchestrations) e Components principais são 
 
 `Chest` e `Pickup` não conhecem inventário nem save: apenas emitem `item_collected(item: ItemData)`. Um handler único — no nó do nível ou no `GameManager` — recebe o Signal e, até a Semana 9, adiciona `item.nome` à lista `itens_coletados` do `SaveManager` (gravada no `SaveData` pelo `SaveComponent` ao alcançar um `Checkpoint`); a partir da Semana 10 o handler passa a repassar o `ItemData` ao `InventoryComponent`. O handler ignora item cujo `nome` já esteja em `itens_coletados`, garantindo idempotência quando o nível é recarregado a partir de um save. As coordenadas e o estado de cada `Chest`/`Pickup` vivem apenas no Node em cena.
 
-**Fluxo de spawn do Player (equivalente a `PlayerStart`/`ChoosePlayerStart` da Unreal).** A posição inicial do Player é sempre uma coordenada de um Node em cena — o `PlayerStart` (`Marker3D`) ou uma instância de `Checkpoint` —, nunca um valor no `GameManager`/`SaveManager`, que guardam apenas *qual* ponto está ativo (`SaveManager.ultimo_checkpoint`, um id). Ao carregar o nível, o script raiz de `level_exploration.tscn` lê o save via `SaveComponent.carregar()`, copia `itens_coletados`/`ultimo_checkpoint` para o `SaveManager` e chama `GameManager.spawn_player()`, que resolve o id para o Node correspondente (ou cai no `PlayerStart`) e reposiciona o Player. `spawn_player()` é público e reutilizável: o fluxo de morte/respawn apenas o chama de novo, sem reimplementar posicionamento. A base (`PlayerStart` + `spawn_player()` sem checkpoint) é construída na Semana 4; a escolha por checkpoint e o carregamento do save ao iniciar, na Semana 7.
+**Fluxo de spawn do Player (equivalente a `PlayerStart`/`ChoosePlayerStart` da Unreal).** A posição inicial do Player é sempre uma coordenada de um Node em cena — o `PlayerStart` (`Marker3D`) ou uma instância de `Checkpoint` —, nunca um valor no `GameManager`/`SaveManager`, que guardam apenas *qual* ponto está ativo (`SaveManager.ultimo_checkpoint`, um id). Ao carregar o nível, o script ou Orchestration raiz de `level_exploration.tscn` lê o save via `SaveComponent.carregar()`, copia `itens_coletados`/`ultimo_checkpoint` para o `SaveManager` e chama `GameManager.spawn_player()`, que resolve o id para o Node correspondente (ou cai no `PlayerStart`) e reposiciona o Player. `spawn_player()` é público e reutilizável: o fluxo de morte/respawn apenas o chama de novo, sem reimplementar posicionamento. A base (`PlayerStart` + `spawn_player()` sem checkpoint) é construída na Semana 4; a escolha por checkpoint e o carregamento do save ao iniciar, na Semana 7.
 
 **Fluxo de morte/respawn do Player (Semana 8).** O Player conecta `HealthComponent.died` a um handler próprio que chama `GameManager.player_morreu()` — a reação vive no `GameManager` (regra de partida), o wiring vive no Player, mesmo padrão do handler de coleta. `player_morreu()`: incrementa `SaveManager.mortes`; se ainda houver tentativas, restaura a vida ao máximo (`HealthComponent.reiniciar()`) e chama `spawn_player()` (respawn no último `Checkpoint`, ou no `PlayerStart` se nenhum foi alcançado); se `mortes >= LIMITE_TENTATIVAS`, instancia a Scene `GameOver`. Como a vida é sempre restaurada ao máximo no respawn, **a vida do Player não é persistida no `SaveData`** (isso resolve a decisão 2 do DC-05). O `LIMITE_TENTATIVAS` é um placeholder ajustável por grupo. Este fluxo define a condição de **derrota** do Vertical Slice; a condição de **vitória** (objetivo final) é tratada no DC-02.
 
@@ -225,10 +225,12 @@ res://
 │       ├── exploration/  (zona externa — level_exploration.tscn contém o Marker3D PlayerStart)
 │       └── dungeon/      (estrutura interna)
 ├── scripts/
-│   ├── autoload/         (game_manager.gd, save_manager.gd)
+│   ├── autoload/         (game_manager.gd, save_manager.gd — apenas se o grupo optar por GDScript em vez de Orchestration)
 │   ├── components/       (interaction_component.gd, inventory_component.gd, health_component.gd, save_component.gd)
 │   └── resources/        (classes de Resource customizado, ex.: item_data.gd — Semana 6)
-├── orchestrations/       (arquivos .torch do Orchestrator equivalentes aos scripts acima)
+├── orchestrations/
+│   ├── autoload/         (game_manager.torch, save_manager.torch — Orchestration registrada diretamente em Project Settings > Autoload, como um .gd)
+│   └── ...               (demais arquivos .torch equivalentes aos scripts acima)
 ├── resources/
 │   ├── items/            (ItemData .tres)
 │   └── save/             (SaveData .tres)
@@ -255,7 +257,7 @@ Godot não usa prefixos de tipo de asset como a Unreal (`BP_`, `WBP_`); a conven
 | Script GDScript | snake_case, mesmo nome da Scene | `player.gd` |
 | Orchestration (Orchestrator) | snake_case, sufixo `.torch` | `player.torch` |
 | Class name (GDScript) | PascalCase | `class_name HealthComponent` |
-| Autoload / Singleton | PascalCase (nome do node), snake_case (arquivo) | `GameManager` / `game_manager.gd` |
+| Autoload / Singleton | PascalCase (nome do node), snake_case (arquivo) — Orchestration `.torch` registrada diretamente como Autoload; `.gd` só se o grupo optar por GDScript | `GameManager` / `game_manager.torch` |
 | Resource customizado | PascalCase (classe), snake_case (arquivo `.tres`) | `ItemData` / `item_key.tres` |
 | Enum | PascalCase | `enum ItemType { KEY, TOOL, QUEST }` |
 | Signal | snake_case, verbo no passado ou substantivo de evento | `interacted`, `item_collected` |

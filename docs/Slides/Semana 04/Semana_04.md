@@ -62,8 +62,8 @@ Encontro guiado. Retoma o projeto da Semana 3 sem alterar nada do que já existe
 
 - Revisão do Encontro 2 da Semana 3 (build exportado, encerramento do Módulo 1) (15 min)
 - Introdução: onde vive o estado que não pertence a nenhuma cena específica (20 min)
-- Demonstração: criação do script `GameManager`, registro como Autoload e `spawn_player()` com o `PlayerStart` (35 min)
-- Laboratório: cada estudante cria o `GameManager`, o `PlayerStart` no nível e `spawn_player()` (40 min)
+- Demonstração: criação da Orchestration `GameManager`, registro como Autoload e `spawn_player()` com o `PlayerStart` (35 min)
+- Laboratório: cada estudante cria o `GameManager` (Orchestration), o `PlayerStart` no nível e `spawn_player()` (40 min)
 - Desafio: adicionar uma variável de estado de partida própria (15 min)
 - Feedback e fechamento (5 min)
 
@@ -103,14 +103,15 @@ Referência: Godot Docs — Singletons (Autoload).
 
 ## Autoload/Singleton no Godot
 
-- **Autoload** — script registrado em Project Settings, instanciado automaticamente na raiz da árvore de cenas
-- Acessível globalmente por nome, de qualquer script do projeto
+- **Autoload** — script (`.gd`), Orchestration (`.torch`) **ou** cena (`.tscn`) registrado em Project Settings, instanciado automaticamente na raiz da árvore de cenas
+- Acessível globalmente por nome, de qualquer script ou Orchestration do projeto
 - Sobrevive a qualquer troca de cena
 - O Godot formaliza como recurso de primeira classe do editor
 
 <!--
 Diferenciar Autoload de um Node comum adicionado a uma Scene: o Autoload vive fora da árvore de cenas do nível.
-Documentação: Godot Docs — Singletons (Autoload).
+O Orchestrator permite selecionar o .torch diretamente no campo Path do Autoload, como um .gd — sem cena wrapper.
+Documentação: Godot Docs — Singletons (Autoload); Orchestrator Docs — Autoloads.
 -->
 
 ---
@@ -118,12 +119,13 @@ Documentação: Godot Docs — Singletons (Autoload).
 ## GameManager — Papel no Projeto
 
 - Reúne regras de partida e estado compartilhado em um único ponto
-- Criado como script `Node`, registrado como Autoload
-- Convenção: `class_name` em PascalCase, arquivo em snake_case
-- Local no projeto: `scripts/autoload/game_manager.gd`
+- Construído como Orchestration com classe base `Node`, registrada diretamente como Autoload
+- GDScript aparece apenas como **implementação de referência** da lógica do grafo
+- Local no projeto: `orchestrations/autoload/game_manager.torch`
 
 <!--
-Reforçar a convenção de nomenclatura do PROJECT_ARCHITECTURE.md (seção 10): class_name PascalCase, arquivo snake_case.
+Reforçar a convenção de nomenclatura do PROJECT_ARCHITECTURE.md (seções 8–9): Orchestration .torch em snake_case; Node Name do Autoload em PascalCase (GameManager).
+O .torch é registrado diretamente no Autoload, exatamente como um .gd.
 -->
 
 ---
@@ -137,7 +139,7 @@ Reforçar a convenção de nomenclatura do PROJECT_ARCHITECTURE.md (seção 10):
 
 ### Godot
 
-- Autoload/Singleton, registrado em Project Settings
+- Autoload/Singleton, registrado em Project Settings (script `.gd` ou Orchestration `.torch`)
 - Instância única garantida pelo editor
 - `GameManager` reúne GameMode + GameState
 
@@ -165,11 +167,11 @@ Não ensinar Unity em profundidade — apenas contrastar arquitetura.
 - Toda engine precisa decidir a posição inicial do jogador ao carregar um nível
 - Unreal formaliza: actor `PlayerStart` (a coordenada) + `GameMode.ChoosePlayerStart` (a decisão)
 - Godot não formaliza: um `Marker3D` no nível guarda a coordenada; o `GameManager` a consulta
-- `GameManager.spawn_player()` lê o grupo `player_start` e reposiciona o Player — **nenhuma coordenada vive no `GameManager`**
+- `GameManager.spawn_player()` (função pública do grafo) lê o grupo `player_start` e reposiciona o Player — **nenhuma coordenada vive no `GameManager`**
 
 <!--
 A lição é a mesma do Autoload: a coordenada é dado da cena (muda quando o level designer arrasta o marcador); a política ("nascer no início") é do gerenciador.
-Erro comum: escrever `var pos_inicial := Vector3(...)` no GameManager em vez de ler o Marker3D.
+Erro comum: criar uma variável Vector3 no grafo do GameManager em vez de ler o Marker3D.
 Nesta semana spawn_player() só conhece o PlayerStart; na Semana 7 passa a escolher entre PlayerStart e o último Checkpoint.
 Não detalhar passo a passo — papel do Tutorial (Semana 4, Encontro 1, Parte 3).
 -->
@@ -180,15 +182,16 @@ Não detalhar passo a passo — papel do Tutorial (Semana 4, Encontro 1, Parte 3
 
 O que será construído:
 
-- Script `scripts/autoload/game_manager.gd`, com `class_name GameManager`
-- Registro em **Project Settings > Autoload**
-- Teste de acesso a partir do script do Player, com `print(GameManager)`
+- Orchestration `orchestrations/autoload/game_manager.torch`, classe base `Node`
+- Registro direto em **Project Settings > Autoload**
+- Teste de acesso a partir do Player, com um nó Print / `print(GameManager)`
 
 Por quê: primeiro Autoload do projeto, base de todo o Módulo 2.
 
 <!--
 Não detalhar passo a passo aqui — isso é papel do Tutorial (Semana 4, Encontro 1). O slide só estrutura a demonstração ao vivo.
-Reforçar: remover o print() de teste antes de encerrar a demonstração.
+Mostrar a lógica do grafo ao lado da versão GDScript equivalente (implementação de referência).
+Reforçar: remover o teste (nó Print / print()) antes de encerrar a demonstração.
 -->
 
 ---
@@ -197,7 +200,7 @@ Reforçar: remover o print() de teste antes de encerrar a demonstração.
 >
 > Objetivo: mostrar a aba Autoload de Project Settings com o `GameManager` recém-registrado.
 > Enquadramento: captura de tela da janela Project Settings, aba Autoload.
-> Elementos presentes: campo Path apontando para `res://scripts/autoload/game_manager.gd`, campo Node Name como `GameManager`, caixa Enable marcada.
+> Elementos presentes: campo Path apontando para `res://orchestrations/autoload/game_manager.torch`, campo Node Name como `GameManager`, caixa Enable marcada.
 > Destaque visual: a linha do `GameManager` na lista de Autoloads.
 > Legenda sugerida: "GameManager registrado e habilitado como Autoload em Project Settings."
 
@@ -211,25 +214,26 @@ Usar esta imagem como referência caso a demonstração ao vivo não seja possí
 
 Cada estudante replica, no próprio projeto:
 
-1. Pasta `scripts/autoload/` criada, conforme PROJECT_ARCHITECTURE.md
-2. Script `game_manager.gd`, com `class_name GameManager`
-3. Registro em **Project Settings > Autoload**
-4. Teste de acesso ao `GameManager` a partir do script do Player
+1. Pasta `orchestrations/autoload/` criada, conforme PROJECT_ARCHITECTURE.md
+2. Orchestration `game_manager.torch`, classe base `Node`
+3. Registro direto em **Project Settings > Autoload**
+4. Teste de acesso ao `GameManager` a partir do Player
 5. `Marker3D` `PlayerStart` no nível (grupo `player_start`); Player no grupo `player`
-6. `spawn_player()` no `GameManager` + chamada no `_ready()` do nível; mover o marcador muda o spawn
-7. Remoção do `print()` de teste ao final
+6. Função pública `spawn_player()` no `GameManager` + chamada no `_ready()` do nível; mover o marcador muda o spawn
+7. Remoção do teste (nó Print / `print()`) ao final
 
 <!--
 Erro comum: registrar o Autoload com Node Name em minúsculo ou diferente de GameManager — sempre ajustar manualmente para PascalCase.
 Erro comum: testar o acesso antes de salvar o registro em Project Settings.
+Erro comum: esquecer de marcar spawn_player() como função pública no grafo.
 -->
 
 ---
 
 ## Boas Práticas — Autoload
 
-- Manter todo Autoload dentro de `scripts/autoload/`, nunca solto na raiz de `res://`
-- Escrever, desde o primeiro script, um comentário curto explicando sua responsabilidade
+- Manter toda Orchestration de Autoload dentro de `orchestrations/autoload/`, nunca solta na raiz de `res://`
+- Registrar, desde o primeiro grafo, uma nota curta explicando sua responsabilidade
 - Testar o acesso ao Autoload a partir de uma cena diferente da que está sendo editada
 - Nunca duplicar em uma Scene um dado que já pertence ao `GameManager`
 
@@ -247,7 +251,7 @@ Adicione ao `GameManager` uma variável de estado de partida própria, não demo
 
 <div class="objectives">
 
-Justifique em um comentário no script por que essa variável pertence ao `GameManager` e não a uma Scene específica.
+Justifique em uma nota no grafo por que essa variável pertence ao `GameManager` e não a uma Scene específica.
 
 </div>
 
@@ -259,9 +263,9 @@ Circular pela sala pedindo justificativas curtas em voz alta. Sem instrumento fo
 
 ## Fechamento — Encontro 1
 
-- `GameManager` criado e registrado como Autoload, com acesso validado a partir do Player
-- `PlayerStart` (Marker3D) no nível; `spawn_player()` posiciona o Player nele ao carregar — sem coordenada no script
-- Variável de estado própria do desafio adicionada, com justificativa comentada
+- `GameManager` (Orchestration) criado e registrado como Autoload, com acesso validado a partir do Player
+- `PlayerStart` (Marker3D) no nível; `spawn_player()` posiciona o Player nele ao carregar — sem coordenada no grafo
+- Variável de estado própria do desafio adicionada, com justificativa anotada no grafo
 - Nível e build da Semana 3 intactos (apenas grupos + chamada de spawn no `_ready()`)
 - Próximo passo: input centralizado no Player e SaveManager, no Encontro 2
 
@@ -290,8 +294,8 @@ Encontro depende diretamente do GameManager do Encontro 1. Confirmar que todos t
 
 - Revisão do Encontro 1 (`GameManager` registrado como Autoload) (10 min)
 - Introdução: input centralizado no Player e o problema da persistência (20 min)
-- Demonstração: criação do `SaveManager` e variável persistente (35 min)
-- Laboratório: cada estudante cria seu `SaveManager` e testa persistência (45 min)
+- Demonstração: criação da Orchestration `SaveManager` e variável persistente (35 min)
+- Laboratório: cada estudante cria seu `SaveManager` (Orchestration) e testa persistência (45 min)
 - Desafio: dado próprio persistindo entre cenas (20 min)
 - Feedback e fechamento (5 min)
 
@@ -372,9 +376,9 @@ Preparar o terreno para a serialização em disco, construída na Semana 7 (Save
 
 ## SaveManager — Segundo Autoload do Projeto
 
-- Script `Node` independente, com `class_name SaveManager`
-- Registrado separadamente em **Project Settings > Autoload**
-- Local no projeto: `scripts/autoload/save_manager.gd`
+- Orchestration independente, classe base `Node`
+- Registrada separadamente em **Project Settings > Autoload**, direto pelo `.torch`
+- Local no projeto: `orchestrations/autoload/save_manager.torch`
 - Guarda dados que sobrevivem à troca de cena, em memória
 
 <!--
@@ -392,7 +396,7 @@ Reforçar: SaveManager e GameManager nunca herdam um do outro nem dependem de de
 
 ### Godot
 
-- Segundo Autoload dedicado (`SaveManager`)
+- Segundo Autoload dedicado (`SaveManager`), Orchestration `.torch`
 - Sobrevivência garantida pelo registro em Project Settings
 
 </div>
@@ -416,7 +420,7 @@ O Godot separa formalmente os dois papéis em Autoloads independentes; na Unity 
 
 O que será construído:
 
-- Script `save_manager.gd`, com uma variável persistente (ex.: `itens_coletados`)
+- Orchestration `save_manager.torch`, com uma variável persistente (ex.: `itens_coletados`) e função pública para alterá-la
 - Scene de teste `level_teste_persistencia.tscn`
 - Troca de cena real, validando que o valor não é perdido
 
@@ -433,7 +437,7 @@ Reforçar: reverter a Main Scene para level_exploration.tscn ao final do teste.
 >
 > Objetivo: mostrar a aba Autoload de Project Settings com dois registros — `GameManager` e `SaveManager` — lado a lado.
 > Enquadramento: captura de tela da janela Project Settings, aba Autoload.
-> Elementos presentes: lista com os dois Autoloads, coluna Path e coluna Node Name.
+> Elementos presentes: lista com os dois Autoloads, coluna Path (ambas apontando para arquivos `.torch`) e coluna Node Name.
 > Destaque visual: as duas linhas, reforçando que são Autoloads independentes.
 > Legenda sugerida: "GameManager e SaveManager registrados como Autoloads independentes ao final da Semana 4."
 
@@ -447,24 +451,25 @@ Usar esta imagem como referência caso a demonstração ao vivo não seja possí
 
 Cada estudante replica, no próprio projeto:
 
-1. Script `save_manager.gd`, com `class_name SaveManager`
-2. Registro em **Project Settings > Autoload**
-3. Variável persistente e função simples para alterá-la
+1. Orchestration `save_manager.torch`, classe base `Node`
+2. Registro direto em **Project Settings > Autoload**
+3. Variável persistente e função pública para alterá-la
 4. Scene de teste com troca real de cena, validando a persistência
 5. Reversão da Main Scene para `level_exploration.tscn`
 
 <!--
 Erro comum: declarar a variável de teste dentro da Scene em vez do SaveManager — o valor seria perdido ao trocar de cena.
 Erro comum: esquecer de reverter a Main Scene após o teste.
+Erro comum: esquecer de marcar a função como pública no grafo.
 -->
 
 ---
 
 ## Boas Práticas — SaveManager
 
-- Manter `GameManager` e `SaveManager` como scripts totalmente independentes
-- Comentar, no topo de cada Autoload, qual tipo de dado ele guarda
-- Sempre testar persistência com uma troca de cena real, nunca apenas revisando o código
+- Manter `GameManager` e `SaveManager` como Orchestrations totalmente independentes
+- Registrar, na nota de topo de cada Autoload, qual tipo de dado ele guarda
+- Sempre testar persistência com uma troca de cena real, nunca apenas revisando o grafo
 - Nomear variáveis de forma que já sugiram o que representam no Vertical Slice final
 
 <!--
@@ -533,10 +538,10 @@ Esses dois sistemas abrem a Unidade II e sustentam toda a arquitetura de gamepla
 
 ## Checklist da Semana
 
-- [ ] Script `game_manager.gd` criado, com `class_name GameManager`, registrado como Autoload
-- [ ] `PlayerStart` (Marker3D, grupo `player_start`) no nível; `spawn_player()` posiciona o Player e é chamado no `_ready()` do nível
+- [ ] Orchestration `game_manager.torch` criada (classe base `Node`), registrada diretamente como Autoload
+- [ ] `PlayerStart` (Marker3D, grupo `player_start`) no nível; função pública `spawn_player()` posiciona o Player e é chamada no `_ready()` do nível
 - [ ] Variável de estado própria do desafio adicionada ao `GameManager`
-- [ ] Script `save_manager.gd` criado, com `class_name SaveManager`, registrado como Autoload
+- [ ] Orchestration `save_manager.torch` criada (classe base `Node`), registrada diretamente como Autoload
 - [ ] Variável persistente implementada e validada com troca real de cena
 - [ ] Main Scene revertida para `level_exploration.tscn` após o teste
 - [ ] Dado próprio do desafio do `SaveManager` implementado e validado
@@ -554,7 +559,7 @@ Os dois Autoloads construídos nesta semana são a base direta da Semana 5:
 - Contrato `Interactable` e Signals para comunicação desacoplada entre sistemas
 - Primeiro objeto interativo do Vertical Slice (porta ou equivalente)
 
-Leitura recomendada: Godot Docs — Singletons (Autoload), GDScript; Unity Manual (consulta comparativa) — DontDestroyOnLoad.
+Leitura recomendada: Godot Docs — Singletons (Autoload), GDScript; Orchestrator Docs — Autoloads; Unity Manual (consulta comparativa) — DontDestroyOnLoad.
 
 <!--
 Nada desta semana será refeito — apenas ampliado. Reforçar isso à turma para reduzir ansiedade sobre "ter feito certo".

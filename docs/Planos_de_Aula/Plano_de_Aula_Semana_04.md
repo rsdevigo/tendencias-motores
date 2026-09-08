@@ -26,23 +26,24 @@ Ao final da semana, cada estudante possui, além do projeto herdado das Semanas 
 
 - Explicar Autoload/Singleton como mecanismo nativo de estado global no Godot.
 - Diferenciar o papel do `GameManager` (regras de partida e estado compartilhado) de um Node comum de cena.
-- Criar um `GameManager` customizado como Autoload no projeto do Vertical Slice.
-- Dar ao `GameManager` sua primeira responsabilidade concreta: `spawn_player()`, que lê um `Marker3D` (`PlayerStart`) do nível e reposiciona o Player ao carregar — sem coordenada no script.
+- Criar um `GameManager` como Orchestration e registrá-lo como Autoload no projeto do Vertical Slice.
+- Dar ao `GameManager` sua primeira responsabilidade concreta: `spawn_player()`, que lê um `Marker3D` (`PlayerStart`) do nível e reposiciona o Player ao carregar — sem coordenada no grafo.
 
 ## Conteúdos
 
-- Autoload/Singleton no Godot: registro, ciclo de vida e escopo global.
+- Autoload/Singleton no Godot: registro (script, Orchestration ou cena), ciclo de vida e escopo global.
 - Papel do `GameManager` como ponto único de regras de partida e estado compartilhado.
-- Criação guiada do script e registro do `GameManager` como Autoload.
+- Autoload com Orchestrator: o `.torch` é selecionável diretamente no campo Path do Autoload, como um `.gd`. GDScript apenas como implementação de referência do grafo.
+- Criação guiada da Orchestration `game_manager.torch` e do registro como Autoload.
 - `PlayerStart` (`Marker3D` no nível, grupo `player_start`) como dado de cena; `spawn_player()` como política de spawn no `GameManager`; grupos como forma de localizar Nodes sem referência direta. Comparação: actor `PlayerStart` + `GameMode.ChoosePlayerStart` da Unreal; "SpawnPoint" por tag na Unity.
 
 ## Conceitos Fundamentais
 
-Toda engine de jogos que trabalha com múltiplas cenas precisa resolver o mesmo problema: onde vive um dado ou uma regra que não pertence a nenhuma cena específica, mas que todas precisam acessar — pontuação da partida, condição de vitória, referência ao jogador ativo. O Godot resolve isso de forma nativa e formal com Autoload/Singleton: um script registrado nas configurações do projeto é instanciado automaticamente na raiz da árvore de cenas e permanece acessível globalmente, sobrevivendo à troca de cenas. O `GameManager` construído nesta semana ocupa esse papel — reunindo em um único ponto o que a Unreal separa formalmente em GameMode (regras) e GameState (estado compartilhado), sem que o Godot precise de dois conceitos distintos para isso.
+Toda engine de jogos que trabalha com múltiplas cenas precisa resolver o mesmo problema: onde vive um dado ou uma regra que não pertence a nenhuma cena específica, mas que todas precisam acessar — pontuação da partida, condição de vitória, referência ao jogador ativo. O Godot resolve isso de forma nativa e formal com Autoload/Singleton: um recurso registrado nas configurações do projeto — um script `.gd`, uma Orchestration `.torch` ou uma cena `.tscn` — é instanciado automaticamente na raiz da árvore de cenas e permanece acessível globalmente, sobrevivendo à troca de cenas. O Orchestrator permite selecionar a Orchestration diretamente no registro do Autoload. O `GameManager` construído nesta semana ocupa esse papel — reunindo em um único ponto o que a Unreal separa formalmente em GameMode (regras) e GameState (estado compartilhado), sem que o Godot precise de dois conceitos distintos para isso.
 
 ## Recursos do Godot
 
-Autoload/Singleton, Project Settings (aba Autoload), GDScript, Orchestrator.
+Autoload/Singleton, Project Settings (aba Autoload), Orchestrator (Orchestration `.torch` como Autoload, funções públicas, variáveis do grafo, nó Get Autoload). GDScript apenas como implementação de referência.
 
 ## Comparação com Unity
 
@@ -51,8 +52,8 @@ A Unity não possui um mecanismo formal equivalente ao Autoload — o mesmo prob
 ## Preparação do Professor
 
 - Projeto do Vertical Slice retomado da Semana 3, com nível de teste, Player e build já configurados.
-- Script de referência de um `GameManager` mínimo já preparado para demonstração (não distribuído antes da aula).
-- Project Settings aberto na aba Autoload da máquina de demonstração, pronto para registrar o script ao vivo.
+- Orchestration de referência de um `GameManager` mínimo já preparada para demonstração (não distribuída antes da aula); versão GDScript equivalente à mão para mostrar a lógica nó a nó.
+- Project Settings aberto na aba Autoload da máquina de demonstração, pronto para registrar a Orchestration ao vivo.
 - Slides com o comparativo Autoload/Singleton × `DontDestroyOnLoad`/singleton manual da Unity.
 
 ## Cronograma do Encontro (2h15)
@@ -61,14 +62,14 @@ A Unity não possui um mecanismo formal equivalente ao Autoload — o mesmo prob
 |---|---|
 | 15 min | Revisão do Encontro 2 da Semana 3 (build exportado, encerramento do Módulo 1) |
 | 20 min | Introdução: onde vive o estado que não pertence a nenhuma cena específica |
-| 35 min | Demonstração: criação do script `GameManager`, registro como Autoload e `spawn_player()` lendo o `PlayerStart` |
-| 40 min | Laboratório: cada estudante cria o `GameManager`, adiciona o `PlayerStart` ao nível e implementa `spawn_player()` |
+| 35 min | Demonstração: criação da Orchestration `GameManager`, registro como Autoload e `spawn_player()` lendo o `PlayerStart` (GDScript ao lado como referência da lógica) |
+| 40 min | Laboratório: cada estudante cria a Orchestration `GameManager`, adiciona o `PlayerStart` ao nível e implementa `spawn_player()` |
 | 15 min | Desafio: adicionar uma variável de estado de partida própria ao `GameManager` |
 | 5 min | Feedback e fechamento |
 
 ## Desenvolvimento
 
-O encontro abre o Módulo 2 retomando o projeto herdado da Semana 3 sem alterar nada do que já existe — nível, Player e build permanecem intactos. O professor demonstra a criação de um script `GameManager` simples e seu registro na aba Autoload de Project Settings, explicando por que esse registro transforma o script em um Singleton acessível globalmente. Em seguida, dá ao `GameManager` sua primeira responsabilidade concreta: um `Marker3D` chamado `PlayerStart` é adicionado ao nível (grupo `player_start`), e `spawn_player()` lê esse marcador para reposicionar o Player ao carregar — reforçando que a coordenada é dado da cena e a decisão de usá-la é do gerenciador (o "ChoosePlayerStart" do projeto). A turma replica tudo no próprio projeto, preparando o `GameManager` para receber, no Encontro 2, o `SaveManager` e a lógica de persistência entre cenas.
+O encontro abre o Módulo 2 retomando o projeto herdado da Semana 3 sem alterar nada do que já existe — nível, Player e build permanecem intactos. O professor demonstra a criação de uma Orchestration `GameManager` simples e seu registro direto na aba Autoload de Project Settings, explicando por que esse registro a transforma em um Singleton acessível globalmente. A lógica de cada nó é acompanhada pela versão GDScript equivalente, usada apenas como referência. Em seguida, dá ao `GameManager` sua primeira responsabilidade concreta: um `Marker3D` chamado `PlayerStart` é adicionado ao nível (grupo `player_start`), e `spawn_player()` (função pública do grafo) lê esse marcador para reposicionar o Player ao carregar — reforçando que a coordenada é dado da cena e a decisão de usá-la é do gerenciador (o "ChoosePlayerStart" do projeto). A turma replica tudo no próprio projeto, preparando o `GameManager` para receber, no Encontro 2, o `SaveManager` e a lógica de persistência entre cenas.
 
 ## Desafio
 
@@ -76,7 +77,7 @@ Cada estudante adiciona ao `GameManager` uma variável de estado de partida pró
 
 ## Critérios de Sucesso
 
-Cada estudante possui, ao final do encontro, um `GameManager` registrado como Autoload no projeto, acessível a partir de qualquer cena, com `spawn_player()` reposicionando o Player no `PlayerStart` do nível (sem coordenada no script) e ao menos uma variável de estado além da demonstrada em aula.
+Cada estudante possui, ao final do encontro, um `GameManager` (Orchestration) registrado como Autoload no projeto, acessível a partir de qualquer cena, com `spawn_player()` reposicionando o Player no `PlayerStart` do nível (sem coordenada no grafo) e ao menos uma variável de estado além da demonstrada em aula.
 
 ## Evidências para Avaliação
 
@@ -84,11 +85,12 @@ Sem instrumento formal isolado neste encontro. O `GameManager` construído aqui 
 
 ## Dificuldades Esperadas
 
-- Registrar o script como Autoload sem defini-lo corretamente como `class_name` ou sem testar o acesso a partir de outra cena — orientar um teste rápido de acesso ao `GameManager` a partir do Player antes de encerrar a etapa.
+- Esquecer de marcar `spawn_player()` como função pública na Orchestration — sem isso, `GameManager.spawn_player()` não é reconhecido pelos outros grafos/scripts.
+- Registrar a Orchestration como Autoload sem testar o acesso a partir de outra cena — orientar um teste rápido de acesso ao `GameManager` a partir do Player antes de encerrar a etapa.
 - Confundir Autoload com um Node comum adicionado manualmente à Scene do nível — reforçar que o Autoload vive fora da árvore de cenas do nível e é configurado exclusivamente em Project Settings.
 - Duplicar responsabilidades já cobertas por variáveis locais do Player (por exemplo, vida ou inventário) dentro do `GameManager` — reforçar que o `GameManager` guarda apenas estado de partida compartilhado, não estado interno de um Node específico.
-- Escrever a posição de spawn como variável no `GameManager` (`var pos_inicial := Vector3(...)`) em vez de ler o `Marker3D` — a coordenada é dado da cena; o `GameManager` só decide *usar* o `PlayerStart`.
-- Chamar `spawn_player()` de dentro de um Autoload (`_ready()` do próprio `GameManager`), antes de o Player existir na árvore — a chamada pertence ao `_ready()` do nó raiz do nível.
+- Escrever a posição de spawn como variável `Vector3` no grafo do `GameManager` em vez de ler o `Marker3D` — a coordenada é dado da cena; o `GameManager` só decide *usar* o `PlayerStart`.
+- Chamar `spawn_player()` de dentro de um Autoload (evento `_ready` do próprio `GameManager`), antes de o Player existir na árvore — a chamada pertence ao `_ready()` do nó raiz do nível.
 
 ---
 
@@ -98,13 +100,13 @@ Sem instrumento formal isolado neste encontro. O `GameManager` construído aqui 
 
 - Explicar a centralização de input de alto nível no próprio Player como característica arquitetural do Godot.
 - Explicar o `SaveManager` (Autoload) como mecanismo de persistência de dados entre cenas.
-- Implementar uma variável persistente no `SaveManager` e validar sua persistência entre trocas de cena.
+- Implementar uma variável persistente no `SaveManager` (Orchestration) e validar sua persistência entre trocas de cena.
 
 ## Conteúdos
 
 - Centralização de input de alto nível no Player, na ausência de uma separação nativa Pawn/Controller.
-- `SaveManager` (Autoload) como ponto único de persistência entre cenas.
-- Implementação guiada de uma variável persistente e teste de troca de cena.
+- `SaveManager` (Autoload) como ponto único de persistência entre cenas, construído como Orchestration registrada diretamente, mesmo padrão do `GameManager`.
+- Implementação guiada de uma variável persistente e de uma função pública no grafo, e teste de troca de cena.
 
 ## Conceitos Fundamentais
 
@@ -112,7 +114,7 @@ O Godot não separa formalmente "quem controla" de "o que é controlado" como a 
 
 ## Recursos do Godot
 
-Autoload/Singleton, SaveManager, GameManager, GDScript.
+Autoload/Singleton, SaveManager, GameManager, Orchestrator (Orchestration como Autoload, variáveis e funções públicas do grafo, nó Get Autoload). GDScript apenas como implementação de referência.
 
 ## Comparação com Unity
 
@@ -120,8 +122,8 @@ A centralização de input de alto nível no próprio Player, sem uma separaçã
 
 ## Preparação do Professor
 
-- Projeto de demonstração com o `GameManager` do Encontro 1 já registrado como Autoload.
-- Script de referência de um `SaveManager` mínimo já preparado para demonstração.
+- Projeto de demonstração com o `GameManager` do Encontro 1 (Orchestration) já registrado como Autoload.
+- Orchestration de referência de um `SaveManager` mínimo já preparada para demonstração; versão GDScript equivalente à mão como referência da lógica.
 - Duas cenas de teste no projeto de demonstração para validar a persistência de uma variável entre trocas de cena.
 - Slides com o comparativo de input centralizado no Player (Godot) × Input System conectado ao personagem (Unity), e persistência via Autoload × singleton com `DontDestroyOnLoad`.
 
@@ -131,14 +133,14 @@ A centralização de input de alto nível no próprio Player, sem uma separaçã
 |---|---|
 | 10 min | Revisão do Encontro 1 (`GameManager` registrado como Autoload) |
 | 20 min | Introdução: centralização de input no Player e o problema da persistência entre cenas |
-| 35 min | Demonstração: criação do `SaveManager` e implementação de uma variável persistente |
-| 45 min | Laboratório: cada estudante cria seu `SaveManager` e testa a persistência entre duas cenas |
+| 35 min | Demonstração: criação da Orchestration `SaveManager` e implementação de uma variável persistente e função pública (GDScript ao lado como referência) |
+| 45 min | Laboratório: cada estudante cria seu `SaveManager` (Orchestration) e testa a persistência entre duas cenas |
 | 20 min | Desafio: cada grupo define e implementa um dado próprio que deve persistir entre cenas |
 | 5 min | Feedback e fechamento |
 
 ## Desenvolvimento
 
-O encontro completa o Módulo 2 desta semana adicionando o `SaveManager` como segundo Autoload do projeto, independente do `GameManager` construído no Encontro 1. O professor demonstra a criação do script, seu registro em Project Settings e a implementação de uma variável simples que precisa sobreviver à troca entre duas cenas de teste, validando o comportamento ao vivo. A turma replica a criação do próprio `SaveManager` e testa a persistência da variável trocando de cena no projeto do Vertical Slice, encerrando a semana com os dois Autoloads que sustentarão gameplay, interação e save/load nas semanas seguintes.
+O encontro completa o Módulo 2 desta semana adicionando o `SaveManager` como segundo Autoload do projeto, independente do `GameManager` construído no Encontro 1. O professor demonstra a criação da Orchestration, seu registro direto em Project Settings e a implementação de uma variável simples que precisa sobreviver à troca entre duas cenas de teste, validando o comportamento ao vivo. A turma replica a criação do próprio `SaveManager` (Orchestration) e testa a persistência da variável trocando de cena no projeto do Vertical Slice, encerrando a semana com os dois Autoloads que sustentarão gameplay, interação e save/load nas semanas seguintes.
 
 ## Desafio
 
@@ -155,6 +157,7 @@ Sem instrumento formal isolado neste encontro. `GameManager` e `SaveManager` com
 ## Dificuldades Esperadas
 
 - Implementar a variável persistente diretamente na cena do nível em vez do `SaveManager`, perdendo o dado ao trocar de cena — orientar teste explícito de troca de cena antes de considerar a etapa concluída.
+- Esquecer de marcar a função como pública no grafo, o que impede `SaveManager.coletar_item()` de ser reconhecido.
 - Confundir o papel do `SaveManager` (persistência entre cenas, em memória) com gravação em disco — reforçar que a serialização em arquivo só será introduzida na Semana 7, e que esta semana resolve apenas a persistência durante a sessão de jogo.
 - Sobrepor responsabilidades entre `GameManager` e `SaveManager` (por exemplo, guardar o mesmo dado nos dois Autoloads) — reforçar a separação de papéis: regras/estado de partida no primeiro, dados que precisam sobreviver à troca de cena no segundo.
 

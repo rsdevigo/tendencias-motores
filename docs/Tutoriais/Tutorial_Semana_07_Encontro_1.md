@@ -199,17 +199,18 @@ Quem decide o que fazer com o item **não** é a Scene coletável. É um handler
 
 **Parte A — o `SaveManager` guarda a lista de itens coletados**
 
-1. Abra `save_manager.gd`. Se a variável de demonstração da Semana 4 (`var itens_coletados: int = 0`) ainda existir com esse nome, substitua-a por uma lista de nomes; se o grupo usou outro nome no desafio da Semana 4, mantenha aquele intacto e apenas adicione o campo novo:
-   ```
+1. Abra a Orchestration `save_manager.torch` (Semana 4). Se a variável de demonstração (`itens_coletados: int = 0`) ainda existir com esse nome, troque o tipo para uma lista de nomes; se o grupo usou outro nome no desafio da Semana 4, mantenha aquele intacto e apenas adicione o campo novo — implementação de referência:
+   ```gdscript
    var itens_coletados: Array[String] = []
    ```
-2. Adicione um método que registra um item **uma única vez**:
-   ```
+2. Adicione uma **função pública** que registra um item **uma única vez** — implementação de referência:
+   ```gdscript
    func registrar_item(nome: String) -> void:
        if nome in itens_coletados:
            return
        itens_coletados.append(nome)
    ```
+   No grafo: função `registrar_item(nome)` → nó **Branch** (`nome in itens_coletados`) que retorna cedo se verdadeiro → senão, nó **Append** em `itens_coletados`.
 
 **Parte B — a Scene `Pickup`**
 
@@ -351,8 +352,8 @@ O carregamento aqui cobre apenas `itens_coletados` e `ultimo_checkpoint` (o sche
 
 ## Passo a passo
 
-1. Abra `game_manager.gd` e amplie `spawn_player()` para considerar o checkpoint ativo antes do `PlayerStart`:
-   ```
+1. Abra a Orchestration `game_manager.torch` e amplie a função `spawn_player()` para considerar o checkpoint ativo antes do `PlayerStart` — implementação de referência:
+   ```gdscript
    func spawn_player() -> void:
        var player := get_tree().get_first_node_in_group("player")
        if player == null:
@@ -366,8 +367,8 @@ O carregamento aqui cobre apenas `itens_coletados` e `ultimo_checkpoint` (o sche
        if destino:
            player.global_position = destino.global_position
    ```
-2. No script raiz de `level_exploration.tscn`, antes de chamar `spawn_player()`, carregue o save e popule o `SaveManager`:
-   ```
+2. No script ou Orchestration raiz de `level_exploration.tscn`, antes de chamar `spawn_player()`, carregue o save e popule o `SaveManager` — implementação de referência:
+   ```gdscript
    func _ready() -> void:
        var dados := $Player/SaveComponent.carregar()  # ajuste o caminho ao seu projeto
        if dados:
@@ -387,7 +388,7 @@ Reabrir o jogo recupera os itens coletados e faz o Player nascer no último `Che
 
 1. Sem arquivo de save: Player no `PlayerStart`.
 2. Com save após um checkpoint: Player na posição do `Checkpoint` de `id_checkpoint` igual a `ultimo_checkpoint`.
-3. `game_manager.gd` e `save_manager.gd` não contêm nenhum `Vector3`/`Transform3D` — apenas ids e leitura de grupos.
+3. `game_manager.torch` e `save_manager.torch` não contêm nenhum `Vector3`/`Transform3D` — apenas ids e leitura de grupos.
 
 ## Problemas comuns
 

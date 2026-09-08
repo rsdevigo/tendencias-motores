@@ -2,7 +2,9 @@
 
 ## Introdução
 
-No Encontro 1, o projeto ganhou seu primeiro Autoload: o `GameManager`, registrado em Project Settings e validado a partir do script do Player. Este encontro completa o Módulo 2 desta semana em duas frentes. Primeiro, uma discussão conceitual breve sobre onde vive o input de alto nível do jogador no Godot, sem separação nativa entre "quem controla" e "o que é controlado". Depois, a construção do segundo Autoload da disciplina, o `SaveManager`, responsável por manter dados persistentes entre trocas de cena — o primeiro passo em direção ao save/load completo que será construído na Semana 7.
+No Encontro 1, o projeto ganhou seu primeiro Autoload: o `GameManager`, construído como Orchestration e registrado em Project Settings. Este encontro completa o Módulo 2 desta semana em duas frentes. Primeiro, uma discussão conceitual breve sobre onde vive o input de alto nível do jogador no Godot, sem separação nativa entre "quem controla" e "o que é controlado". Depois, a construção do segundo Autoload da disciplina, o `SaveManager`, responsável por manter dados persistentes entre trocas de cena — o primeiro passo em direção ao save/load completo que será construído na Semana 7.
+
+Como no Encontro 1, o `SaveManager` é construído como **Orchestration**. Cada trecho de GDScript no tutorial é a **implementação de referência** da lógica do grafo, não um arquivo a ser digitado.
 
 Este tutorial dá continuidade direta ao Encontro 1 — o `GameManager` já deve existir e estar registrado como Autoload antes de começar.
 
@@ -10,7 +12,7 @@ Este tutorial dá continuidade direta ao Encontro 1 — o `GameManager` já deve
 
 - Explicar a centralização de input de alto nível no próprio Player como característica arquitetural do Godot.
 - Explicar o `SaveManager` (Autoload) como mecanismo de persistência de dados entre cenas.
-- Implementar uma variável persistente no `SaveManager` e validar sua persistência entre trocas de cena.
+- Implementar uma variável persistente no `SaveManager` (Orchestration) e validar sua persistência entre trocas de cena.
 
 ## Resultado esperado ao final da semana
 
@@ -18,7 +20,8 @@ Ao final da Semana 4 (Encontros 1 e 2), cada estudante terá um `GameManager` e 
 
 ## Pré-requisitos
 
-- `GameManager` criado e registrado como Autoload, com `spawn_player()` e a variável de estado do desafio do Encontro 1 (ver Tutorial - Semana 4, Encontro 1).
+- `GameManager` criado como Orchestration e registrado como Autoload, com `spawn_player()` e a variável de estado do desafio do Encontro 1 (ver Tutorial - Semana 4, Encontro 1).
+- Uso básico do editor do Orchestrator (grafo, nós, pinos, variáveis, funções).
 
 ---
 
@@ -30,7 +33,7 @@ Ao final da Semana 4 (Encontros 1 e 2), cada estudante terá um `GameManager` e 
 
 ## Arquivos necessários
 
-- Nenhum arquivo externo adicional. O `SaveManager` é um script GDScript novo, criado dentro do próprio projeto.
+- Nenhum arquivo externo adicional. O `SaveManager` é uma Orchestration nova, criada dentro do próprio projeto.
 
 ## Assets utilizados
 
@@ -38,14 +41,14 @@ Ao final da Semana 4 (Encontros 1 e 2), cada estudante terá um `GameManager` e 
 
 ## Projeto esperado
 
-- Projeto aberto no Godot 4.7, com o `GameManager` do Encontro 1 já registrado e testado.
+- Projeto aberto no Godot 4.7 com o Orchestrator ativado, e o `GameManager` do Encontro 1 já registrado e testado.
 - Uma segunda Scene de teste simples, criada neste encontro exclusivamente para validar a persistência de dados entre trocas de cena (ver Parte 3).
 
 > **Imagem sugerida**
 >
 > Objetivo: mostrar a aba Autoload de Project Settings com dois registros — `GameManager` e `SaveManager` — lado a lado.
 > Enquadramento: captura de tela da janela Project Settings, aba Autoload.
-> Elementos importantes: lista com os dois Autoloads, coluna Path e coluna Node Name.
+> Elementos importantes: lista com os dois Autoloads, coluna Path (ambas apontando para arquivos `.torch`) e coluna Node Name.
 > Destaque: as duas linhas, reforçando que são Autoloads independentes.
 > Legenda sugerida: "GameManager e SaveManager registrados como Autoloads independentes ao final da Semana 4."
 
@@ -109,36 +112,36 @@ Toda engine multi-cena precisa de um lugar para guardar dados que sobrevivem à 
 
 Separar `SaveManager` de `GameManager` não é redundância: o `GameManager` guarda regras e estado da partida atual (por exemplo, se a porta principal está aberta); o `SaveManager` guarda dados que precisam sobreviver à própria troca de cena, e futuramente à gravação em arquivo. Essa distinção evita que um único Autoload acumule responsabilidades que deveriam estar separadas — princípio já reforçado no Encontro 1 (Parte 1).
 
+A construção segue o mesmo padrão do `GameManager`: uma Orchestration `Node` registrada diretamente como Autoload.
+
 ## Passo a passo
 
-1. No FileSystem Dock, dentro de `scripts/autoload/`, clique com o botão direito e selecione **Create New > Script...**.
-2. Mantenha Inherits como `Node`, nomeie o arquivo como `save_manager.gd` e clique em **Create**.
-3. No topo do script, adicione `class_name SaveManager`.
-4. Adicione um comentário breve explicando que este Autoload guarda dados que precisam sobreviver a trocas de cena, distinto do `GameManager`.
-5. Abra **Project > Project Settings > Autoload**.
-6. No campo **Path**, selecione `res://scripts/autoload/save_manager.gd`.
-7. Confirme que o **Node Name** aparece como `SaveManager` (PascalCase) e clique em **Add**.
-8. Confirme que a lista de Autoloads agora mostra `GameManager` e `SaveManager`, ambos habilitados.
-9. Salve o projeto (**Ctrl+S**).
+1. No FileSystem Dock, dentro de `orchestrations/autoload/`, crie uma nova Orchestration chamada `save_manager.torch`, com classe base `Node`.
+2. Abra-a no editor do Orchestrator e registre uma nota curta explicando que este Autoload guarda dados que precisam sobreviver a trocas de cena, distinto do `GameManager`.
+3. Abra **Project > Project Settings > Autoload**.
+4. No campo **Path**, selecione `res://orchestrations/autoload/save_manager.torch`.
+5. Confirme que o **Node Name** aparece como `SaveManager` (PascalCase) e clique em **Add**.
+6. Confirme que a lista de Autoloads agora mostra `GameManager` e `SaveManager`, ambos habilitados.
+7. Salve o projeto (**Ctrl+S**).
 
 ## Resultado esperado
 
-Existe um segundo Autoload, `SaveManager`, registrado e habilitado em Project Settings, independente do `GameManager` do Encontro 1.
+Existe um segundo Autoload, `SaveManager` (Orchestration `save_manager.torch`), registrado e habilitado em Project Settings, independente do `GameManager` do Encontro 1.
 
 ## Verificando
 
-1. Abra **Project Settings > Autoload** e confirme as duas linhas: `GameManager` e `SaveManager`.
-2. Rode qualquer Scene do projeto e confirme, via `print(SaveManager)` temporário em qualquer script, que o novo Autoload é acessível globalmente.
+1. Abra **Project Settings > Autoload** e confirme as duas linhas: `GameManager` e `SaveManager`, ambas apontando para arquivos `.torch`.
+2. Rode qualquer Scene do projeto e confirme, via teste temporário (`print(SaveManager)` / nó Print) em qualquer script ou grafo, que o novo Autoload é acessível globalmente.
 
 ## Problemas comuns
 
-- Registrar o `SaveManager` reaproveitando o mesmo Node Name do `GameManager` por engano: revisar o campo Node Name antes de clicar em Add, garantindo que o nome corresponda exatamente ao arquivo criado.
+- Registrar o `SaveManager` reaproveitando o mesmo Node Name do `GameManager` por engano: revisar o campo Node Name antes de clicar em Add, garantindo que o nome corresponda exatamente ao Autoload criado.
 - Colocar, por atalho, uma variável que deveria estar no `SaveManager` diretamente no `GameManager` (ou vice-versa): revisar a distinção de responsabilidades antes de declarar qualquer variável nova nos próximos passos.
 
 ## Boas práticas
 
-- Manter `GameManager` e `SaveManager` como scripts totalmente independentes — nenhum deve herdar do outro nem depender de detalhes internos do outro.
-- Comentar, logo no topo de cada Autoload, qual tipo de dado ele guarda — essa documentação mínima evita duplicação de responsabilidade nas semanas seguintes.
+- Manter `GameManager` e `SaveManager` como Orchestrations totalmente independentes — nenhuma deve depender de detalhes internos da outra.
+- Registrar, logo na nota de topo de cada Orchestration de Autoload, qual tipo de dado ela guarda — essa documentação mínima evita duplicação de responsabilidade nas semanas seguintes.
 
 ## Comparação com Unity
 
@@ -158,16 +161,31 @@ Um Autoload só demonstra sua utilidade quando testado sob o cenário que ele re
 
 ## Passo a passo
 
-1. No script `save_manager.gd`, declare uma variável persistente simples, por exemplo `var itens_coletados: int = 0`.
-2. Adicione uma função simples para alterá-la, por exemplo `func coletar_item() -> void: itens_coletados += 1`.
+1. Na Orchestration `save_manager.torch`, no painel de variáveis, declare uma variável persistente simples — implementação de referência:
+   ```gdscript
+   var itens_coletados: int = 0
+   ```
+2. Crie uma **função pública** para alterá-la — implementação de referência:
+   ```gdscript
+   func coletar_item() -> void:
+       itens_coletados += 1
+   ```
+   No grafo: função `coletar_item` → nó **Set** da variável `itens_coletados` recebendo `itens_coletados + 1`.
 3. No FileSystem Dock, crie uma nova Scene em `scenes/levels/exploration/` chamada `level_teste_persistencia.tscn`, com um Node raiz `Node3D` e um `Label3D` filho exibindo um texto temporário (por exemplo, "Cena de teste"), seguindo a mesma pasta de `level_exploration.tscn` (PROJECT_ARCHITECTURE.md, seção 8).
-4. No script do Player (`player.gd`), adicione temporariamente uma ação de teste: ao pressionar uma tecla ainda não usada (por exemplo, `ui_accept`), chame `SaveManager.coletar_item()` e imprima `print(SaveManager.itens_coletados)`.
+4. No Player (`player.tscn`), adicione temporariamente uma ação de teste: ao pressionar uma tecla ainda não usada (por exemplo, `ui_accept`), chame `SaveManager.coletar_item()` e imprima o valor — implementação de referência:
+   ```gdscript
+   func _unhandled_input(event: InputEvent) -> void:
+       if event.is_action_pressed("ui_accept"):
+           SaveManager.coletar_item()
+           print(SaveManager.itens_coletados)
+   ```
+   No Orchestrator: evento de input → nó **Call Function** `coletar_item` com alvo vindo de **Get Autoload** (`SaveManager`) → nó **Print** com `SaveManager.itens_coletados`.
 5. Rode `level_exploration.tscn` (F6), pressione a tecla de teste algumas vezes e confirme, no Output, que o valor de `itens_coletados` aumenta.
 6. Ainda no editor, troque manualmente a Scene principal rodada para `level_teste_persistencia.tscn` (Play Current Scene com essa Scene aberta, ou defina-a temporariamente como Main Scene em Project Settings).
-7. No script do Player (se o Player não estiver presente nesta Scene de teste, use qualquer script anexado a um Node dela) ou diretamente no depurador, confirme que `SaveManager.itens_coletados` mantém o valor acumulado no passo anterior, mesmo após a troca de cena.
+7. Em qualquer script/grafo anexado a um Node dessa Scene de teste, ou diretamente no depurador, confirme que `SaveManager.itens_coletados` mantém o valor acumulado no passo anterior, mesmo após a troca de cena.
 8. Reverta a Main Scene do projeto para `level_exploration.tscn` em Project Settings, caso tenha sido alterada no passo 6.
-9. Remova a ação de teste temporária do script do Player, mantendo apenas a variável e a função no `SaveManager`.
-10. Salve todos os scripts e cenas alterados (**Ctrl+S**).
+9. Remova a ação de teste temporária do Player, mantendo apenas a variável e a função no `SaveManager`.
+10. Salve todos os grafos e cenas alterados (**Ctrl+S**).
 
 ## Resultado esperado
 
@@ -181,19 +199,20 @@ O `SaveManager` mantém o valor de `itens_coletados` (ou variável equivalente e
 
 ## Problemas comuns
 
-- Declarar a variável de teste dentro da Scene (por exemplo, em um script anexado a um Node de `level_exploration.tscn`) em vez de no `SaveManager`: o valor será perdido ao trocar de cena — esse é exatamente o erro que a Parte 3 existe para evitar, revisando onde a variável foi declarada.
+- Declarar a variável de teste dentro da Scene (por exemplo, num grafo anexado a um Node de `level_exploration.tscn`) em vez de no `SaveManager`: o valor será perdido ao trocar de cena — esse é exatamente o erro que a Parte 3 existe para evitar, revisando onde a variável foi declarada.
 - Esquecer de reverter a Main Scene do projeto para `level_exploration.tscn` após o teste, deixando o projeto abrindo na Scene de teste por engano.
 - Confundir o papel do `SaveManager` (persistência entre cenas, em memória) com gravação em disco: nenhum arquivo é salvo neste encontro — a serialização em disco só será introduzida na Semana 7.
+- Esquecer de marcar `coletar_item` como função pública na Orchestration: `SaveManager.coletar_item()` não será reconhecido pelos outros nós/scripts.
 
 ## Boas práticas
 
-- Sempre testar persistência com uma troca de cena real, nunca apenas revisando o código — o comportamento de um Autoload só é confiável quando observado em funcionamento.
+- Sempre testar persistência com uma troca de cena real, nunca apenas revisando o grafo — o comportamento de um Autoload só é confiável quando observado em funcionamento.
 - Remover Scenes de teste temporárias (como `level_teste_persistencia.tscn`) da Main Scene do projeto assim que o teste for concluído, evitando que builds futuros abram na cena errada.
 - Nomear variáveis do `SaveManager` de forma que já sugiram o que representam no Vertical Slice final (`itens_coletados`, não `contador` ou `x`).
 
 ## Comparação com Unity
 
-Assim como discutido na Parte 2, a Unity resolveria esse mesmo teste com um singleton mantido por `DontDestroyOnLoad`, validado da mesma forma — trocando de cena via `SceneManager.LoadScene` e conferindo se o valor da variável persiste no objeto singleton. O comportamento esperado é idêntico entre as duas engines; o que muda é que, no Godot, a sobrevivência do Autoload já é garantida pelo registro em Project Settings, sem exigir nenhuma chamada explícita equivalente a `DontDestroyOnLoad` dentro do próprio script.
+Assim como discutido na Parte 2, a Unity resolveria esse mesmo teste com um singleton mantido por `DontDestroyOnLoad`, validado da mesma forma — trocando de cena via `SceneManager.LoadScene` e conferindo se o valor da variável persiste no objeto singleton. O comportamento esperado é idêntico entre as duas engines; o que muda é que, no Godot, a sobrevivência do Autoload já é garantida pelo registro em Project Settings, sem exigir nenhuma chamada explícita equivalente a `DontDestroyOnLoad` dentro do próprio grafo.
 
 ---
 
@@ -202,8 +221,8 @@ Assim como discutido na Parte 2, a Unity resolveria esse mesmo teste com um sing
 Ao final da Semana 4 (Encontros 1 e 2), o projeto do Vertical Slice deve conter:
 
 - O Player, o nível de teste e o build da Semana 3, sem nenhuma alteração.
-- Um `GameManager` (Autoload), com `spawn_player()` posicionando o Player no `PlayerStart` e pelo menos uma variável de estado de partida própria (desafio do Encontro 1).
-- Um `SaveManager` (Autoload), independente do `GameManager`, com pelo menos uma variável persistindo corretamente entre cenas (Encontro 2).
+- Um `GameManager` (Autoload, Orchestration), com `spawn_player()` posicionando o Player no `PlayerStart` e pelo menos uma variável de estado de partida própria (desafio do Encontro 1).
+- Um `SaveManager` (Autoload, Orchestration), independente do `GameManager`, com pelo menos uma variável persistindo corretamente entre cenas (Encontro 2).
 - A discussão conceitual sobre centralização de input no Player, sem alteração de código associada.
 
 Segundo o PROJECT_ARCHITECTURE.md (seção 6, Módulo 2), este resultado corresponde à conclusão do item "GameManager (Autoload)" e ao início do item "Player input de alto nível + SaveManager (Autoload)" do roadmap. Os dois Autoloads construídos nesta semana sustentam toda a arquitetura de gameplay das semanas seguintes — a partir da Semana 5, o contrato `Interactable` e as Signals passarão a se comunicar com o `GameManager` ao reagir a interações do jogador.
@@ -216,11 +235,11 @@ Cada grupo define e implementa, no `SaveManager`, um dado próprio que deve pers
 
 ☐ Discussão sobre centralização de input no Player realizada, sem alteração de código
 
-☐ Script `save_manager.gd` criado, com `class_name SaveManager` declarado
+☐ Orchestration `save_manager.torch` criada (classe base `Node`), com nota de responsabilidade registrada
 
-☐ `SaveManager` registrado e habilitado em **Project Settings > Autoload**, junto ao `GameManager`
+☐ `SaveManager` registrado e habilitado em **Project Settings > Autoload**, junto ao `GameManager`, apontando para `save_manager.torch`
 
-☐ Variável persistente implementada no `SaveManager` e validada com troca real de cena
+☐ Variável persistente e função pública implementadas no `SaveManager` e validadas com troca real de cena
 
 ☐ Main Scene do projeto revertida para `level_exploration.tscn` após o teste
 
@@ -229,6 +248,9 @@ Cada grupo define e implementa, no `SaveManager`, um dado próprio que deve pers
 # Glossário
 
 - **SaveManager:** Autoload responsável por manter dados persistentes entre cenas e centralizar o slot de save ativo, base para a serialização em disco da Semana 7.
+- **Orchestration:** grafo de visual scripting do Orchestrator (arquivo `.torch`); pode ser registrada diretamente como Autoload, como um `.gd`.
+- **Implementação de referência:** trecho de GDScript no tutorial que descreve a lógica que o grafo deve reproduzir; não é um arquivo a ser digitado.
+- **Get Autoload (Orchestrator):** nó que devolve a referência de um Autoload registrado, para chamar suas funções e ler suas variáveis a partir de outro grafo.
 - **Pawn/Controller:** separação nativa da Unreal Engine entre o objeto controlado (Pawn) e quem lê o input e comanda esse objeto (Controller); ausente no Godot, que concentra essa responsabilidade no próprio Node do Player.
 - **Persistência entre cenas:** capacidade de um dado sobreviver à troca de Scene ativa, sem depender ainda de gravação em disco.
 
@@ -237,5 +259,6 @@ Cada grupo define e implementa, no `SaveManager`, um dado próprio que deve pers
 - Godot Documentation — Singletons (Autoload): https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html
 - Godot Documentation — GDScript: https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/index.html
 - Orchestrator — Documentação oficial: https://orchestrator.cratercrash.space/
+- Orchestrator — Autoloads: https://docs.cratercrash.space/orchestrator/nodes/autoloads/
 - Unity Manual (consulta comparativa) — DontDestroyOnLoad: https://docs.unity3d.com/ScriptReference/Object.DontDestroyOnLoad.html
 - Canais recomendados para consulta complementar (não substituem a documentação oficial): GDQuest (https://www.youtube.com/@GDQuest), Clear Code (https://www.youtube.com/@ClearCode)

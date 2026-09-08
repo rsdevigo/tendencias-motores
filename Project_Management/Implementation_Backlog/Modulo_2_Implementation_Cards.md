@@ -8,31 +8,31 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 
 ---
 
-## IC-VS04-01 — GameManager (Script + Registro como Autoload)
+## IC-VS04-01 — GameManager (Orchestration + Registro como Autoload)
 
 **Objetivo:** criar o primeiro ponto de estado global do projeto.
 
-**Contexto:** abre o Módulo 2; nenhuma alteração visual ou de gameplay ocorre nesta carta — é puramente arquitetural.
+**Contexto:** abre o Módulo 2; nenhuma alteração visual ou de gameplay ocorre nesta carta — é puramente arquitetural. GDScript aparece nos documentos apenas como implementação de referência da lógica do grafo.
 
 **Documentos de Referência:** `PROJECT_ARCHITECTURE.md` §6, §7, §9; `Tutorial_Semana_04_Encontro_1.md`.
 
 **Tipo:** A
 
-**Arquivos Esperados:** `res://scripts/autoload/game_manager.gd`
+**Arquivos Esperados:** `res://orchestrations/autoload/game_manager.torch` (ou `.gd` equivalente, se o grupo optar por GDScript)
 
 **Implementação:**
-1. Criar `scripts/autoload/game_manager.gd`, herdando `Node`.
-2. Declarar `class_name GameManager` e um comentário de responsabilidade (regras de partida + estado compartilhado).
-3. Registrar em Project Settings > Autoload (Path: o script; Node Name: `GameManager`, PascalCase).
-4. Validar acesso a partir do script do Player com `print(GameManager)` temporário; remover após confirmar.
+1. Criar `orchestrations/autoload/game_manager.torch`, classe base `Node`.
+2. Registrar uma nota de responsabilidade no grafo (regras de partida + estado compartilhado).
+3. Registrar em Project Settings > Autoload (Path: o `.torch` diretamente; Node Name: `GameManager`, PascalCase).
+4. Validar acesso a partir do Player com um teste temporário (nó Print / `print(GameManager)`); remover após confirmar.
 
-**Restrições:** não instanciar `GameManager` como Node dentro de uma Scene — apenas via registro em Autoload. Não deixar `print()` de teste no código final.
+**Restrições:** não instanciar `GameManager` como Node dentro de uma Scene — apenas via registro em Autoload. Não deixar teste (`print`/nó Print) no grafo final.
 
 **Testes:** F6 em `level_exploration.tscn`; Output confirma acesso sem erro (`Invalid get index`/`Identifier not declared` ausentes).
 
 **Critérios de Aceite:**
-- [ ] `game_manager.gd` com `class_name GameManager`, registrado e habilitado como Autoload.
-- [ ] Acesso validado a partir de um script fora do próprio Autoload.
+- [ ] `game_manager.torch` (classe base `Node`) registrado e habilitado diretamente como Autoload.
+- [ ] Acesso validado a partir de um script/grafo fora do próprio Autoload.
 
 **Definition of Done:** checklist do Tutorial (Semana 4, Encontro 1) 100% (exceto desafio, ver IC-VS04-D).
 
@@ -42,7 +42,7 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 
 ---
 
-## IC-VS04-02 — SaveManager (Script + Registro como Autoload)
+## IC-VS04-02 — SaveManager (Orchestration + Registro como Autoload)
 
 **Objetivo:** criar o segundo Autoload, dedicado a dados que sobrevivem à troca de cena.
 
@@ -52,19 +52,19 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 
 **Tipo:** A
 
-**Arquivos Esperados:** `res://scripts/autoload/save_manager.gd`
+**Arquivos Esperados:** `res://orchestrations/autoload/save_manager.torch` (ou `.gd` equivalente)
 
 **Implementação:**
-1. Criar `scripts/autoload/save_manager.gd`, herdando `Node`, com `class_name SaveManager`.
-2. Registrar como segundo Autoload independente (Node Name: `SaveManager`).
-3. Comentar a distinção de responsabilidade frente ao `GameManager`.
+1. Criar `orchestrations/autoload/save_manager.torch`, classe base `Node`.
+2. Registrar como segundo Autoload independente, direto pelo `.torch` (Node Name: `SaveManager`).
+3. Registrar uma nota com a distinção de responsabilidade frente ao `GameManager`.
 
-**Restrições:** `SaveManager` e `GameManager` não devem herdar um do outro nem depender de detalhes internos um do outro.
+**Restrições:** `SaveManager` e `GameManager` não devem depender de detalhes internos um do outro.
 
 **Testes:** Project Settings > Autoload lista os dois; `print(SaveManager)` de teste confirma acesso global.
 
 **Critérios de Aceite:**
-- [ ] `SaveManager` registrado e habilitado, independente do `GameManager`.
+- [ ] `save_manager.torch` registrado e habilitado, independente do `GameManager`.
 
 **Definition of Done:** ver IC-VS04-03 para o teste de persistência completo.
 
@@ -84,10 +84,10 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 
 **Tipo:** A (a parte guiada em si não tem ambiguidade — a variável de exemplo é dada pelo tutorial).
 
-**Arquivos Esperados:** modificação em `save_manager.gd`; nova Scene temporária `res://scenes/levels/exploration/level_teste_persistencia.tscn` (descartável, não faz parte do nível final).
+**Arquivos Esperados:** modificação em `save_manager.torch`; nova Scene temporária `res://scenes/levels/exploration/level_teste_persistencia.tscn` (descartável, não faz parte do nível final).
 
 **Implementação:**
-1. Em `save_manager.gd`, declarar a variável de exemplo `itens_coletados: int` e uma função para alterá-la.
+1. Em `save_manager.torch`, declarar a variável de exemplo `itens_coletados: int` (painel de variáveis) e uma função pública para alterá-la.
 2. Criar `level_teste_persistencia.tscn` (Node3D + Label3D) apenas para o teste.
 3. No Player, acionar temporariamente a função via uma tecla livre; validar incremento.
 4. Trocar a Main Scene para `level_teste_persistencia.tscn`, confirmar que o valor persiste; reverter a Main Scene para `level_exploration.tscn`.
@@ -119,21 +119,21 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 
 **Tipo:** A
 
-**Arquivos Esperados:** `res://scenes/levels/exploration/level_exploration.tscn` (novo Marker3D + chamada no `_ready()`); modificação em `game_manager.gd`.
+**Arquivos Esperados:** `res://scenes/levels/exploration/level_exploration.tscn` (novo Marker3D + chamada no `_ready()`); modificação em `game_manager.torch`.
 
 **Implementação:**
 1. Em `level_exploration.tscn`: adicionar um `Marker3D` filho do nó raiz, renomear para `PlayerStart`, posicionar no ponto inicial, adicionar ao grupo `player_start`.
 2. Adicionar o Node do Player ao grupo `player`.
-3. Em `game_manager.gd`: `func spawn_player() -> void` que lê `get_tree().get_first_node_in_group("player")` e `..._first_node_in_group("player_start")` e faz `player.global_position = inicio.global_position` (com guardas de `null`).
-4. No script raiz de `level_exploration.tscn`, chamar `GameManager.spawn_player()` no `_ready()`.
+3. Em `game_manager.torch`: função pública `spawn_player()` que lê `get_first_node_in_group("player")` e `..._first_node_in_group("player_start")` e faz `player.global_position = inicio.global_position` (com guardas de `null`). Implementação de referência em GDScript no Tutorial (Parte 3).
+4. No grafo/script raiz de `level_exploration.tscn`, chamar `GameManager.spawn_player()` no `_ready()` (nó Get Autoload → Call Function).
 
-**Restrições:** nenhuma coordenada de spawn (`Vector3`/`Transform3D`) dentro de `game_manager.gd` — a posição é dado da cena. `spawn_player()` deve ser público (será reutilizado pelo respawn do Módulo 3).
+**Restrições:** nenhuma coordenada de spawn (`Vector3`/`Transform3D`) dentro de `game_manager.torch` — a posição é dado da cena. `spawn_player()` deve ser função pública (será reutilizada pelo respawn do Módulo 3).
 
 **Testes:** rodar o nível → Player no `PlayerStart`; mover o marcador no editor → Player segue; comentar a chamada no `_ready()` → Player volta a nascer onde a instância está salva.
 
 **Critérios de Aceite:**
 - [ ] `Marker3D` `PlayerStart` em `level_exploration.tscn`, grupo `player_start`; Player no grupo `player`.
-- [ ] `GameManager.spawn_player()` reposiciona o Player lendo os grupos, sem coordenada no script, chamado no `_ready()` do nível.
+- [ ] `GameManager.spawn_player()` reposiciona o Player lendo os grupos, sem coordenada no grafo, chamado no `_ready()` do nível.
 
 **Definition of Done:** checklist do Tutorial (Semana 4, Encontro 1), itens de PlayerStart/spawn.
 
@@ -154,7 +154,7 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 **Tipo:** B — liberdade de escolha total, sem solução única, conforme o próprio Cronograma.
 
 **Implementação:**
-1. Encontro 1: adicionar ao `GameManager` UMA variável de estado de partida própria, não demonstrada em aula (ex.: contador de tentativas, flag de evento). Comentar por que ela pertence ao `GameManager`.
+1. Encontro 1: adicionar ao `GameManager` UMA variável de estado de partida própria, não demonstrada em aula (ex.: contador de tentativas, flag de evento). Anotar no grafo por que ela pertence ao `GameManager`.
 2. Encontro 2: implementar no `SaveManager` um dado próprio que deve persistir entre cenas — DIFERENTE de `itens_coletados` (a variável de exemplo de IC-VS04-03). Validar com uma troca de cena real, repetindo o procedimento de IC-VS04-03.
 
 **Restrições:** a variável do Encontro 2 não pode ser a mesma já usada na demonstração de IC-VS04-03.
@@ -162,7 +162,7 @@ Fonte primária: `docs/Tutoriais/Tutorial_Semana_04_*.md` a `Tutorial_Semana_07_
 **Testes:** `print()` temporário confirmando leitura de ambas as variáveis; troca de cena real para a do `SaveManager`.
 
 **Critérios de Aceite:**
-- [ ] Variável própria no `GameManager`, comentada.
+- [ ] Variável própria no `GameManager`, com justificativa anotada no grafo.
 - [ ] Variável própria (distinta da demo) no `SaveManager`, validada com troca de cena real.
 
 **Definition of Done:** avaliado pela Rubrica 2 — Solução proposta, Uso correto do Godot, Criatividade, Organização, Funcionamento.
@@ -415,12 +415,12 @@ res://resources/items/item_chave.tres
 ```
 res://scenes/interactables/Pickup.tscn   + pickup.gd (ou pickup.torch)
 res://scenes/interactables/Chest.tscn    + chest.gd  (ou chest.torch)
-modificação em res://scripts/autoload/save_manager.gd
-handler no script raiz de level_exploration.tscn (ou em game_manager.gd)
+modificação em res://orchestrations/autoload/save_manager.torch
+handler no grafo/script raiz de level_exploration.tscn (ou em game_manager.torch)
 ```
 
 **Implementação:**
-1. Em `save_manager.gd`: `var itens_coletados: Array[String] = []` (substituindo a variável `int` de demonstração da Semana 4, se ainda com esse nome) e `func registrar_item(nome: String) -> void` idempotente (`if nome in itens_coletados: return`).
+1. Em `save_manager.torch`: `var itens_coletados: Array[String] = []` (substituindo a variável `int` de demonstração da Semana 4, se ainda com esse nome) e a função pública `registrar_item(nome: String)` idempotente (`if nome in itens_coletados: return`). Implementação de referência em GDScript no Tutorial (Semana 7, Encontro 1).
 2. `Pickup.tscn`: `Area3D` + `CollisionShape3D` + malha (Mini Dungeon), mesma estrutura de `Door`. `pickup.gd`: `class_name Pickup`, `signal item_collected(item: ItemData)`, `@export var item: ItemData`. `interact()` → `item_collected.emit(item)` + `queue_free()` (guarda `if item == null: return`).
 3. `Chest.tscn`: mesma estrutura, malha de baú. `chest.gd`: `class_name Chest`, mesmo Signal e `@export`, mais `var aberto := false`. `interact()` → `if aberto or item == null: return`; `aberto = true`; `item_collected.emit(item)`.
 4. Handler único `_ao_coletar_item(item: ItemData)` → `SaveManager.registrar_item(item.nome)`; conectar o Signal `item_collected` de cada instância a ele.
@@ -433,7 +433,7 @@ handler no script raiz de level_exploration.tscn (ou em game_manager.gd)
 **Critérios de Aceite:**
 - [ ] `Pickup` e `Chest` implementam `interact()` e emitem `item_collected(item: ItemData)`.
 - [ ] `Chest` concede o item apenas na primeira interação (`aberto`).
-- [ ] Handler único registra `item.nome` em `SaveManager.itens_coletados`, sem duplicatas; nenhuma Scene coletável conhece o `SaveManager`.
+- [ ] Handler único registra `item.nome` via `SaveManager.registrar_item(...)`, sem duplicatas; nenhuma Scene coletável conhece o `SaveManager`.
 
 **Definition of Done:** checklist do Tutorial (Semana 7, Encontro 1), itens de Pickup/Chest/handler.
 
